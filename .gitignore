@@ -25,3 +25,8 @@
 ###> vincentlanglet/twig-cs-fixer ###
 /tools/.twig-cs-fixer.cache
 ###< vincentlanglet/twig-cs-fixer ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

@@ -23,7 +23,7 @@ class Category
     /**
      * @var Collection<int, Trick>
      */
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Trick::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Trick::class, cascade: ['persist', 'remove'])]
     private Collection $tricks;
 
     public function __construct()
