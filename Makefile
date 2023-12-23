@@ -134,7 +134,8 @@ rector: ## Run rector
 tests: ## Run tests
 tests: export APP_ENV=test
 tests:
-	$(DOCKER_COMPOSE) exec php php bin/phpunit --configuration $(TOOLS_DIRECTORY)/phpunit.xml.dist
+	@$(eval c ?=)
+	symfony run bin/phpunit --configuration $(TOOLS_DIRECTORY)/phpunit.xml.dist $(c) $(coverage)
 
 tests-reset: ## Recreate database, launch migrations, load fixtures and execute tests
 tests-reset: export APP_ENV=test
@@ -144,6 +145,27 @@ infection: ## Run infection
 infection: export APP_ENV=test
 infection:
 	$(DOCKER_COMPOSE) exec php vendor/bin/infection --configuration=$(TOOLS_DIRECTORY)/infection.json5 --threads=4
+
+##
+## # Coverage
+##---------------------------------------------------------------------------
+
+.PHONY: coverage coverage-reset
+
+coverage: ## Run phpunit with the Code coverage report
+coverage: export APP_ENV=test
+coverage: export XDEBUG_MODE=coverage
+coverage:
+	@$(eval c ?=)
+	@make tests $(c) coverage='--coverage-html vendor/coverage'
+
+coverage-reset: ## Recreate database, launch migrations, load fixtures and execute tests with code coverage
+coverage-reset:	export APP_ENV=test
+coverage-reset:	export XDEBUG_MODE=coverage
+coverage-reset: db-reset
+coverage-reset:
+	@$(eval c ?=)
+	@make coverage $(c) coverage='--coverage-html vendor/coverage'
 
 ##
 ## # Help

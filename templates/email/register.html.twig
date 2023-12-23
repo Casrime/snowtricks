@@ -1,0 +1,12 @@
+<h1>Welcome to Snowtricks {{ user.username }}!</h1>
+
+<p>
+    You signed up as {{ user.username }} the following email: {{ user.email }}
+</p>
+
+<p>
+    <a href="{{ baseUrl ~ path('app_activate', {
+        value: token
+    }) }}">Click here to activate your account</a>
+    (this link is valid until {{ expiration_date|date('d/m/Y') }})
+</p>
