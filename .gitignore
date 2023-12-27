@@ -8,12 +8,20 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
-
 ###> symfony/phpunit-bridge ###
-.phpunit.result.cache
+tools/.phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/tools/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> phpstan/phpstan ###
+/tools/phpstan.dist.neon
+###< phpstan/phpstan ###
+
+###> vincentlanglet/twig-cs-fixer ###
+/tools/.twig-cs-fixer.cache
+###< vincentlanglet/twig-cs-fixer ###

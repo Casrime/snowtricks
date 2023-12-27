@@ -2,6 +2,7 @@ APP_ENV ?= dev
 CONTAINER_NAME ?= php
 DOCKER_COMPOSE = docker-compose --project-name snowtricks --project-directory .
 OS := $(shell uname)
+TOOLS_DIRECTORY = tools
 
 ##
 ## # Install
@@ -108,16 +109,22 @@ sf: ## Symfony command example: make sf c='c:c -e prod'
 ##
 ## # Checks
 ##---------------------------------------------------------------------------
-.PHONY: cs
+.PHONY: checks cs
+
+checks: ## Run all checks
+checks: rector cs twig phpstan
 
 cs: ## Run php-cs-fixer
-	$(DOCKER_COMPOSE) exec php vendor/bin/php-cs-fixer fix --diff --verbose
+	$(DOCKER_COMPOSE) exec php vendor/bin/php-cs-fixer --config=$(TOOLS_DIRECTORY)/.php-cs-fixer.dist.php fix --diff --verbose --allow-risky=yes
+
+twig: ## Run twig-cs-fixer
+	$(DOCKER_COMPOSE) exec php vendor/bin/twig-cs-fixer lint --config=$(TOOLS_DIRECTORY)/.twig-cs-fixer.php --fix templates
 
 phpstan: ## Run phpstan
-	$(DOCKER_COMPOSE) exec php vendor/bin/phpstan
+	$(DOCKER_COMPOSE) exec php vendor/bin/phpstan analyse --memory-limit=1G --configuration $(TOOLS_DIRECTORY)/phpstan.dist.neon
 
 rector: ## Run rector
-	$(DOCKER_COMPOSE) exec php vendor/bin/rector
+	$(DOCKER_COMPOSE) exec php vendor/bin/rector --config=$(TOOLS_DIRECTORY)/rector.php
 
 ##
 ## # Tests
@@ -127,11 +134,16 @@ rector: ## Run rector
 tests: ## Run tests
 tests: export APP_ENV=test
 tests:
-	$(DOCKER_COMPOSE) exec php php bin/phpunit
+	$(DOCKER_COMPOSE) exec php php bin/phpunit --configuration $(TOOLS_DIRECTORY)/phpunit.xml.dist
 
 tests-reset: ## Recreate database, launch migrations, load fixtures and execute tests
 tests-reset: export APP_ENV=test
 tests-reset: db-reset tests
+
+infection: ## Run infection
+infection: export APP_ENV=test
+infection:
+	$(DOCKER_COMPOSE) exec php vendor/bin/infection --configuration=$(TOOLS_DIRECTORY)/infection.json5 --threads=4
 
 ##
 ## # Help
