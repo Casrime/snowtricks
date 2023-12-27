@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+    {{ form_row(form.category) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+
+    <div>
+        <label {% if form.images.vars.required %}class="required"{% endif %}>{{ form.images.vars.name|capitalize }}</label>
+        <div id="{{ form.images.vars.id }}">
+            {% for image in form.images %}
+                <input
+                    type="checkbox"
+                    id="{{ image.vars.id }}"
+                    name="{{ image.vars.full_name }}"
+                    value="{{ image.vars.value }}"
+                    {% if image.vars.checked %}checked="checked"{% endif %}
+                >
+                <label for="{{ image.vars.id }}">
+                    <img src="{{ asset('uploads/images/' ~ image.vars.label) }}" alt="{{ image.vars.label }}" style="width: 300px" />
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+
+    {{ form_row(form.videos) }}
+    {{ form_row(form._token) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form, {'render_rest': false}) }}

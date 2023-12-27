@@ -10,11 +10,11 @@
 
 ###> symfony/phpunit-bridge ###
 /tools/.phpunit.result.cache
-/phpunit.xml
+/tools/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 ###> friendsofphp/php-cs-fixer ###
-/.php-cs-fixer.php
+/tools/.php-cs-fixer.php
 /tools/.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
@@ -27,3 +27,8 @@
 ###< vincentlanglet/twig-cs-fixer ###
 
 /public/uploads/images/
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ImageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
@@ -21,8 +23,13 @@ class Image
     #[ORM\Column(length: 255)]
     private ?string $alt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'images')]
-    private ?Trick $trick = null;
+    #[ORM\ManyToMany(targetEntity: Trick::class, mappedBy: 'images')]
+    private Collection $tricks;
+
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -53,14 +60,29 @@ class Image
         return $this;
     }
 
-    public function getTrick(): ?Trick
+    /**
+     * @return Collection<int, Trick>
+     */
+    public function getTricks(): Collection
     {
-        return $this->trick;
+        return $this->tricks;
     }
 
-    public function setTrick(?Trick $trick): static
+    public function addTrick(Trick $trick): static
     {
-        $this->trick = $trick;
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks->add($trick);
+            $trick->addImage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): static
+    {
+        if ($this->tricks->removeElement($trick)) {
+            $trick->removeImage($this);
+        }
 
         return $this;
     }
