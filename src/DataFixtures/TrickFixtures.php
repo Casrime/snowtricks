@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\Image;
 use App\Entity\Trick;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -23,9 +24,16 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
         /** @var Category $flip */
         $flip = $this->getReference('flip');
 
+        /** @var Image $image1 */
+        $image1 = $this->getReference('image-1');
+        /** @var Image $image2 */
+        $image2 = $this->getReference('image-2');
+
         $trick1 = new Trick();
         $trick1->setName('Mute');
         $trick1->setCategory($grab);
+        $trick1->addImage($image1);
+        $trick1->addImage($image2);
         $manager->persist($trick1);
 
         $trick2 = new Trick();
@@ -115,6 +123,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             CategoryFixtures::class,
+            ImageFixtures::class,
         ];
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -24,9 +25,13 @@ abstract class BaseController extends WebTestCase
     private function login(string $email): KernelBrowser
     {
         $client = static::createClient();
+        /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
 
-        $testUser = $userRepository->findOneByEmail($email);
+        /** @var User $testUser */
+        $testUser = $userRepository->findOneBy([
+            'email' => $email,
+        ]);
 
         $client->loginUser($testUser);
 

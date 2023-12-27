@@ -26,7 +26,4 @@
 /tools/.twig-cs-fixer.cache
 ###< vincentlanglet/twig-cs-fixer ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
+/public/uploads/images/
