@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
@@ -18,6 +20,9 @@ class Category
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
+    /**
+     * @var Collection<int, Trick>
+     */
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Trick::class)]
     private Collection $tricks;
 
