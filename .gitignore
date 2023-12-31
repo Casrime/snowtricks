@@ -9,7 +9,7 @@
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
-tools/.phpunit.result.cache
+/tools/.phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 

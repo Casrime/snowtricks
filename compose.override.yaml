@@ -4,7 +4,7 @@ version: "3.4"
 services:
     database:
         ports:
-            - "5432"
+            - '5432:5432'
 
     php:
         build:
@@ -25,5 +25,8 @@ services:
             # Ensure that host.docker.internal is correctly defined on Linux
             - host.docker.internal:host-gateway
 
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
+    mailer:
+        image: schickling/mailcatcher
+        ports:
+            - '1025:1025'
+            - '1080:1080'
