@@ -51,7 +51,7 @@
         ]
     },
     "friendsofphp/php-cs-fixer": {
-        "version": "3.43",
+        "version": "3.45",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",

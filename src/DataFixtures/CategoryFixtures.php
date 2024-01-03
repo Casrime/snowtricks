@@ -29,6 +29,11 @@ class CategoryFixtures extends Fixture
         $this->addReference('flip', $category3);
         $manager->persist($category3);
 
+        $category4 = new Category();
+        $category4->setName('Category');
+        $this->addReference('category', $category4);
+        $manager->persist($category4);
+
         $manager->flush();
     }
 }
