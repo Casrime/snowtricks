@@ -19,6 +19,11 @@ class VideoFixtures extends Fixture
         $this->addReference('video1', $video1);
         $manager->persist($video1);
 
+        $video2 = new Video();
+        $video2->setUrl('https://www.youtube.com/watch?v=VFecEFvpaaI');
+        $this->addReference('video2', $video2);
+        $manager->persist($video2);
+
         $manager->flush();
     }
 }
