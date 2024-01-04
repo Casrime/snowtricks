@@ -7,6 +7,7 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Image;
 use App\Entity\Trick;
+use App\Entity\Video;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -28,6 +29,9 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
         $image1 = $this->getReference('image-1');
         /** @var Image $image2 */
         $image2 = $this->getReference('image-2');
+
+        /** @var Video $video1 */
+        $video1 = $this->getReference('video1');
 
         $trick1 = new Trick();
         $trick1->setName('Mute');
@@ -54,6 +58,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
         $trick5 = new Trick();
         $trick5->setName('Tail grab');
         $trick5->setCategory($grab);
+        $trick5->addVideo($video1);
         $manager->persist($trick5);
 
         $trick6 = new Trick();
