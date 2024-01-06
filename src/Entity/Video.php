@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\VideoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
@@ -18,8 +20,13 @@ class Video
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
-    #[ORM\ManyToOne(inversedBy: 'videos')]
-    private ?Trick $trick = null;
+    #[ORM\ManyToMany(targetEntity: Trick::class, mappedBy: 'videos')]
+    private Collection $tricks;
+
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -38,14 +45,29 @@ class Video
         return $this;
     }
 
-    public function getTrick(): ?Trick
+    /**
+     * @return Collection<int, Trick>
+     */
+    public function getTricks(): Collection
     {
-        return $this->trick;
+        return $this->tricks;
     }
 
-    public function setTrick(?Trick $trick): static
+    public function addTrick(Trick $trick): static
     {
-        $this->trick = $trick;
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks->add($trick);
+            $trick->addVideo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): static
+    {
+        if ($this->tricks->removeElement($trick)) {
+            $trick->removeVideo($this);
+        }
 
         return $this;
     }
