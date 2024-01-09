@@ -11,6 +11,6 @@ class FrontControllerTest extends BaseController
         $client = static::createClient();
         $client->request('GET', '/');
 
-        $this->assertSelectorTextContains('h1', 'Hello FrontController! ✅');
+        $this->assertSelectorTextContains('h1', 'SnowTricks');
     }
 }

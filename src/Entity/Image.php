@@ -8,6 +8,7 @@ use App\Repository\ImageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
@@ -15,12 +16,15 @@ class Image
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['tricks:load:more'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['tricks:load:more'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['tricks:load:more'])]
     private ?string $alt = null;
 
     #[ORM\ManyToMany(targetEntity: Trick::class, mappedBy: 'images')]
