@@ -36,9 +36,10 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('trick/new.html.twig', [
+        return $this->render('generic/new.html.twig', [
             'trick' => $trick,
             'form' => $form,
+            'name' => 'trick',
         ]);
     }
 
@@ -63,9 +64,10 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('trick/edit.html.twig', [
+        return $this->render('generic/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
+            'name' => 'trick',
         ]);
     }
 

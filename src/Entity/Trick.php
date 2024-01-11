@@ -49,6 +49,9 @@ class Trick
     #[ORM\ManyToMany(targetEntity: Video::class, inversedBy: 'tricks')]
     private Collection $videos;
 
+    #[ORM\ManyToOne]
+    private ?Image $mainImage = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -183,6 +186,18 @@ class Trick
     public function removeVideo(Video $video): static
     {
         $this->videos->removeElement($video);
+
+        return $this;
+    }
+
+    public function getMainImage(): ?Image
+    {
+        return $this->mainImage;
+    }
+
+    public function setMainImage(?Image $mainImage): static
+    {
+        $this->mainImage = $mainImage;
 
         return $this;
     }

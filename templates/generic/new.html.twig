@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New {{ name|capitalize }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Create new {{ name|capitalize }}</h1>
+
+        {{ include(name ~ '/_form.html.twig') }}
+
+        <p class="text-center">
+            <a href="{{ path('app_' ~ name ~ '_index') }}">back to list</a>
+        </p>
+    </div>
+{% endblock %}

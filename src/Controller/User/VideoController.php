@@ -38,9 +38,10 @@ class VideoController extends AbstractController
             return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('video/new.html.twig', [
+        return $this->render('generic/new.html.twig', [
             'video' => $video,
             'form' => $form,
+            'name' => 'video',
         ]);
     }
 
@@ -64,9 +65,10 @@ class VideoController extends AbstractController
             return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('video/edit.html.twig', [
+        return $this->render('generic/edit.html.twig', [
             'video' => $video,
             'form' => $form,
+            'name' => 'video',
         ]);
     }
 

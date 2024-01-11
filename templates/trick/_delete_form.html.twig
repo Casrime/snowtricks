@@ -1,4 +1,0 @@
-<form method="post" action="{{ path('app_trick_delete', {'id': trick.id}) }}">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-    <button class="btn btn-danger">{{ content|raw }}</button>
-</form>
