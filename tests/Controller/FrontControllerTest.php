@@ -22,4 +22,30 @@ class FrontControllerTest extends BaseController
         $this->assertSelectorTextNotContains('h1', 'SnowTricks');
         $this->assertSelectorTextContains('h1', 'Tricks list');
     }
+
+    public function testTrickShowPageWithoutLogin(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/trick/1');
+
+        $this->assertResponseStatusCodeSame(200);
+    }
+
+    public function testTrickShowPageWithUserLogin(): void
+    {
+        $client = $this->loginUser();
+        $client->request('GET', '/trick/1');
+
+        $this->assertResponseStatusCodeSame(200);
+        $this->assertSelectorTextContains('h1', 'Mute');
+    }
+
+    public function testTrickShowPageWithAdminLogin(): void
+    {
+        $client = $this->loginAdmin();
+        $client->request('GET', '/trick/1');
+
+        $this->assertResponseStatusCodeSame(200);
+        $this->assertSelectorTextContains('h1', 'Mute');
+    }
 }

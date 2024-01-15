@@ -114,33 +114,6 @@ class TrickControllerTest extends BaseController
         $this->assertPageTitleContains('Redirecting to /user/trick/');
     }
 
-    public function testTrickShowPageWithoutLogin(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/user/trick/1');
-
-        $this->assertResponseRedirects('/login');
-    }
-
-    public function testTrickShowPageWithUserLogin(): void
-    {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/trick/1');
-
-        $this->assertPageTitleContains('Trick');
-        $this->assertSelectorTextContains('h1', 'Trick');
-    }
-
-    public function testTrickShowPageWithAdminLogin(): void
-    {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/1');
-
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Trick');
-        $this->assertSelectorTextContains('h1', 'Trick');
-    }
-
     public function testTrickEditPageWithoutLogin(): void
     {
         $client = static::createClient();

@@ -32,6 +32,12 @@ class ImageFixtures extends Fixture
         $this->addReference('image-3', $image3);
         $manager->persist($image3);
 
+        $image4 = new Image();
+        $image4->setName('snowtricks-4.jpg');
+        $image4->setAlt('Image 4');
+        $this->addReference('image-4', $image4);
+        $manager->persist($image4);
+
         $manager->flush();
     }
 }

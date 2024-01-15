@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Trick;
+use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -38,8 +41,38 @@ final class FrontController extends BaseController
     }
 
     #[Route('/trick/{id}', name: 'trick')]
-    public function trick(Trick $trick): Response
+    public function trick(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
-        return new Response('Trick');
+        $form = $this->createForm(CommentType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment = $form->getData();
+            $comment->setTrick($trick);
+            $comment->setUser($this->getUser());
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Commentaire ajouté !');
+
+            return $this->redirectToRoute('trick', ['id' => $trick->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('front/trick.html.twig', [
+            'trick' => $trick,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/trick/{id}/load-more-comments', name: 'load-more-comments')]
+    public function loadMoreComments(Request $request, Trick $trick, CommentRepository $commentRepository): Response
+    {
+        $comments = $commentRepository->loadMoreComments($trick, $request->query->getInt('offset'));
+        $results = $comments->getQuery()->getResult();
+
+        return $this->render('_inc/_comments.html.twig', [
+            'comments' => $results,
+        ]);
     }
 }
