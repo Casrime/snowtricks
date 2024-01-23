@@ -13,6 +13,7 @@ use App\Repository\TokenRepository;
 use App\Repository\UserRepository;
 use DateTimeImmutable;
 use Exception;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,10 +24,14 @@ use Symfony\Component\Uid\Uuid;
 class LoginController extends BaseController
 {
     #[Route('/login', name: 'app_login')]
-    public function index(Request $request, AuthenticationUtils $authenticationUtils): Response
+    public function index(Request $request, AuthenticationUtils $authenticationUtils, Security $security): Response
     {
         $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
+
+        if (null !== $security->getUser()) {
+            return $this->redirectToRoute('home');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
