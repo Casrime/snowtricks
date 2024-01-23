@@ -134,7 +134,7 @@ class LoginController extends BaseController
 
             $this->addFlash('success', 'Votre mot de passe a été réinitialisé.');
 
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('login/reset_password.html.twig', [

@@ -155,7 +155,7 @@ class LoginControllerTest extends BaseController
         $this->assertSelectorTextContains('div.alert-danger', 'Token expired!');
     }
 
-    public function testActivatePageWithValidToken(): void
+    public function testResetPasswordPageWithValidToken(): void
     {
         $client = static::createClient();
         /** @var Token[] $tokens */
@@ -166,14 +166,14 @@ class LoginControllerTest extends BaseController
         $tokenUuid = $tokens[1]->getUuid();
         $client->request('GET', '/reset_password/'.$tokenUuid->toRfc4122());
 
-        $client->submitForm('Valider', [
+        $client->submitForm('Reset', [
             'reset_password[plainPassword][first]' => 'p@ss123',
             'reset_password[plainPassword][second]' => 'p@ss123',
         ]);
 
         $this->assertResponseStatusCodeSame(302);
         $client->followRedirect();
-        $this->assertEquals('/login', $client->getRequest()->getPathInfo());
+        $this->assertEquals('/', $client->getRequest()->getPathInfo());
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('div.alert-success', 'Votre mot de passe a été réinitialisé.');
