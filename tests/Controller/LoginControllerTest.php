@@ -104,7 +104,7 @@ class LoginControllerTest extends BaseController
         $client->followRedirect();
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
 
-        $this->assertSelectorTextContains('div.flash-danger', 'Aucun compte n\'est associé à ce nom d\'utilisateur.');
+        $this->assertSelectorTextContains('div.alert-danger', 'Aucun compte n\'est associé à ce nom d\'utilisateur.');
     }
 
     public function testForgetPasswordPageWithFormSubmissionWithValidUsername(): void
@@ -120,7 +120,7 @@ class LoginControllerTest extends BaseController
         $client->followRedirect();
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
 
-        $this->assertSelectorTextContains('div.flash-success', 'Un email vous a été envoyé pour réinitialiser votre mot de passe.');
+        $this->assertSelectorTextContains('div.alert-success', 'Un email vous a été envoyé pour réinitialiser votre mot de passe.');
     }
 
     public function testResetPasswordPageWithInvalidToken(): void
@@ -133,7 +133,7 @@ class LoginControllerTest extends BaseController
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('div.flash-danger', 'Invalid token!');
+        $this->assertSelectorTextContains('div.alert-danger', 'Invalid token!');
     }
 
     public function testResetPasswordPageWithExpiredToken(): void
@@ -152,7 +152,7 @@ class LoginControllerTest extends BaseController
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('div.flash-danger', 'Token expired!');
+        $this->assertSelectorTextContains('div.alert-danger', 'Token expired!');
     }
 
     public function testActivatePageWithValidToken(): void
@@ -176,6 +176,6 @@ class LoginControllerTest extends BaseController
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('div.flash-success', 'Votre mot de passe a été réinitialisé.');
+        $this->assertSelectorTextContains('div.alert-success', 'Votre mot de passe a été réinitialisé.');
     }
 }
