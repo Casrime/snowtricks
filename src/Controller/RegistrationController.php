@@ -58,11 +58,13 @@ class RegistrationController extends BaseController
                 'baseUrl' => $request->getSchemeAndHttpHost(),
             ]);
 
+            $this->addFlash('success', 'Account created, check your email to activate your account!');
+
             return $this->redirectToRoute('home');
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'registrationForm' => $form,
         ]);
     }
 

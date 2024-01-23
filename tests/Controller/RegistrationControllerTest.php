@@ -24,13 +24,12 @@ final class RegistrationControllerTest extends BaseController
         $client = static::createClient();
         $client->request('GET', '/register');
 
-        $client->submitForm('Register');
+        $client->submitForm('Create an account');
 
-        $this->assertResponseStatusCodeSame(200);
+        $this->assertResponseStatusCodeSame(422);
         $this->assertSelectorTextContains('#registration_form', 'Please enter a username');
         $this->assertSelectorTextContains('#registration_form', 'Please enter an email');
         $this->assertSelectorTextContains('#registration_form', 'Please enter a password');
-        $this->assertSelectorTextContains('#registration_form', 'You should agree to our terms');
     }
 
     public function testRegisterPageWithFormSubmissionWithInvalidValues(): void
@@ -38,14 +37,13 @@ final class RegistrationControllerTest extends BaseController
         $client = static::createClient();
         $client->request('GET', '/register');
 
-        $client->submitForm('Register', [
+        $client->submitForm('Create an account', [
             'registration_form[username]' => '1',
             'registration_form[email]' => 'hello',
             'registration_form[plainPassword]' => '1234',
-            'registration_form[agreeTerms]' => true,
         ]);
 
-        $this->assertResponseStatusCodeSame(200);
+        $this->assertResponseStatusCodeSame(422);
         $this->assertSelectorTextContains('#registration_form', 'Your username should be at least 3 characters');
         $this->assertSelectorTextContains('#registration_form', 'Please enter a valid email address');
         $this->assertSelectorTextContains('#registration_form', 'Your password should be at least 6 characters');
@@ -56,17 +54,16 @@ final class RegistrationControllerTest extends BaseController
         $client = static::createClient();
         $client->request('GET', '/register');
 
-        $client->submitForm('Register', [
+        $client->submitForm('Create an account', [
             'registration_form[username]' => 'admin',
             'registration_form[email]' => 'new-user@snowtricks.com',
             'registration_form[plainPassword]' => 'pass123',
-            'registration_form[agreeTerms]' => true,
         ]);
 
         $this->assertEquals('/register', $client->getRequest()->getPathInfo());
 
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('li', 'There is already an account with this username.');
+        $this->assertResponseStatusCodeSame(422);
+        $this->assertSelectorTextContains('.invalid-feedback', 'There is already an account with this username.');
     }
 
     public function testRegisterPageWithFormSubmissionWithValidValues(): void
@@ -74,11 +71,10 @@ final class RegistrationControllerTest extends BaseController
         $client = static::createClient();
         $client->request('GET', '/register');
 
-        $client->submitForm('Register', [
+        $client->submitForm('Create an account', [
             'registration_form[username]' => 'admin-for-test',
             'registration_form[email]' => 'admin-for-test@snowtricks.com',
             'registration_form[plainPassword]' => 'pass123',
-            'registration_form[agreeTerms]' => true,
         ]);
 
         $this->assertResponseStatusCodeSame(302);
@@ -87,7 +83,7 @@ final class RegistrationControllerTest extends BaseController
         $this->assertEquals('/', $client->getRequest()->getPathInfo());
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Hello FrontController! ✅');
+        $this->assertSelectorTextContains('h1', 'SnowTricks');
     }
 
     public function testActivatePageWithInvalidValue(): void
@@ -109,7 +105,7 @@ final class RegistrationControllerTest extends BaseController
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('div.flash-danger', 'Invalid token!');
+        $this->assertSelectorTextContains('div.alert-danger', 'Invalid token!');
     }
 
     public function testActivatePageWithExpiredToken(): void
@@ -128,7 +124,7 @@ final class RegistrationControllerTest extends BaseController
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('div.flash-danger', 'Token expired!');
+        $this->assertSelectorTextContains('div.alert-danger', 'Token expired!');
     }
 
     public function testActivatePageWithValidToken(): void
@@ -147,6 +143,6 @@ final class RegistrationControllerTest extends BaseController
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('div.flash-success', 'Your account has been activated!');
+        $this->assertSelectorTextContains('div.alert-success', 'Your account has been activated!');
     }
 }
