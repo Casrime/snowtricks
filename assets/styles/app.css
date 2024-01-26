@@ -1,0 +1,46 @@
+body {
+    background-color: skyblue;
+}
+
+.navbar {
+    height: 10vh;
+}
+
+#logo {
+    width: 50px;
+}
+
+#content-home {
+    height: 90vh;
+    border: solid 1px white;
+    background-image: url("../images/snowtricks.jpg");
+}
+
+#content-home h1 {
+    color: #00BFFF;
+    font-size: 4em;
+    text-align: center;
+    margin-top: 40vh;
+}
+
+#content-home .bi-arrow-down-circle-fill {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
+.bi-arrow-down-circle-fill, .bi-arrow-up-circle-fill  {
+    font-size: 36px;
+}
+
+.image-trick {
+    width: 100%;
+}
+
+.trick-content-actions a {
+    text-decoration: none;
+}
+
+.trick-content-actions i {
+    margin-right: 10px;
+}
