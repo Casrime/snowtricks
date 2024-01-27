@@ -14,7 +14,7 @@ class LoginControllerTest extends BaseController
         $client = static::createClient();
         $client->request('GET', '/login');
 
-        $client->submitForm('login', [
+        $client->submitForm('Connexion', [
             'login[username]' => 'unexisting-user',
             'login[password]' => 'pass',
         ]);
@@ -32,7 +32,7 @@ class LoginControllerTest extends BaseController
         $client = static::createClient();
         $client->request('GET', '/login');
 
-        $client->submitForm('login', [
+        $client->submitForm('Connexion', [
             'login[username]' => 'admin',
             'login[password]' => 'pass',
         ]);
@@ -50,7 +50,7 @@ class LoginControllerTest extends BaseController
         $client = static::createClient();
         $client->request('GET', '/login');
 
-        $client->submitForm('login', [
+        $client->submitForm('Connexion', [
             'login[username]' => 'admin',
             'login[password]' => 'pass123',
         ]);
@@ -60,7 +60,7 @@ class LoginControllerTest extends BaseController
 
         $this->assertEquals('/', $client->getRequest()->getPathInfo());
         $this->assertResponseStatusCodeSame(200);
-        $this->assertSelectorTextContains('h1', 'Hello FrontController! ✅');
+        $this->assertSelectorTextContains('h1', 'SnowTricks');
     }
 
     public function testLogoutPage(): void
@@ -68,7 +68,7 @@ class LoginControllerTest extends BaseController
         $client = static::createClient();
         $client->request('GET', '/login');
 
-        $client->submitForm('login', [
+        $client->submitForm('Connexion', [
             'login[username]' => 'admin',
             'login[password]' => 'pass123',
         ]);
@@ -80,7 +80,7 @@ class LoginControllerTest extends BaseController
         $client->followRedirect();
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertSelectorTextContains('h1', 'Hello FrontController! ✅');
+        $this->assertSelectorTextContains('h1', 'SnowTricks');
     }
 
     public function testForgetPasswordPageWithoutFormSubmission(): void
