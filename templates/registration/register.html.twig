@@ -3,13 +3,22 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="container">
+        <div class="col-md-4 offset-md-4 text-center mt-5">
+            <h1>Register</h1>
+            <div class="border border-black border-3 container">
+                <div class="col-md-6 offset-md-3 my-3">
+                    {{ form_errors(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+                    {{ form_start(registrationForm) }}
+                    {{ form_widget(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_widget(registrationForm) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                    <button class="btn btn-primary" type="submit">Create an account</button>
+                    {{ form_end(registrationForm) }}
+                    <br>
+                    <p><a href="{{ path('app_login') }}">Already an account ?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
