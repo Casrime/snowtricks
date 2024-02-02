@@ -1,8 +1,8 @@
 {% for five_tricks in tricks|batch(5, false) %}
-    <div class="row d-flex justify-content-start my-3">
+    <div class="row d-flex justify-content-start">
         {% for trick in five_tricks %}
             {% if trick %}
-                <div class="trick col-sm col-md">
+                <div class="trick col-sm col-md my-2">
                     <div class="card">
                         {% if trick.images|length > 0 %}
                             <img
