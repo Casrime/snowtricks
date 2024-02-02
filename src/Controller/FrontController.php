@@ -24,15 +24,17 @@ final class FrontController extends BaseController
         $tricks = $trickRepository->loadMoreTricks($request->query->getInt('offset'));
         $results = $tricks->getQuery()->getResult();
 
-        return $this->render('_inc/_load_more_tricks.html.twig', [
+        return $this->render('_inc/_tricks.html.twig', [
             'tricks' => $results,
         ]);
     }
 
     #[Route('/tricks', name: 'tricks')]
-    public function tricks(): Response
+    public function tricks(TrickRepository $trickRepository): Response
     {
-        return new Response('Tricks');
+        return $this->render('front/tricks.html.twig', [
+            'tricks' => $trickRepository->findAll(),
+        ]);
     }
 
     #[Route('/trick/{id}', name: 'trick')]
