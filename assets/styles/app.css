@@ -3,7 +3,7 @@ body {
 }
 
 .navbar {
-    height: 10vh;
+    min-height: 10vh;
 }
 
 #logo {
@@ -11,7 +11,7 @@ body {
 }
 
 #content-home {
-    height: 90vh;
+    height: 30vh;
     border: solid 1px white;
     background-image: url("../images/snowtricks.jpg");
 }
@@ -20,7 +20,10 @@ body {
     color: #00BFFF;
     font-size: 4em;
     text-align: center;
-    margin-top: 40vh;
+}
+
+#content-home h1.text-center {
+    margin-top: 5vh;
 }
 
 #content-home .bi-arrow-down-circle-fill {
@@ -69,4 +72,14 @@ body {
 
 textarea.form-control {
     height: 200px;
+}
+
+@media (min-width: 992px) {
+    #content-home {
+        height: 90vh;
+    }
+
+    #content-home h1.text-center {
+        margin-top: 40vh;
+    }
 }

@@ -1,20 +1,20 @@
 {% for five_tricks in tricks|batch(5, false) %}
-    <div class="row d-flex justify-content-start my-3">
+    <div class="row d-flex justify-content-start">
         {% for trick in five_tricks %}
             {% if trick %}
-                <div class="trick col-sm col-md">
+                <div class="trick col-sm col-md my-2">
                     <div class="card">
-                        {% if trick.images|length > 0 %}
+                        {% if trick.mainImage %}
                             <img
-                                alt="{{ trick.images[0].alt }}"
+                                alt="{{ trick.mainImage.alt }}"
                                 class="card-img-top image-trick"
-                                src="{{ asset('images/' ~ trick.images[0].name) }}"
+                                src="{{ asset('uploads/images/' ~ trick.mainImage.name) }}"
                             />
                         {% else %}
                             <img
                                 alt="SnowTricks"
                                 class="card-img-top image-trick"
-                                src="{{ asset('images/snowtricks.jpg') }}"
+                                src="{{ asset('uploads/images/snowtricks.jpg') }}"
                             />
                         {% endif %}
                         <div class="card-body trick-content d-flex justify-content-between align-items-center">

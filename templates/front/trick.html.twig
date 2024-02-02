@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trick{% endblock %}
+
+{% block body %}
+    <div id="content-home" {% if trick.mainImage %}style="background: no-repeat center/100% url({{ asset('uploads/images/' ~ trick.mainImage.name) }})"{% endif %}>
+        {% if is_granted('ROLE_USER') %}
+            <div
+                class="actions d-flex justify-content-end align-items-start"
+                style="position: relative; top: 10px; right: 10px;"
+            >
+                <a href="{{ path('app_trick_edit', {
+                    id: trick.id
+                }) }}">
+                    <i class="bi bi-pencil"></i>
+                </a>
+                <span data-bs-toggle="modal" data-bs-target="#trick-{{ trick.id }}">
+                    <i class="bi bi-trash"></i>
+                </span>
+                {{ include('_inc/_modal.html.twig', {
+                    id: trick.id,
+                    htmlName: 'trick',
+                    name: trick.name,
+                    includeForm: include('_inc/_delete_form.html.twig', {
+                        action: path('app_trick_delete', {'id': trick.id}),
+                        content: 'Delete',
+                        value: csrf_token('delete' ~ trick.id),
+                    })
+                }) }}
+            </div>
+        {% endif %}
+        <h1 class="text-center">{{ trick.name }}</h1>
+    </div>
+    <div class="container">
+        <div id="see-medias-block" class="text-center" data-controller="show-medias">
+            <button class="btn btn-primary d-sm-none" data-action="show-medias#show">See medias</button>
+        </div>
+        <div class="row d-none d-sm-flex">
+            <div class="col-md-6 d-flex flex-column flex-md-row flex-wrap">
+                {% for image in trick.images %}
+                    <div class="form-check my-2 col-12 col-md-4 d-flex flex-column">
+                        <div class="mx-md-2">
+                            <label class="form-check-label" for="{{ image.id }}">
+                                <img class="img-fluid rounded" src="{{ asset('uploads/images/' ~ image.name) }}" alt="{{ image.alt }}" />
+                            </label>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-6 d-flex flex-column flex-md-row flex-wrap">
+                {% for video in trick.videos %}
+                    <div class="form-check my-2 col-12 col-md-4 d-flex flex-column">
+                        <div class="mx-md-2">
+                            <embed type="video/mp4" src="{{ video.url }}" width="100%" height="125">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <p>{{ trick.description }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3 text-center">
+                <span class="badge text-bg-primary">Créée le : {{ trick.createdAt|date('d/m/Y') }}</span>
+                <span class="badge text-bg-secondary">Groupe : {{ trick.category.name }}</span>
+                {% if trick.updatedAt %}
+                    <span class="badge text-bg-success">Modifiée le : {{ trick.updatedAt|date('d/m/Y') }}</span>
+                {% endif %}
+                <span class="badge text-bg-danger">Créée par : {{ trick.user.username }}</span>
+                <hr>
+            </div>
+
+            {% if is_granted('ROLE_USER') %}
+                {{ include('comment/_form.html.twig', {'button_label': 'Leave a comment'}) }}
+            {% else %}
+                <div class="col-12 col-md-6 offset-md-3 alert alert-info text-center" role="alert">
+                    You need to be <a href="{{ path('app_login') }}" class="alert-link">logged in</a> to leave a comment.
+                </div>
+            {% endif %}
+
+            <div
+                class="col-12 col-md-6 offset-md-3"
+                data-controller="load-more-comments"
+                data-offset="0"
+                data-id="{{ trick.id }}"
+                id="comments"
+            >
+                <hr>
+
+                <h2>Comments</h2>
+                <div class="accordion" id="accordionExample">
+                    <div
+                        class="text-center"
+                        id="load-more-button-div"
+                    >
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-action="load-more-comments#connect"
+                        id="load-more-button"
+                    >Load more</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
