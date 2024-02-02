@@ -13,4 +13,13 @@ class FrontControllerTest extends BaseController
 
         $this->assertSelectorTextContains('h1', 'SnowTricks');
     }
+
+    public function testTricksPage(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/tricks');
+
+        $this->assertSelectorTextNotContains('h1', 'SnowTricks');
+        $this->assertSelectorTextContains('h1', 'Tricks list');
+    }
 }
