@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit {{ name|capitalize }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Edit {{ name|capitalize }}</h1>
+
+        {{ include(name ~ '/_form.html.twig', {
+            'button_label': 'Update',
+            delete: true
+        }) }}
+
+        <p class="text-center">
+            <a href="{{ path('app_' ~ name ~ '_index') }}">back to list</a>
+        </p>
+    </div>
+{% endblock %}

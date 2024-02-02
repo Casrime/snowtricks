@@ -29,8 +29,16 @@ body {
     right: 20px;
 }
 
+.bi {
+    font-size: 1.4em;
+}
+
 .bi-arrow-down-circle-fill, .bi-arrow-up-circle-fill  {
     font-size: 36px;
+}
+
+.bi-trash {
+    color: #842029;
 }
 
 .image-trick {
@@ -43,4 +51,22 @@ body {
 
 .trick-content-actions i {
     margin-right: 10px;
+}
+
+.form-check {
+    padding-left: 0;
+}
+
+.form-check-label {
+    display: inherit;
+}
+
+.form-check input {
+    position: relative;
+    left: 20px;
+    bottom: 10px;
+}
+
+textarea.form-control {
+    height: 200px;
 }

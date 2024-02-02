@@ -38,6 +38,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
         $trick1->setCategory($grab);
         $trick1->addImage($image1);
         $trick1->addImage($image2);
+        $trick1->setMainImage($image1);
         $manager->persist($trick1);
 
         $trick2 = new Trick();

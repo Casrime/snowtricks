@@ -1,27 +1,183 @@
 {{ form_start(form) }}
-    {{ form_row(form.category) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.description) }}
-
-    <div>
-        <label {% if form.images.vars.required %}class="required"{% endif %}>{{ form.images.vars.name|capitalize }}</label>
-        <div id="{{ form.images.vars.id }}">
-            {% for image in form.images %}
-                <input
-                    type="checkbox"
-                    id="{{ image.vars.id }}"
-                    name="{{ image.vars.full_name }}"
-                    value="{{ image.vars.value }}"
-                    {% if image.vars.checked %}checked="checked"{% endif %}
-                >
-                <label for="{{ image.vars.id }}">
-                    <img src="{{ asset('uploads/images/' ~ image.vars.label) }}" alt="{{ image.vars.label }}" style="width: 300px" />
-                </label>
+    <div class="col-md-12">
+        <label class="mb-3 {% if form.mainImage.vars.required %}required{% endif %}">{{ form.mainImage.vars.label|capitalize }}</label>
+        <div id="{{ form.mainImage.vars.id }}" class="d-flex flex-wrap">
+            {% for image in form.mainImage.children %}
+                <div class="form-check my-2 col-12 col-md-3 d-flex flex-column">
+                    <div class="img-input-and-label mx-md-2">
+                        <input
+                            type="radio"
+                            id="{{ image.vars.id }}"
+                            name="{{ image.vars.full_name }}"
+                            class="form-check-input"
+                            value="{{ image.vars.value }}"
+                            {% if image.vars.checked %}checked{% endif %}
+                        >
+                        <label class="form-check-label {% if image.vars.required %}required{% endif %}" for="{{ image.vars.id }}">
+                            <img class="img-fluid rounded" src="{{ asset('uploads/images/' ~ image.vars.label) }}" alt="{{ image.vars.label }}" />
+                        </label>
+                    </div>
+                    <div class="actions d-flex justify-content-end">
+                        <a href="{{ path('app_image_edit', {
+                            id: image.vars.value
+                        }) }}">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <span data-bs-toggle="modal" data-bs-target="#mainImage-{{ image.vars.value }}">
+                            <i class="bi bi-trash"></i>
+                        </span>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>
+    <div id="see-medias-block" class="text-center" data-controller="show-medias">
+        <button class="btn btn-primary d-sm-none" data-action="show-medias#show">See medias</button>
+    </div>
+    <div class="row d-none d-sm-flex">
+        <div class="col-md-6">
+            <label class="mb-3 {% if form.images.vars.required %}required{% endif %}">{{ form.images.vars.name|capitalize }}</label>
+            <div id="{{ form.images.vars.id }}" class="d-flex flex-wrap flex-column flex-md-row container">
+                {% for image in form.images %}
+                    <div class="form-check my-2 col-12 col-md-4 d-flex flex-column">
+                        <div class="img-input-and-label mx-md-2">
+                            <input
+                                type="checkbox"
+                                id="{{ image.vars.id }}"
+                                name="{{ image.vars.full_name }}"
+                                class="form-check-input"
+                                value="{{ image.vars.value }}"
+                                {% if image.vars.checked %}checked="checked"{% endif %}
+                            >
+                            <label class="form-check-label" for="{{ image.vars.id }}">
+                                <img class="img-fluid rounded" src="{{ asset('uploads/images/' ~ image.vars.label) }}" alt="{{ image.vars.label }}" />
+                            </label>
+                        </div>
+                        <div class="actions d-flex justify-content-end">
+                            <a href="{{ path('app_image_edit', {
+                                id: image.vars.value
+                            }) }}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <span data-bs-toggle="modal" data-bs-target="#image-{{ image.vars.value }}">
+                                <i class="bi bi-trash"></i>
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 
-    {{ form_row(form.videos) }}
+        <div class="col-md-6">
+            <label class="col-form-label {% if form.videos.vars.required %}required{% endif %}">{{ form.videos.vars.name|capitalize }}</label>
+            <div id="{{ form.videos.vars.id }}" class="d-flex flex-wrap">
+                {% for video in form.videos %}
+                    <div class="form-check my-2 col-12 col-md-4 d-flex flex-column">
+                        <div class="video-input-and-label mx-md-2">
+                            <input
+                                type="checkbox"
+                                id="{{ video.vars.id }}"
+                                name="{{ video.vars.full_name }}"
+                                class="form-check-input"
+                                value="{{ video.vars.value }}"
+                                {% if video.vars.checked %}checked="checked"{% endif %}
+                            >
+                            <label class="form-check-label" for="{{ video.vars.id }}">
+                                <embed type="video/mp4" src="{{ video.vars.label }}" width="100%" height="125">
+                            </label>
+                        </div>
+                        <div class="actions d-flex justify-content-end">
+                            <a href="{{ path('app_video_edit', {
+                                id: video.vars.value
+                            }) }}">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <span data-bs-toggle="modal" data-bs-target="#video-{{ video.vars.value }}">
+                                <i class="bi bi-trash"></i>
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="col-md-6 offset-md-2">
+        {{ form_row(form.name) }}
+    </div>
+    <div class="col-md-8 offset-md-2">
+        {{ form_row(form.description) }}
+    </div>
+    <div class="row">
+        <div class="col-md-2 offset-md-2">
+            {{ form_row(form.category) }}
+        </div>
+        <div class="col-md-2 offset-md-{% if delete is defined %}4{% else %}5{% endif %}">
+            <div class="d-flex justify-content-between">
+                {% if delete is defined %}
+                    {{ include('_inc/_modal_button.html.twig', {
+                        btn_class: 'btn-danger',
+                        content: 'Delete',
+                        target: 'trick-' ~ trick.id
+                    }) }}
+                {% endif %}
+                <button class="btn btn-{% if delete is defined %}warning{% else %}primary{% endif %}">{{ button_label|default('Save') }}</button>
+            </div>
+        </div>
+    </div>
     {{ form_row(form._token) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form, {'render_rest': false}) }}
+
+{% for image in form.mainImage.children %}
+    {{ include('_inc/_modal.html.twig', {
+        id: image.vars.value,
+        htmlName: 'mainImage',
+        name: image.vars.label,
+        includeForm: include('_inc/_delete_form.html.twig', {
+            action: path('app_image_delete', {'id': image.vars.value}),
+            content: 'Delete',
+            value: csrf_token('delete' ~ image.vars.value),
+        })
+    }) }}
+{% endfor %}
+
+{% for image in form.images %}
+    {{ include('_inc/_modal.html.twig', {
+        id: image.vars.value,
+        htmlName: 'image',
+        name: image.vars.label,
+        includeForm: include('_inc/_delete_form.html.twig', {
+            action: path('app_image_delete', {'id': image.vars.value}),
+            content: 'Delete',
+            value: csrf_token('delete' ~ image.vars.value),
+        })
+    }) }}
+{% endfor %}
+
+{% for video in form.videos %}
+    {{ include('_inc/_modal.html.twig', {
+        id: video.vars.value,
+        htmlName: 'video',
+        name: video.vars.label,
+        includeForm: include('_inc/_delete_form.html.twig', {
+            action: path('app_video_delete', {'id': video.vars.value}),
+            content: 'Delete',
+            value: csrf_token('delete' ~ video.vars.value),
+        })
+    }) }}
+{% endfor %}
+
+{% if delete is defined %}
+    {{ include('_inc/_modal.html.twig', {
+        id: trick.id,
+        htmlName: 'trick',
+        name: trick.name,
+        includeForm: include('_inc/_delete_form.html.twig', {
+            action: path('app_trick_delete', {'id': trick.id}),
+            content: 'Delete',
+            value: csrf_token('delete' ~ trick.id),
+        })
+    }) }}
+{% endif %}

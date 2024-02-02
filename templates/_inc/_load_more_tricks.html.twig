@@ -37,6 +37,11 @@
                                         id: trick.id,
                                         htmlName: 'trick',
                                         name: trick.name,
+                                        includeForm: include('_inc/_delete_form.html.twig', {
+                                            action: path('app_trick_delete', {'id': trick.id}),
+                                            content: 'Delete',
+                                            value: csrf_token('delete' ~ trick.id),
+                                        })
                                     }) }}
                                 </div>
                             {% endif %}

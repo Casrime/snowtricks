@@ -67,7 +67,7 @@ class TrickControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Trick');
-        $this->assertSelectorTextContains('li', 'This value should not be blank.');
+        $this->assertSelectorTextContains('.invalid-feedback', 'This value should not be blank.');
     }
 
     public function testTrickNewPageWithAdminLoginWithFormSubmissionWithInvalidValues(): void
@@ -75,12 +75,12 @@ class TrickControllerTest extends BaseController
         $client = $this->loginAdmin();
         $client->request('GET', '/user/trick/new');
         $client->submitForm('Save', [
-            'trick[name]' => true,
+            'trick[name]' => null,
         ]);
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Trick');
-        $this->assertSelectorTextContains('li', 'This value should not be blank.');
+        $this->assertSelectorTextContains('.invalid-feedback', 'This value should not be blank.');
     }
 
     public function testTrickNewPageWithAdminLoginWithFormSubmissionWithMinimalValidValues(): void

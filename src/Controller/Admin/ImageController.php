@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Entity\Image;
 use App\Form\ImageType;
 use App\Repository\ImageRepository;
+use App\Repository\TrickRepository;
 use App\Service\FileHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,9 +47,10 @@ class ImageController extends AbstractController
             return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('image/new.html.twig', [
+        return $this->render('generic/new.html.twig', [
             'image' => $image,
             'form' => $form,
+            'name' => 'image',
         ]);
     }
 
@@ -78,17 +80,25 @@ class ImageController extends AbstractController
             return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('image/edit.html.twig', [
+        return $this->render('generic/edit.html.twig', [
             'image' => $image,
             'form' => $form,
+            'name' => 'image',
         ]);
     }
 
     #[Route('/{id}', name: 'app_image_delete', methods: ['POST'])]
-    public function delete(Request $request, Image $image, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Image $image, EntityManagerInterface $entityManager, TrickRepository $trickRepository): Response
     {
         $token = $request->request->getString('_token');
         if ($this->isCsrfTokenValid('delete'.$image->getId(), $token)) {
+            $tricks = $trickRepository->findAll();
+            foreach ($tricks as $trick) {
+                if ($trick->getMainImage() === $image) {
+                    $trick->setMainImage(null);
+                }
+                $trick->removeImage($image);
+            }
             $entityManager->remove($image);
             $entityManager->flush();
         }

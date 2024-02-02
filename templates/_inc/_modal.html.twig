@@ -10,9 +10,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                {{ include('trick/_delete_form.html.twig', {
-                    content: 'Delete',
-                }) }}
+                {{ includeForm|raw }}
             </div>
         </div>
     </div>
