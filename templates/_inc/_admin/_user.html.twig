@@ -1,0 +1,50 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Roles</th>
+        <th>Comments</th>
+        <th>Tricks</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>
+                {% for role in user.roles %}
+                    <span class="badge text-bg-secondary">{{ role }}</span>
+                {% endfor %}
+            </td>
+            <td>
+                <span class="badge text-bg-secondary">{{ user.comments.count }}</span>
+            </td>
+            <td>
+                <span class="badge text-bg-secondary">{{ user.tricks.count }}</span>
+            </td>
+            <td>
+                <span data-bs-toggle="modal" data-bs-target="#user-{{ user.id }}">
+                    <i class="bi bi-trash"></i>
+                </span>
+                {{ include('_inc/_modal.html.twig', {
+                    id: user.id,
+                    htmlName: 'user',
+                    name: user.username,
+                    includeForm: include('_inc/_delete_form.html.twig', {
+                        action: path('app_user_delete', {'id': user.id}),
+                        content: 'Delete',
+                        value: csrf_token('delete' ~ user.id),
+                    })
+                }) }}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

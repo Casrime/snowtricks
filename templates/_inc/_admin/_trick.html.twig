@@ -1,0 +1,45 @@
+<a href="{{ path('app_trick_new') }}" class="btn btn-primary">New trick</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for trick in tricks %}
+        <tr>
+            <td>{{ trick.id }}</td>
+            <td>{{ trick.name }}</td>
+            <td>{{ trick.description|u.truncate(100, '...') }}</td>
+            <td>
+                <a href="{{ path('trick', {'id': trick.id}) }}">
+                    <i class="bi bi-eye"></i>
+                </a>
+                <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">
+                    <i class="bi bi-pencil"></i>
+                </a>
+                <span data-bs-toggle="modal" data-bs-target="#trick-{{ trick.id }}">
+                                <i class="bi bi-trash"></i>
+                            </span>
+                {{ include('_inc/_modal.html.twig', {
+                    id: trick.id,
+                    htmlName: 'trick',
+                    name: trick.name,
+                    includeForm: include('_inc/_delete_form.html.twig', {
+                        action: path('app_trick_delete', {'id': trick.id}),
+                        content: 'Delete',
+                        value: csrf_token('delete' ~ trick.id),
+                    })
+                }) }}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

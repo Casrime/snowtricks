@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller;
+namespace App\Tests\Controller\User;
 
 use App\Entity\Token;
+use App\Tests\Controller\BaseController;
 use Symfony\Component\Uid\Uuid;
 
 class LoginControllerTest extends BaseController

@@ -1,0 +1,45 @@
+<a href="{{ path('app_image_new') }}" class="btn btn-primary">New image</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Alt</th>
+        <th>Tricks</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for image in images %}
+        <tr>
+            <td>{{ image.id }}</td>
+            <td>
+                <img class="img-thumbnail" src="{{ asset('uploads/images/' ~ image.name) }}" alt="{{ image.alt }}" width="200" height="200">
+            </td>
+            <td>{{ image.alt }}</td>
+            <td>
+                <span class="badge text-bg-secondary">{{ image.tricks.count }}</span>
+            </td>
+            <td>
+                <span data-bs-toggle="modal" data-bs-target="#image-{{ image.id }}">
+                    <i class="bi bi-trash"></i>
+                </span>
+                {{ include('_inc/_modal.html.twig', {
+                    id: image.id,
+                    htmlName: 'image',
+                    name: image.name,
+                    includeForm: include('_inc/_delete_form.html.twig', {
+                        action: path('app_image_delete', {'id': image.id}),
+                        content: 'Delete',
+                        value: csrf_token('delete' ~ image.id),
+                    })
+                }) }}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
