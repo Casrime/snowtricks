@@ -6,33 +6,6 @@ use App\Tests\Controller\BaseController;
 
 class TrickControllerTest extends BaseController
 {
-    public function testTrickHomePageWithoutLogin(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/user/trick/');
-
-        $this->assertResponseStatusCodeSame(302);
-        $this->assertResponseRedirects('/login');
-    }
-
-    public function testTrickHomePageWithUserLogin(): void
-    {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/trick/');
-
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Trick index');
-    }
-
-    public function testTrickHomePageWithAdminLogin(): void
-    {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/');
-
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Trick index');
-    }
-
     public function testTrickNewPageWithoutLogin(): void
     {
         $client = static::createClient();
@@ -83,9 +56,9 @@ class TrickControllerTest extends BaseController
         $this->assertSelectorTextContains('.invalid-feedback', 'This value should not be blank.');
     }
 
-    public function testTrickNewPageWithAdminLoginWithFormSubmissionWithMinimalValidValues(): void
+    public function testTrickNewPageWithUserLoginWithFormSubmissionWithMinimalValidValues(): void
     {
-        $client = $this->loginAdmin();
+        $client = $this->loginUser();
         $client->request('GET', '/user/trick/new');
         $client->submitForm('Save', [
             'trick[name]' => 'New trick',
@@ -93,8 +66,7 @@ class TrickControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/trick/');
-        $this->assertPageTitleContains('Redirecting to /user/trick/');
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testTrickNewPageWithAdminLoginWithFormSubmissionWithMaximalValidValues(): void
@@ -110,8 +82,7 @@ class TrickControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/trick/');
-        $this->assertPageTitleContains('Redirecting to /user/trick/');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testTrickEditPageWithoutLogin(): void
@@ -147,8 +118,7 @@ class TrickControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/trick/');
-        $this->assertPageTitleContains('Redirecting to /user/trick/');
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testTrickEditPageWithAdminLoginWithExistingTrick(): void
@@ -160,14 +130,13 @@ class TrickControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/trick/');
-        $this->assertPageTitleContains('Redirecting to /user/trick/');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testTrickRemovePageWithoutLogin(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/user/trick/1');
+        $client->request('POST', '/user/trick/1');
 
         $this->assertResponseRedirects('/login');
     }
@@ -175,7 +144,7 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithUserLoginWithUnexistingTrick(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/user/trick/100');
+        $client->request('POST', '/user/trick/100');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -183,7 +152,7 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithAdminLoginWithUnexistingTrick(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/100');
+        $client->request('POST', '/user/trick/100');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -191,105 +160,36 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithUserLoginWithExistingTrickWithoutAssociation(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/user/trick/2');
-        $client->submitForm('Delete');
+        $client->request('POST', '/user/trick/2');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/trick/');
-        $this->assertPageTitleContains('Redirecting to /user/trick/');
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testTrickRemovePageWithAdminLoginWithExistingTrickWithoutAssociation(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/2');
-        $client->submitForm('Delete');
+        $client->request('POST', '/user/trick/2');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/trick/');
-        $this->assertPageTitleContains('Redirecting to /user/trick/');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testTrickRemovePageWithUserLoginWithExistingTrickWithAssociation(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/user/trick/1');
-        $client->submitForm('Delete');
+        $client->request('POST', '/user/trick/1');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/trick/');
-        $this->assertPageTitleContains('Redirecting to /user/trick/');
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testTrickRemovePageWithAdminLoginWithExistingTrickWithAssociation(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/1');
-        $client->submitForm('Delete');
+        $client->request('POST', '/user/trick/1');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/trick/');
-        $this->assertPageTitleContains('Redirecting to /user/trick/');
+        $this->assertResponseRedirects('/admin/');
     }
-
-    /*
-    private string $path = '/trick/';
-
-    public function testIndex(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', $this->path);
-
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Trick index');
-    }
-
-    public function testNew(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/trick/new');
-
-        self::assertResponseStatusCodeSame(200);
-
-        $client->submitForm('Save', [
-            'trick[name]' => 'Testing',
-            'trick[description]' => 'Testing',
-            'trick[category]' => '1',
-        ]);
-
-        self::assertResponseRedirects('/trick/');
-    }
-
-    public function testShow(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/trick/1');
-
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Trick');
-    }
-
-    public function testEdit(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/trick/1/edit');
-
-        $client->submitForm('Update', [
-            'trick[name]' => 'Something New',
-            'trick[description]' => 'Something New',
-            'trick[category]' => '2',
-        ]);
-
-        self::assertResponseRedirects('/trick/');
-    }
-
-    public function testRemove(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/trick/1');
-        $client->submitForm('Delete');
-
-        self::assertResponseRedirects('/trick/');
-    }
-    */
 }

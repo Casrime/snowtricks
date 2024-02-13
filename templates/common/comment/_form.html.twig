@@ -1,0 +1,31 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-12 {% if edit is defined %}col-md-7{% else %}col-md-4 offset-md-3{% endif%} text-center">
+            {{ form_widget(form) }}
+        </div>
+        <div class="col-12 col-md-2 text-center">
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-{% if delete is defined %}warning{% else %}primary{% endif %}">{{ button_label|default('Save') }}</button>
+                {% if delete is defined %}
+                    {{ include('_inc/_modal_button.html.twig', {
+                        btn_class: 'btn-danger',
+                        content: 'Delete',
+                        target: 'comment-' ~ comment.id
+                    }) }}
+                {% endif %}
+            </div>
+        </div>
+{{ form_end(form) }}
+
+{% if delete is defined %}
+    {{ include('_inc/_modal.html.twig', {
+        id: comment.id,
+        htmlName: 'comment',
+        name: comment.content,
+        includeForm: include('_inc/_delete_form.html.twig', {
+            action: path('app_comment_delete', {'id': comment.id}),
+            content: 'Delete',
+            value: csrf_token('delete' ~ comment.id),
+        })
+    }) }}
+{% endif %}

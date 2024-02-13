@@ -6,8 +6,9 @@
     <div class="container">
         <h1>Edit {{ name|capitalize }}</h1>
 
-        {{ include(name ~ '/_form.html.twig', {
+        {{ include('common/' ~ name ~ '/_form.html.twig', {
             'button_label': 'Update',
+            edit: true,
             delete: true
         }) }}
     </div>

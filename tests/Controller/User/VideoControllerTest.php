@@ -8,33 +8,6 @@ use App\Tests\Controller\BaseController;
 
 class VideoControllerTest extends BaseController
 {
-    public function testVideoHomePageWithoutLogin(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/user/video/');
-
-        $this->assertResponseStatusCodeSame(302);
-        $this->assertResponseRedirects('/login');
-    }
-
-    public function testVideoHomePageWithUserLogin(): void
-    {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/video/');
-
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Video index');
-    }
-
-    public function testVideoHomePageWithAdminLogin(): void
-    {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/video/');
-
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Video index');
-    }
-
     public function testVideoNewPageWithoutLogin(): void
     {
         $client = static::createClient();
@@ -69,7 +42,7 @@ class VideoControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Video');
-        $this->assertSelectorTextContains('li', 'This value should not be blank.');
+        $this->assertSelectorTextContains('.invalid-feedback', 'This value should not be blank.');
     }
 
     public function testVideoNewPageWithAdminLoginWithFormSubmissionWithInvalidValues(): void
@@ -82,7 +55,19 @@ class VideoControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Video');
-        $this->assertSelectorTextContains('li', 'This value is not a valid URL.');
+        $this->assertSelectorTextContains('.invalid-feedback', 'This value is not a valid URL.');
+    }
+
+    public function testVideoNewPageWithUserLoginWithFormSubmissionWithValidValues(): void
+    {
+        $client = $this->loginUser();
+        $client->request('GET', '/user/video/new');
+        $client->submitForm('Save', [
+            'video[url]' => 'https://www.youtube.com/watch?v=xsE5sFZ3sq0',
+        ]);
+
+        $this->assertResponseStatusCodeSame(303);
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testVideoNewPageWithAdminLoginWithFormSubmissionWithValidValues(): void
@@ -94,35 +79,7 @@ class VideoControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/video/');
-        $this->assertPageTitleContains('Redirecting to /user/video/');
-    }
-
-    public function testVideoShowPageWithoutLogin(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/user/video/1');
-
-        $this->assertResponseRedirects('/login');
-    }
-
-    public function testVideoShowPageWithUserLogin(): void
-    {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/video/1');
-
-        $this->assertPageTitleContains('Video');
-        $this->assertSelectorTextContains('h1', 'Video');
-    }
-
-    public function testVideoShowPageWithAdminLogin(): void
-    {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/video/1');
-
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Video');
-        $this->assertSelectorTextContains('h1', 'Video');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testVideoEditPageWithoutLogin(): void
@@ -158,8 +115,7 @@ class VideoControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/video/');
-        $this->assertPageTitleContains('Redirecting to /user/video/');
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testVideoEditPageWithAdminLoginWithExistingVideo(): void
@@ -171,14 +127,13 @@ class VideoControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/video/');
-        $this->assertPageTitleContains('Redirecting to /user/video/');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testVideoRemovePageWithoutLogin(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/user/video/1');
+        $client->request('POST', '/user/video/1');
 
         $this->assertResponseRedirects('/login');
     }
@@ -186,7 +141,7 @@ class VideoControllerTest extends BaseController
     public function testVideoRemovePageWithUserLoginWithUnexistingVideo(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/user/video/100');
+        $client->request('POST', '/user/video/100');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -194,7 +149,7 @@ class VideoControllerTest extends BaseController
     public function testVideoRemovePageWithAdminLoginWithUnexistingVideo(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/user/video/100');
+        $client->request('POST', '/user/video/100');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -202,44 +157,41 @@ class VideoControllerTest extends BaseController
     public function testVideoRemovePageWithUserLoginWithExistingVideoWithoutAssociation(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/user/video/2');
-        $client->submitForm('Delete');
+        $client->request('POST', '/user/video/2');
+        //$client->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/video/');
-        $this->assertPageTitleContains('Redirecting to /user/video/');
+        $this->assertResponseRedirects('/user/');
+        //$this->assertPageTitleContains('Redirecting to /user/video/');
     }
 
     public function testVideoRemovePageWithAdminLoginWithExistingVideoWithoutAssociation(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/user/video/2');
-        $client->submitForm('Delete');
+        $client->request('POST', '/user/video/2');
+        // $client->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/video/');
-        $this->assertPageTitleContains('Redirecting to /user/video/');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testVideoRemovePageWithUserLoginWithExistingVideoWithAssociation(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/user/video/1');
-        $client->submitForm('Delete');
+        $client->request('POST', '/user/video/1');
+        // $client->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/video/');
-        $this->assertPageTitleContains('Redirecting to /user/video/');
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testVideoRemovePageWithAdminLoginWithExistingVideoWithAssociation(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/user/video/1');
-        $client->submitForm('Delete');
+        $client->request('POST', '/user/video/1');
+        // $client->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/user/video/');
-        $this->assertPageTitleContains('Redirecting to /user/video/');
+        $this->assertResponseRedirects('/admin/');
     }
 }

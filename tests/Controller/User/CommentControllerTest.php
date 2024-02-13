@@ -41,7 +41,7 @@ class CommentControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testCommentEditPageWithAdminLoginWithExistingComment(): void
@@ -53,7 +53,7 @@ class CommentControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testCommentRemovePageWithoutLogin(): void
@@ -87,7 +87,7 @@ class CommentControllerTest extends BaseController
         $client->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testCommentRemovePageWithAdminLoginWithExistingCommentWithoutAssociation(): void
@@ -97,7 +97,7 @@ class CommentControllerTest extends BaseController
         $client->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testCommentRemovePageWithUserLoginWithExistingCommentWithAssociation(): void
@@ -107,7 +107,7 @@ class CommentControllerTest extends BaseController
         $client->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/user/');
     }
 
     public function testCommentRemovePageWithAdminLoginWithExistingCommentWithAssociation(): void
@@ -117,6 +117,6 @@ class CommentControllerTest extends BaseController
         $client->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/');
+        $this->assertResponseRedirects('/admin/');
     }
 }
