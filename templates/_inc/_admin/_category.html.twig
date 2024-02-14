@@ -1,0 +1,46 @@
+<a href="{{ path('app_category_new') }}" class="btn btn-primary">New category</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Tricks</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+        <tr>
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>
+                <span class="badge text-bg-secondary">{{ category.tricks.count }}</span>
+            </td>
+            <td>
+                <a href="{{ path('app_category_edit', {'id': category.id}) }}">
+                    <i class="bi bi-pencil"></i>
+                </a>
+                <span data-bs-toggle="modal" data-bs-target="#category-{{ category.id }}">
+                                    <i class="bi bi-trash"></i>
+                                </span>
+                {{ include('_inc/_modal.html.twig', {
+                    id: category.id,
+                    htmlName: 'category',
+                    name: category.name,
+                    includeForm: include('_inc/_delete_form.html.twig', {
+                        action: path('app_category_delete', {'id': category.id}),
+                        content: 'Delete',
+                        value: csrf_token('delete' ~ category.id),
+                        id: category.id,
+                        name: 'category'
+                    })
+                }) }}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

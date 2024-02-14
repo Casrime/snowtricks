@@ -79,6 +79,8 @@ class VideoController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$video->getId(), $token)) {
             $entityManager->remove($video);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Video deleted successfully');
         }
 
         return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);

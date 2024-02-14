@@ -1,0 +1,40 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Content</th>
+        <th>User</th>
+        <th>Trick</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for comment in comments %}
+        <tr>
+            <td>{{ comment.id }}</td>
+            <td>{{ comment.content|u.truncate(100, '...') }}</td>
+            <td>{{ comment.user.username }}</td>
+            <td>{{ comment.trick.name }}</td>
+            <td>
+                <span data-bs-toggle="modal" data-bs-target="#comment-{{ comment.id }}">
+                    <i class="bi bi-trash"></i>
+                </span>
+                {{ include('_inc/_modal.html.twig', {
+                    id: comment.id,
+                    htmlName: 'comment',
+                    name: comment.content,
+                    includeForm: include('_inc/_delete_form.html.twig', {
+                        action: path('app_comment_delete', {'id': comment.id}),
+                        content: 'Delete',
+                        value: csrf_token('delete' ~ comment.id),
+                    })
+                }) }}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

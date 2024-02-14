@@ -70,6 +70,10 @@ body {
     bottom: 10px;
 }
 
+td a {
+    text-decoration: none;
+}
+
 textarea.form-control {
     height: 200px;
 }

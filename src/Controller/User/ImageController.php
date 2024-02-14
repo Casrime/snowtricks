@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace App\Controller\User;
 
 use App\Entity\Image;
 use App\Form\ImageType;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/image')]
+#[Route('/user/image')]
 class ImageController extends AbstractController
 {
     #[Route('/', name: 'app_image_index', methods: ['GET'])]
@@ -101,6 +101,8 @@ class ImageController extends AbstractController
             }
             $entityManager->remove($image);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Image deleted successfully');
         }
 
         return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);

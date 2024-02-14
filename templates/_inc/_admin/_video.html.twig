@@ -1,0 +1,43 @@
+<a href="{{ path('app_video_new') }}" class="btn btn-primary">New video</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Url</th>
+        <th>Tricks</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for video in videos %}
+        <tr>
+            <td>{{ video.id }}</td>
+            <td>
+                <embed type="video/mp4" src="{{ video.url }}" width="300">
+            </td>
+            <td>
+                <span class="badge text-bg-secondary">{{ video.tricks.count }}</span>
+            </td>
+            <td>
+                <span data-bs-toggle="modal" data-bs-target="#video-{{ video.id }}">
+                    <i class="bi bi-trash"></i>
+                </span>
+                {{ include('_inc/_modal.html.twig', {
+                    id: video.id,
+                    htmlName: 'video',
+                    name: video.url,
+                    includeForm: include('_inc/_delete_form.html.twig', {
+                        action: path('app_video_delete', {'id': video.id}),
+                        content: 'Delete',
+                        value: csrf_token('delete' ~ video.id),
+                    })
+                }) }}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

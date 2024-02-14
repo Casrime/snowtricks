@@ -2,37 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller;
+namespace App\Tests\Controller\Admin;
+
+use App\Tests\Controller\BaseController;
+use Symfony\Component\DomCrawler\Link;
 
 class CategoryControllerTest extends BaseController
 {
-    public function testCategoryHomePageWithoutLogin(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/admin/category/');
-
-        $this->assertResponseStatusCodeSame(302);
-        $this->assertResponseRedirects('/login');
-    }
-
-    public function testCategoryHomePageWithUserLogin(): void
-    {
-        $client = $this->loginUser();
-        $client->request('GET', '/admin/category/');
-
-        $this->assertResponseStatusCodeSame(403);
-        $this->assertSelectorTextContains('h1.exception-message', 'Access Denied.');
-    }
-
-    public function testCategoryHomePageWithAdminLogin(): void
-    {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/');
-
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Category index');
-    }
-
     public function testCategoryNewPageWithoutLogin(): void
     {
         $client = static::createClient();
@@ -67,7 +43,7 @@ class CategoryControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Category');
-        $this->assertSelectorTextContains('li', 'This value should not be blank.');
+        $this->assertSelectorTextContains('.invalid-feedback', 'This value should not be blank.');
     }
 
     public function testCategoryNewPageWithAdminLoginWithFormSubmissionWithInvalidValues(): void
@@ -80,7 +56,7 @@ class CategoryControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Category');
-        $this->assertSelectorTextContains('li', 'This value is too short. It should have 3 characters or more.');
+        $this->assertSelectorTextContains('.invalid-feedback', 'This value is too short. It should have 3 characters or more.');
     }
 
     public function testCategoryNewPageWithAdminLoginWithFormSubmissionWithValidValues(): void
@@ -92,35 +68,8 @@ class CategoryControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/admin/category/');
-        $this->assertPageTitleContains('Redirecting to /admin/category/');
-    }
-
-    public function testCategoryShowPageWithoutLogin(): void
-    {
-        $client = static::createClient();
-        $client->request('GET', '/admin/category/1');
-
-        $this->assertResponseRedirects('/login');
-    }
-
-    public function testCategoryShowPageWithUserLogin(): void
-    {
-        $client = $this->loginUser();
-        $client->request('GET', '/admin/category/1');
-
-        $this->assertResponseStatusCodeSame(403);
-        $this->assertSelectorTextContains('h1.exception-message', 'Access Denied.');
-    }
-
-    public function testCategoryShowPageWithAdminLogin(): void
-    {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/1');
-
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Category');
-        $this->assertSelectorTextContains('h1', 'Category');
+        $client->followRedirects();
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testCategoryEditPageWithoutLogin(): void
@@ -157,14 +106,13 @@ class CategoryControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/admin/category/');
-        $this->assertPageTitleContains('Redirecting to /admin/category/');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testCategoryRemovePageWithoutLogin(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/admin/category/1');
+        $client->request('POST', '/admin/category/1');
 
         $this->assertResponseRedirects('/login');
     }
@@ -172,7 +120,7 @@ class CategoryControllerTest extends BaseController
     public function testCategoryRemovePageWithUserLogin(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/admin/category/1');
+        $client->request('POST', '/admin/category/1');
 
         $this->assertResponseStatusCodeSame(403);
         $this->assertSelectorTextContains('h1.exception-message', 'Access Denied.');
@@ -181,7 +129,7 @@ class CategoryControllerTest extends BaseController
     public function testCategoryRemovePageWithAdminLoginWithUnexistingCategory(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/100');
+        $client->request('POST', '/admin/category/100');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -189,22 +137,18 @@ class CategoryControllerTest extends BaseController
     public function testCategoryRemovePageWithAdminLoginWithExistingCategoryWithoutAssociation(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/4');
-        $client->submitForm('Delete');
+        $client->request('POST', '/admin/category/4');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/admin/category/');
-        $this->assertPageTitleContains('Redirecting to /admin/category/');
+        $this->assertResponseRedirects('/admin/');
     }
 
     public function testCategoryRemovePageWithAdminLoginWithExistingCategoryWithAssociation(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/1');
-        $client->submitForm('Delete');
+        $client->request('POST', '/admin/category/1');
 
         $this->assertResponseStatusCodeSame(303);
-        $this->assertResponseRedirects('/admin/category/');
-        $this->assertPageTitleContains('Redirecting to /admin/category/');
+        $this->assertResponseRedirects('/admin/');
     }
 }

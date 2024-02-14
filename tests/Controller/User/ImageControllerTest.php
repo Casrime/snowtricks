@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller;
+namespace App\Tests\Controller\User;
 
+use App\Tests\Controller\BaseController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageControllerTest extends BaseController
