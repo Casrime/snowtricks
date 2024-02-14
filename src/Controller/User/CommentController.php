@@ -22,12 +22,19 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Comment updated successfully');
+
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('comment/edit.html.twig', [
+        return $this->render('common/edit.html.twig', [
             'comment' => $comment,
             'form' => $form,
+            'name' => 'comment',
         ]);
     }
 
@@ -41,6 +48,10 @@ class CommentController extends AbstractController
             $this->addFlash('success', 'Comment deleted successfully');
         }
 
-        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
     }
 }

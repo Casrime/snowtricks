@@ -74,7 +74,7 @@
             </div>
 
             {% if is_granted('ROLE_USER') %}
-                {{ include('comment/_form.html.twig', {'button_label': 'Leave a comment'}) }}
+                {{ include('common/comment/_form.html.twig', {'button_label': 'Leave a comment'}) }}
             {% else %}
                 <div class="col-12 col-md-6 offset-md-3 alert alert-info text-center" role="alert">
                     You need to be <a href="{{ path('app_login') }}" class="alert-link">logged in</a> to leave a comment.

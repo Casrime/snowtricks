@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-{% if delete is defined %}warning{% else %}primary{% endif %}">{{ button_label|default('Save') }}</button>
+        {% if delete is defined %}
+            {{ include('_inc/_modal_button.html.twig', {
+                btn_class: 'btn-danger',
+                content: 'Delete',
+                target: 'category-' ~ category.id
+            }) }}
+        {% endif %}
+    </div>
+{{ form_end(form) }}
+
+{% if delete is defined %}
+    {{ include('_inc/_modal.html.twig', {
+        id: category.id,
+        htmlName: 'category',
+        name: category.name,
+        includeForm: include('_inc/_delete_form.html.twig', {
+            action: path('app_category_delete', {'id': category.id}),
+            content: 'Delete',
+            value: csrf_token('delete' ~ category.id),
+        })
+    }) }}
+{% endif %}

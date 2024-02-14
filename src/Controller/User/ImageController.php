@@ -19,14 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/user/image')]
 class ImageController extends AbstractController
 {
-    #[Route('/', name: 'app_image_index', methods: ['GET'])]
-    public function index(ImageRepository $imageRepository): Response
-    {
-        return $this->render('image/index.html.twig', [
-            'images' => $imageRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'app_image_new', methods: ['GET', 'POST'])]
     public function new(Request $request, FileHandler $fileHandler, EntityManagerInterface $entityManager): Response
     {
@@ -44,21 +36,19 @@ class ImageController extends AbstractController
             $entityManager->persist($image);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Image created successfully');
+
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('generic/new.html.twig', [
+        return $this->render('common/new.html.twig', [
             'image' => $image,
             'form' => $form,
             'name' => 'image',
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_image_show', methods: ['GET'])]
-    public function show(Image $image): Response
-    {
-        return $this->render('image/show.html.twig', [
-            'image' => $image,
         ]);
     }
 
@@ -77,10 +67,16 @@ class ImageController extends AbstractController
             }
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('warning', 'Image updated successfully');
+
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('generic/edit.html.twig', [
+        return $this->render('common/edit.html.twig', [
             'image' => $image,
             'form' => $form,
             'name' => 'image',
@@ -105,6 +101,10 @@ class ImageController extends AbstractController
             $this->addFlash('success', 'Image deleted successfully');
         }
 
-        return $this->redirectToRoute('app_image_index', [], Response::HTTP_SEE_OTHER);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
     }
 }

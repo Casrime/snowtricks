@@ -6,7 +6,6 @@ namespace App\Controller\User;
 
 use App\Entity\Video;
 use App\Form\VideoType;
-use App\Repository\VideoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,14 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/user/video')]
 class VideoController extends AbstractController
 {
-    #[Route('/', name: 'app_video_index', methods: ['GET'])]
-    public function index(VideoRepository $videoRepository): Response
-    {
-        return $this->render('video/index.html.twig', [
-            'videos' => $videoRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'app_video_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -35,21 +26,18 @@ class VideoController extends AbstractController
             $entityManager->persist($video);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Video created successfully');
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('generic/new.html.twig', [
+        return $this->render('common/new.html.twig', [
             'video' => $video,
             'form' => $form,
             'name' => 'video',
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_video_show', methods: ['GET'])]
-    public function show(Video $video): Response
-    {
-        return $this->render('video/show.html.twig', [
-            'video' => $video,
         ]);
     }
 
@@ -62,10 +50,16 @@ class VideoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('warning', 'Video updated successfully');
+
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('generic/edit.html.twig', [
+        return $this->render('common/edit.html.twig', [
             'video' => $video,
             'form' => $form,
             'name' => 'video',
@@ -83,6 +77,10 @@ class VideoController extends AbstractController
             $this->addFlash('success', 'Video deleted successfully');
         }
 
-        return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
     }
 }

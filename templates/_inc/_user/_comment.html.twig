@@ -16,6 +16,11 @@
             <td>{{ comment.user.username }}</td>
             <td>{{ comment.trick.name }}</td>
             <td>
+                {% if app.user is same as comment.user %}
+                    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                {% endif %}
                 <span data-bs-toggle="modal" data-bs-target="#comment-{{ comment.id }}">
                     <i class="bi bi-trash"></i>
                 </span>

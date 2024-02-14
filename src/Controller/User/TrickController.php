@@ -15,14 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/user/trick')]
 class TrickController extends AbstractController
 {
-    #[Route('/', name: 'app_trick_index', methods: ['GET'])]
-    public function index(TrickRepository $trickRepository): Response
-    {
-        return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -34,10 +26,16 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Trick created successfully');
+
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('generic/new.html.twig', [
+        return $this->render('common/new.html.twig', [
             'trick' => $trick,
             'form' => $form,
             'name' => 'trick',
@@ -55,10 +53,16 @@ class TrickController extends AbstractController
             $trick->setUpdatedAt(new DateTimeImmutable());
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('warning', 'Trick updated successfully');
+
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('generic/edit.html.twig', [
+        return $this->render('common/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
             'name' => 'trick',
@@ -76,6 +80,10 @@ class TrickController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->redirectToRoute('user', [], Response::HTTP_SEE_OTHER);
     }
 }
