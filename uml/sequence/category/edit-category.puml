@@ -1,0 +1,31 @@
+@startuml
+autonumber
+title       Admin wants to edit a category
+actor       Admin
+participant Application
+database    Database
+
+ref over Admin, Application, Database: Login
+ref over Admin, Application, Database: Show admin
+ref over Admin, Application, Database: Show categories
+
+Admin -> Application: GET /admin/category/:id/edit
+Application -> Database: Get category by id
+alt category exists
+    Database -> Application: Return category
+    Application -> Admin: Render /admin/category/:id/edit
+    Admin -> Application: POST /admin/category/:id/edit
+    Application -> Application: Validate category
+    alt category is valid
+        Application -> Database: Update category
+        Database -> Application: Return updated category
+        Application -> Admin: Redirect to /admin/
+    else category is invalid
+        Application -> Admin: Render /admin/category/:id/edit
+    end
+else category does not exist
+    Database -> Application: Add error message
+    Application -> Admin: Render /admin/
+end
+
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       User wants to add a trick
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show user
+ref over User, Application, Database: Show tricks
+
+User -> Application: POST /user/trick/new
+Application -> Application: Check values
+alt values are valid
+    Application -> Database: Add trick
+    Database -> Application: Add trick
+    Application -> User: Redirect to /user/
+else values are invalid
+    Application -> Application: Add error
+    Application -> User: Render /user/trick/new
+end
+
+@enduml

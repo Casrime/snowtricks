@@ -1,0 +1,91 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+object category {
+   -id: INTEGER [PK]
+   -name: VARCHAR [50]
+}
+
+object comment {
+   -id: INTEGER [PK]
+   -user_id: INTEGER [FK]
+   -trick_id: INTEGER [FK]
+   -created_at: TIMESTAMP
+   -content: TEXT
+}
+
+object image {
+   -id: INTEGER [PK]
+   -name: VARCHAR [255]
+   -alt: VARCHAR [255]
+}
+
+object token {
+   -uuid: UUID [PK]
+   -user_id: INTEGER [FK]
+   -expiration_date: DATETIME
+   -active: BOOLEAN
+}
+
+object trick {
+   -id: INTEGER [PK]
+   -category_id: INTEGER [FK]
+   -user_id: INTEGER [FK]
+   -name: VARCHAR [50]
+   -description: TEXT
+   -main_image_id: INTEGER [FK]
+   -created_at: TIMESTAMP
+   -updated_at: TIMESTAMP
+}
+
+object trick_image {
+   -trick_id: INTEGER [PK]
+   -image_id: INTEGER [PK]
+}
+
+object trick_video {
+   -trick_id: INTEGER [PK]
+   -video_id: INTEGER [PK]
+}
+
+object user {
+   -id: INTEGER [PK]
+   -username: VARCHAR [180]
+   -roles: JSON
+   -password: VARCHAR [255]
+   -email: VARCHAR [255]
+   -active: BOOLEAN
+}
+
+object video {
+   -id: INTEGER [PK]
+   -url: VARCHAR [255]
+}
+
+object doctrine_migration_versions {
+   -version: VARCHAR [191] [PK]
+   -executed_at: TIMESTAMP
+   -execution_time: INTEGER
+}
+
+object messenger_messages {
+   -id: BIGINT [PK]
+   -body: TEXT
+   -headers: TEXT
+   -queue_name: VARCHAR [190]
+   -created_at: TIMESTAMP
+   -available_at: TIMESTAMP
+   -delivered_at: TIMESTAMP
+}
+
+trick - category
+trick - comment
+trick - user
+trick - trick_image
+trick - trick_video
+image - trick_image
+video - trick_video
+user - comment
+user - token
+
+@enduml

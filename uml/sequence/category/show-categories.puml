@@ -1,0 +1,16 @@
+@startuml
+autonumber
+title       Admin wants to show categories
+actor       Admin
+participant Application
+database    Database
+
+ref over Admin, Application, Database: Login
+ref over Admin, Application, Database: Show admin
+
+Admin -> Application: GET /admin/
+Application -> Database: Get categories
+Database -> Application: return categories
+Application -> Admin: Render /admin/ with categories
+
+@enduml

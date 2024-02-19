@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       User wants to delete an video
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show user
+ref over User, Application, Database: Show videos
+
+User -> Application: POST /user/video/:id
+Application -> Database: Delete video with associated id
+Database -> Database: Delete video
+alt video is deleted
+    Database -> Application: Return delete success
+    Application -> User: Redirect to /user/
+else video is not deleted
+    Database -> Application: Add error message
+    Application -> User: Render /user/
+end
+
+@enduml

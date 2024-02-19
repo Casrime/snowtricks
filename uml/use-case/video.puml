@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+actor User as user #dodgerblue;line:dodgerblue;line.bold;text:black
+actor Admin as admin #crimson;line:crimson;line.bold;text:black
+
+package Video #dodgerblue;line:dodgerblue;line.bold;text:white {
+  usecase "Show videos" as showVideos
+  usecase "Add video" as addVideo
+  usecase "Delete video" as deleteVideo
+}
+
+admin --> user
+
+user --> showVideos
+user --> addVideo
+user --> deleteVideo
+@enduml

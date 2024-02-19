@@ -1,0 +1,13 @@
+@startuml
+autonumber
+title       Visitor wants to show tricks
+actor       Visitor
+participant Application
+database    Database
+
+Visitor -> Application: GET /tricks
+Application -> Database: Get tricks
+Database -> Application: return tricks
+Application -> Visitor: Render /tricks with tricks
+
+@enduml

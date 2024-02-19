@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       User wants to delete an image
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show user
+ref over User, Application, Database: Show images
+
+User -> Application: POST /user/image/:id
+Application -> Database: Delete image with associated id
+Database -> Database: Delete image
+alt image is deleted
+    Database -> Application: Return delete success
+    Application -> User: Redirect to /user/
+else image is not deleted
+    Database -> Application: Add error message
+    Application -> User: Render /user/
+end
+
+@enduml

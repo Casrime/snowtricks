@@ -1,0 +1,22 @@
+@startuml
+autonumber
+title       User wants to add a comment
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show trick
+
+User -> Application: POST /trick/:id
+Application -> Application: Check values
+alt values are valid
+    Application -> Database: Add comment
+    Database -> Application: Add comment
+    Application -> User: Redirect to /trick/:id
+else values are invalid
+    Application -> Application: Add error
+    Application -> User: Render /trick/:id
+end
+
+@enduml

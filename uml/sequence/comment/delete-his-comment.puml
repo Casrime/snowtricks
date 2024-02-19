@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       User wants to delete a comment
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show user
+ref over User, Application, Database: Show comments
+
+User -> Application: POST /user/comment/:id
+Application -> Database: Delete comment with associated id
+Database -> Database: Delete comment
+alt comment is deleted
+    Database -> Application: Return delete success
+    Application -> User: Redirect to /user/
+else comment is not deleted
+    Database -> Application: Add error message
+    Application -> User: Render /user/
+end
+
+@enduml

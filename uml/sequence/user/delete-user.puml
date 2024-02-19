@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       Admin wants to delete a user
+actor       Admin
+participant Application
+database    Database
+
+ref over Admin, Application, Database: Login
+ref over Admin, Application, Database: Show admin
+ref over Admin, Application, Database: Show users
+
+Admin -> Application: POST /admin/user/:id
+Application -> Database: Delete user with associated id
+Database -> Database: Delete user
+alt user is deleted
+    Database -> Application: Return delete success
+    Application -> Admin: Redirect to /admin/
+else user is not deleted
+    Database -> Application: Add error message
+    Application -> Admin: Render /admin/
+end
+
+@enduml

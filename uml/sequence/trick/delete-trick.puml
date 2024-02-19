@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       User wants to delete a trick
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show user
+ref over User, Application, Database: Show tricks
+
+User -> Application: POST /user/trick/:id
+Application -> Database: Delete trick with associated id
+Database -> Database: Delete trick
+alt trick is deleted
+    Database -> Application: Return delete success
+    Application -> User: Redirect to /user/
+else trick is not deleted
+    Database -> Application: Add error message
+    Application -> User: Render /user/
+end
+
+@enduml
