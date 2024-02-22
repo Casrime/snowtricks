@@ -29,7 +29,7 @@ class FrontControllerTest extends BaseController
     public function testTrickShowPageWithoutLogin(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/trick/1');
+        $client->request('GET', '/trick/mute');
 
         $this->assertResponseStatusCodeSame(200);
     }
@@ -37,7 +37,7 @@ class FrontControllerTest extends BaseController
     public function testTrickShowPageWithUserLogin(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/trick/1');
+        $client->request('GET', '/trick/mute');
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertSelectorTextContains('h1', 'Mute');
@@ -46,7 +46,7 @@ class FrontControllerTest extends BaseController
     public function testTrickShowPageWithAdminLogin(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/trick/1');
+        $client->request('GET', '/trick/mute');
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertSelectorTextContains('h1', 'Mute');

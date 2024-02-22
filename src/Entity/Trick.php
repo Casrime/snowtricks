@@ -10,10 +10,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'A trick with the same name already exists')]
 class Trick
 {
     #[ORM\Id]
@@ -40,17 +42,17 @@ class Trick
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $comments;
 
-    #[ORM\ManyToMany(targetEntity: Image::class, inversedBy: 'tricks')]
+    #[ORM\ManyToMany(targetEntity: Image::class, inversedBy: 'tricks', cascade: ['persist', 'remove'])]
     #[Groups(['tricks:load:more'])]
     private Collection $images;
 
-    #[ORM\ManyToMany(targetEntity: Video::class, inversedBy: 'tricks')]
+    #[ORM\ManyToMany(targetEntity: Video::class, inversedBy: 'tricks', cascade: ['persist', 'remove'])]
     private Collection $videos;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Image::class, cascade: ['persist'])]
     private ?Image $mainImage = null;
 
     #[ORM\Column]
@@ -58,6 +60,9 @@ class Trick
 
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -230,6 +235,18 @@ class Trick
     public function setUpdatedAt(?DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -8,6 +8,7 @@ use App\Repository\ImageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
@@ -29,6 +30,8 @@ class Image
 
     #[ORM\ManyToMany(targetEntity: Trick::class, mappedBy: 'images')]
     private Collection $tricks;
+
+    private ?UploadedFile $file = null;
 
     public function __construct()
     {
@@ -57,7 +60,7 @@ class Image
         return $this->alt;
     }
 
-    public function setAlt(string $alt): static
+    public function setAlt(?string $alt): static
     {
         $this->alt = $alt;
 
@@ -89,5 +92,15 @@ class Image
         }
 
         return $this;
+    }
+
+    public function setFile(?UploadedFile $file): void
+    {
+        $this->file = $file;
+    }
+
+    public function getFile(): ?UploadedFile
+    {
+        return $this->file;
     }
 }

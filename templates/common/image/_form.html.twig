@@ -1,4 +1,9 @@
 {{ form_start(form) }}
+    {% if image.id is not null %}
+        <label class="form-check-label" for="{{ image.id }}">
+            <img class="img-fluid rounded" src="{{ asset('uploads/images/' ~ image.name) }}" alt="{{ image.alt }}" />
+        </label>
+    {% endif %}
     {{ form_widget(form) }}
 
     <div class="d-flex justify-content-between">

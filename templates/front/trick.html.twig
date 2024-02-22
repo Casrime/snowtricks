@@ -10,7 +10,7 @@
                 style="position: relative; top: 10px; right: 10px;"
             >
                 <a href="{{ path('app_trick_edit', {
-                    id: trick.id
+                    slug: trick.slug
                 }) }}">
                     <i class="bi bi-pencil"></i>
                 </a>
@@ -22,7 +22,7 @@
                     htmlName: 'trick',
                     name: trick.name,
                     includeForm: include('_inc/_delete_form.html.twig', {
-                        action: path('app_trick_delete', {'id': trick.id}),
+                        action: path('app_trick_delete', {'slug': trick.slug}),
                         content: 'Delete',
                         value: csrf_token('delete' ~ trick.id),
                     })

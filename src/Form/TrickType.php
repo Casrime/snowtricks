@@ -8,6 +8,7 @@ use App\Entity\Trick;
 use App\Entity\Video;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,24 +45,21 @@ class TrickType extends AbstractType
                 'label' => false,
                 'multiple' => false,
             ])
-            ->add('mainImage', EntityType::class, [
-                'class' => Image::class,
-                'choice_label' => 'name',
-                'expanded' => true,
+            ->add('mainImage', MainImageType::class, [
                 'label' => 'Image principale',
-                'multiple' => false,
+                'required' => false,
             ])
-            ->add('images', EntityType::class, [
-                'class' => Image::class,
-                'choice_label' => 'name',
-                'expanded' => true,
-                'multiple' => true,
+            ->add('images', CollectionType::class, [
+                'entry_type' => ImageType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
-            ->add('videos', EntityType::class, [
-                'class' => Video::class,
-                'choice_label' => 'url',
-                'expanded' => true,
-                'multiple' => true,
+            ->add('videos', CollectionType::class, [
+                'entry_type' => VideoType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
         ;
     }

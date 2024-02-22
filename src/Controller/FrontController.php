@@ -54,7 +54,7 @@ final class FrontController extends BaseController
         ]);
     }
 
-    #[Route('/trick/{id}', name: 'trick')]
+    #[Route('/trick/{slug}', name: 'trick')]
     public function trick(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CommentType::class);
@@ -90,7 +90,7 @@ final class FrontController extends BaseController
         ]);
     }
 
-    #[\Symfony\Component\Routing\Annotation\Route('/register', name: 'app_register')]
+    #[Route('/register', name: 'app_register')]
     public function register(Request $request): Response
     {
         $form = $this->createForm(RegistrationFormType::class);

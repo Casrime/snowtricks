@@ -19,14 +19,14 @@
                         {% endif %}
                         <div class="card-body trick-content d-flex justify-content-between align-items-center">
                             <a href="{{ path('trick', {
-                                id: trick.id,
+                                slug: trick.slug,
                             }) }}">
                                 <h5 class="card-title">{{ trick.name }}</h5>
                             </a>
                             {% if is_granted('ROLE_USER') %}
                                 <div class="trick-content-actions d-flex align-items-center">
                                     <a href="{{ path('app_trick_edit', {
-                                        id: trick.id
+                                        slug: trick.slug
                                     }) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
@@ -38,7 +38,7 @@
                                         htmlName: 'trick',
                                         name: trick.name,
                                         includeForm: include('_inc/_delete_form.html.twig', {
-                                            action: path('app_trick_delete', {'id': trick.id}),
+                                            action: path('app_trick_delete', {'slug': trick.slug}),
                                             content: 'Delete',
                                             value: csrf_token('delete' ~ trick.id),
                                         })

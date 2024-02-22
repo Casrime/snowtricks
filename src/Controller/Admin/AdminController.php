@@ -50,15 +50,6 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            foreach ($user->getTokens() as $token) {
-                $entityManager->remove($token);
-            }
-            foreach ($user->getTricks() as $trick) {
-                $entityManager->remove($trick);
-            }
-            foreach ($user->getComments() as $comment) {
-                $entityManager->remove($comment);
-            }
             $entityManager->remove($user);
             $entityManager->flush();
             $this->addFlash('success', 'User deleted with associated tokens, tricks and comments.');

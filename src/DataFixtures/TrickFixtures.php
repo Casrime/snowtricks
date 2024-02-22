@@ -14,9 +14,14 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Override;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class TrickFixtures extends Fixture implements DependentFixtureInterface
 {
+    public function __construct(private SluggerInterface $slugger)
+    {
+    }
+
     #[Override]
     public function load(ObjectManager $manager): void
     {
@@ -52,6 +57,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
 
         $trick1 = new Trick();
         $trick1->setName('Mute');
+        $trick1->setSlug($this->slugger->slug($trick1->getName())->lower()->toString());
         $trick1->setCategory($grab);
         $trick1->addImage($image1);
         $trick1->addImage($image2);
@@ -78,24 +84,28 @@ Aliquam et justo velit. Mauris placerat ligula ex, eget tincidunt odio pharetra 
 
         $trick2 = new Trick();
         $trick2->setName('Sad');
+        $trick2->setSlug($this->slugger->slug($trick2->getName())->lower()->toString());
         $trick2->setCategory($grab);
         $trick2->setUser($user1);
         $manager->persist($trick2);
 
         $trick3 = new Trick();
         $trick3->setName('Indy');
+        $trick3->setSlug($this->slugger->slug($trick3->getName())->lower()->toString());
         $trick3->setCategory($grab);
         $trick3->setUser($user1);
         $manager->persist($trick3);
 
         $trick4 = new Trick();
         $trick4->setName('Stalefish');
+        $trick4->setSlug($this->slugger->slug($trick4->getName())->lower()->toString());
         $trick4->setCategory($grab);
         $trick4->setUser($user1);
         $manager->persist($trick4);
 
         $trick5 = new Trick();
         $trick5->setName('Tail grab');
+        $trick5->setSlug($this->slugger->slug($trick5->getName())->lower()->toString());
         $trick5->setCategory($grab);
         $trick5->addVideo($video1);
         $trick5->setUser($user1);
@@ -103,72 +113,84 @@ Aliquam et justo velit. Mauris placerat ligula ex, eget tincidunt odio pharetra 
 
         $trick6 = new Trick();
         $trick6->setName('Nose grab');
+        $trick6->setSlug($this->slugger->slug($trick6->getName())->lower()->toString());
         $trick6->setCategory($grab);
         $trick6->setUser($user1);
         $manager->persist($trick6);
 
         $trick7 = new Trick();
         $trick7->setName('Japan');
+        $trick7->setSlug($this->slugger->slug($trick7->getName())->lower()->toString());
         $trick7->setCategory($grab);
         $trick7->setUser($user1);
         $manager->persist($trick7);
 
         $trick8 = new Trick();
         $trick8->setName('Seat belt');
+        $trick8->setSlug($this->slugger->slug($trick8->getName())->lower()->toString());
         $trick8->setCategory($grab);
         $trick8->setUser($user1);
         $manager->persist($trick8);
 
         $trick9 = new Trick();
         $trick9->setName('Truck driver');
+        $trick9->setSlug($this->slugger->slug($trick9->getName())->lower()->toString());
         $trick9->setCategory($grab);
         $trick9->setUser($user1);
         $manager->persist($trick9);
 
         $trick10 = new Trick();
         $trick10->setName('180');
+        $trick10->setSlug($this->slugger->slug($trick10->getName())->lower()->toString());
         $trick10->setCategory($rotation);
         $trick10->setUser($user1);
         $manager->persist($trick10);
 
         $trick11 = new Trick();
         $trick11->setName('360');
+        $trick11->setSlug($this->slugger->slug($trick11->getName())->lower()->toString());
         $trick11->setCategory($rotation);
         $trick11->setUser($user1);
         $manager->persist($trick11);
 
         $trick12 = new Trick();
         $trick12->setName('540');
+        $trick12->setSlug($this->slugger->slug($trick12->getName())->lower()->toString());
         $trick12->setCategory($rotation);
         $trick12->setUser($user1);
         $manager->persist($trick12);
 
         $trick13 = new Trick();
         $trick13->setName('720');
+        $trick13->setSlug($this->slugger->slug($trick13->getName())->lower()->toString());
         $trick13->setCategory($rotation);
         $trick13->setUser($user1);
         $manager->persist($trick13);
 
         $trick14 = new Trick();
         $trick14->setName('900');
+        $trick14->setSlug($this->slugger->slug($trick14->getName())->lower()->toString());
         $trick14->setCategory($rotation);
         $trick14->setUser($user1);
         $manager->persist($trick14);
 
         $trick15 = new Trick();
         $trick15->setName('1080');
+        $trick15->setSlug($this->slugger->slug($trick15->getName())->lower()->toString());
         $trick15->setCategory($rotation);
         $trick15->setUser($user2);
         $manager->persist($trick15);
 
         $trick16 = new Trick();
         $trick16->setName('Front flip');
+        $trick16->setSlug($this->slugger->slug($trick16->getName())->lower()->toString());
         $trick16->setCategory($flip);
         $trick16->setUser($user2);
         $manager->persist($trick16);
 
         $trick17 = new Trick();
         $trick17->setName('Back flip');
+        $trick17->setSlug($this->slugger->slug($trick17->getName())->lower()->toString());
         $trick17->setCategory($flip);
         $trick17->setUser($user2);
         $manager->persist($trick17);

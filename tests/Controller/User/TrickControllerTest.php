@@ -56,6 +56,20 @@ class TrickControllerTest extends BaseController
         $this->assertSelectorTextContains('.invalid-feedback', 'This value should not be blank.');
     }
 
+    public function testTrickNewPageWithUserLoginWithFormSubmissionWithExistingNameValue(): void
+    {
+        $client = $this->loginUser();
+        $client->request('GET', '/user/trick/new');
+        $client->submitForm('Save', [
+            'trick[name]' => 'Mute',
+            'trick[category]' => 1,
+        ]);
+
+        $this->assertResponseStatusCodeSame(422);
+        $this->assertPageTitleContains('New Trick');
+        $this->assertSelectorTextContains('.invalid-feedback', 'A trick with the same name already exists');
+    }
+
     public function testTrickNewPageWithUserLoginWithFormSubmissionWithMinimalValidValues(): void
     {
         $client = $this->loginUser();
@@ -88,7 +102,7 @@ class TrickControllerTest extends BaseController
     public function testTrickEditPageWithoutLogin(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/user/trick/1/edit');
+        $client->request('GET', '/user/trick/mute/edit');
 
         $this->assertResponseRedirects('/login');
     }
@@ -96,7 +110,7 @@ class TrickControllerTest extends BaseController
     public function testTrickEditPageWithUserLoginWithUnexistingTrick(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/user/trick/100/edit');
+        $client->request('GET', '/user/trick/unexisting-slug/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -104,7 +118,7 @@ class TrickControllerTest extends BaseController
     public function testTrickEditPageWithAdminLoginWithUnexistingTrick(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/100/edit');
+        $client->request('GET', '/user/trick/unexisting-slug/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -112,7 +126,7 @@ class TrickControllerTest extends BaseController
     public function testTrickEditPageWithUserLoginWithExistingTrick(): void
     {
         $client = $this->loginUser();
-        $client->request('GET', '/user/trick/1/edit');
+        $client->request('GET', '/user/trick/mute/edit');
         $client->submitForm('Update', [
             'trick[name]' => 'https://www.youtube.com/watch?v=PEP1-Y7fX_I',
         ]);
@@ -124,7 +138,7 @@ class TrickControllerTest extends BaseController
     public function testTrickEditPageWithAdminLoginWithExistingTrick(): void
     {
         $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/1/edit');
+        $client->request('GET', '/user/trick/mute/edit');
         $client->submitForm('Update', [
             'trick[name]' => 'https://www.youtube.com/watch?v=PEP1-Y7fX_I',
         ]);
@@ -136,7 +150,7 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithoutLogin(): void
     {
         $client = static::createClient();
-        $client->request('POST', '/user/trick/1');
+        $client->request('POST', '/user/trick/mute');
 
         $this->assertResponseRedirects('/login');
     }
@@ -144,7 +158,7 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithUserLoginWithUnexistingTrick(): void
     {
         $client = $this->loginUser();
-        $client->request('POST', '/user/trick/100');
+        $client->request('POST', '/user/trick/unexisting-slug');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -152,7 +166,7 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithAdminLoginWithUnexistingTrick(): void
     {
         $client = $this->loginAdmin();
-        $client->request('POST', '/user/trick/100');
+        $client->request('POST', '/user/trick/unexisting-slug');
 
         $this->assertResponseStatusCodeSame(404);
     }
@@ -160,7 +174,7 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithUserLoginWithExistingTrickWithoutAssociation(): void
     {
         $client = $this->loginUser();
-        $client->request('POST', '/user/trick/2');
+        $client->request('POST', '/user/trick/sad');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
@@ -169,7 +183,7 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithAdminLoginWithExistingTrickWithoutAssociation(): void
     {
         $client = $this->loginAdmin();
-        $client->request('POST', '/user/trick/2');
+        $client->request('POST', '/user/trick/sad');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');
@@ -178,7 +192,7 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithUserLoginWithExistingTrickWithAssociation(): void
     {
         $client = $this->loginUser();
-        $client->request('POST', '/user/trick/1');
+        $client->request('POST', '/user/trick/mute');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
@@ -187,7 +201,7 @@ class TrickControllerTest extends BaseController
     public function testTrickRemovePageWithAdminLoginWithExistingTrickWithAssociation(): void
     {
         $client = $this->loginAdmin();
-        $client->request('POST', '/user/trick/1');
+        $client->request('POST', '/user/trick/mute');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');

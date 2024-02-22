@@ -144,7 +144,7 @@ tests-reset: db-reset tests
 infection: ## Run infection
 infection: export APP_ENV=test
 infection:
-	$(DOCKER_COMPOSE) exec php vendor/bin/infection --configuration=$(TOOLS_DIRECTORY)/infection.json5 --threads=4
+	$(DOCKER_COMPOSE) exec --env APP_ENV=$(APP_ENV) php vendor/bin/infection --configuration=$(TOOLS_DIRECTORY)/infection.json5 --threads=4
 
 ##
 ## # Coverage

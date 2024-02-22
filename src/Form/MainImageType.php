@@ -12,9 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ImageType extends AbstractType
+class MainImageType extends AbstractType
 {
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -33,11 +32,7 @@ class ImageType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('alt', TextType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
+            ->add('alt', TextType::class)
         ;
     }
 

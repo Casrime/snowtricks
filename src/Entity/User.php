@@ -38,13 +38,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, cascade: ['remove'])]
     private Collection $comments;
 
     /**
      * @var Collection<int, Trick>
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Trick::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Trick::class, cascade: ['remove'])]
     private Collection $tricks;
 
     #[ORM\Column(length: 255)]
@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Token>
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class, cascade: ['remove'])]
     private Collection $tokens;
 
     public function __construct()
