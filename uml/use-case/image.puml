@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+actor User as user #dodgerblue;line:dodgerblue;line.bold;text:black
+actor Admin as admin #crimson;line:crimson;line.bold;text:black
+
+package Image #dodgerblue;line:dodgerblue;line.bold;text:white {
+  usecase "Show images" as showImages
+  usecase "Add image" as addImage
+  usecase "Delete image" as deleteImage
+}
+
+admin --> user
+
+user --> showImages
+user --> addImage
+user --> deleteImage
+@enduml

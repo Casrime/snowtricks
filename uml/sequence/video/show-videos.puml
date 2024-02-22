@@ -1,0 +1,16 @@
+@startuml
+autonumber
+title       User wants to show videos
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show user
+
+User -> Application: GET /user/
+Application -> Database: Get videos
+Database -> Application: return videos
+Application -> User: Render /user/ with videos
+
+@enduml

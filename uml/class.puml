@@ -1,0 +1,156 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Category {
+    -id
+    -name
+    -tricks
+    +getId()
+    +getName()
+    +setName()
+    +getTricks()
+    +addTrick()
+    +removeTrick()
+}
+
+class Comment {
+    -id
+    -user
+    -createdAt
+    -content
+    -trick
+    -active
+    +getId()
+    +getUser()
+    +setUser()
+    +getCreatedAt()
+    +setCreatedAt()
+    +getContent()
+    +setContent()
+    +getTrick()
+    +setTrick()
+}
+
+class Image {
+    -id
+    -name
+    -alt
+    -tricks
+    +getId()
+    +getName()
+    +setName()
+    +getAlt()
+    +setAlt()
+    +getTricks()
+    +addTrick()
+    +removeTrick()
+}
+
+class Token {
+    -uuid
+    -user
+    -expirationDate
+    -active
+    +getUuid()
+    +setUuid()
+    +getUser()
+    +setUser()
+    +getExpirationDate()
+    +setExpirationDate()
+    +isActive()
+    +setActive()
+}
+
+class Trick {
+    -id
+    -name
+    -description
+    -category
+    -user
+    -comments
+    -images
+    -videos
+    -mainImage
+    -createdAt
+    -updatedAt
+    +getId()
+    +getName()
+    +setName()
+    +getDescription()
+    +setDescription()
+    +getCategory()
+    +setCategory()
+    +getUser()
+    +setUser()
+    +getComments()
+    +addComment()
+    +removeComment()
+    +getImages()
+    +addImage()
+    +removeImage()
+    +getVideos()
+    +addVideo()
+    +removeVideo()
+    +getMainImage()
+    +setMainImage()
+    +getCreatedAt()
+    +setCreatedAt()
+    +getUpdatedAt()
+    +setUpdatedAt()
+}
+
+class User {
+    -id
+    -username
+    -roles
+    -password
+    -comments
+    -tricks
+    -email
+    -active
+    -tokens
+    +getId()
+    +getUsername()
+    +setUsername()
+    +getUserIdentifier()
+    +getRoles()
+    +setRoles()
+    +getPassword()
+    +setPassword()
+    +eraseCredentials()
+    +getComments()
+    +addComment()
+    +removeComment()
+    +getTricks()
+    +addTrick()
+    +removeTrick()
+    +getEmail()
+    +setEmail()
+    +isActive()
+    +setActive()
+    +getTokens()
+    +addToken()
+    +removeToken()
+}
+
+class Video {
+    -id
+    -url
+    -tricks
+    +getId()
+    +getUrl()
+    +setUrl()
+    +getTricks()
+    +addTrick()
+    +removeTrick()
+}
+
+Category -{ Trick
+Trick -{ Comment
+Trick }-{ Image
+Trick }-{ Video
+Trick }- User
+User -{ Comment
+Token }- User
+
+@enduml

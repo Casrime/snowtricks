@@ -1,0 +1,12 @@
+@startuml
+left to right direction
+actor Admin as admin #crimson;line:crimson;line.bold;text:black
+
+package User #dodgerblue;line:dodgerblue;line.bold;text:white {
+  usecase "Show users" as showUsers
+  usecase "Delete user" as deleteUser
+}
+
+admin --> showUsers
+admin --> deleteUser
+@enduml

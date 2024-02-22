@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+actor Visitor as visitor #limegreen;line:limegreen;line.bold;text:black
+actor User as user #dodgerblue;line:dodgerblue;line.bold;text:black
+actor Admin as admin #crimson;line:crimson;line.bold;text:black
+
+package Trick #dodgerblue;line:dodgerblue;line.bold;text:white {
+  usecase "Show tricks" as showTricks
+  usecase "Show trick" as showTrick
+  usecase "Add trick" as addTrick
+  usecase "Edit trick" as editTrick
+  usecase "Delete trick" as deleteTrick
+}
+
+user --> visitor
+admin --> user
+
+visitor --> showTricks
+visitor --> showTrick
+user --> addTrick
+user --> editTrick
+user --> deleteTrick
+@enduml

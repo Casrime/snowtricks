@@ -1,0 +1,16 @@
+@startuml
+autonumber
+title       User wants to show images
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show user
+
+User -> Application: GET /user/
+Application -> Database: Get images
+Database -> Application: return images
+Application -> User: Render /user/ with images
+
+@enduml

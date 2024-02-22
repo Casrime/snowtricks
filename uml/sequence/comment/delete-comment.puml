@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       Admin wants to delete a comment
+actor       Admin
+participant Application
+database    Database
+
+ref over Admin, Application, Database: Login
+ref over Admin, Application, Database: Show admin
+ref over Admin, Application, Database: Show comments
+
+Admin -> Application: POST /admin/comment/:id
+Application -> Database: Delete comment with associated id
+Database -> Database: Delete comment
+alt comment is deleted
+    Database -> Application: Return delete success
+    Application -> Admin: Redirect to /admin/
+else comment is not deleted
+    Database -> Application: Add error message
+    Application -> Admin: Render /admin/
+end
+
+@enduml

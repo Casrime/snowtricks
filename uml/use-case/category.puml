@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+actor Admin as admin #crimson;line:crimson;line.bold;text:black
+
+package Category #dodgerblue;line:dodgerblue;line.bold;text:white {
+  usecase "Show categories" as showCategories
+  usecase "Add category" as addCategory
+  usecase "Edit category" as editCategory
+  usecase "Delete category" as deleteCategory
+}
+
+admin --> showCategories
+admin --> addCategory
+admin --> editCategory
+admin --> deleteCategory
+@enduml

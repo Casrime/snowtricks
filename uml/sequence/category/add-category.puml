@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       Admin wants to add a category
+actor       Admin
+participant Application
+database    Database
+
+ref over Admin, Application, Database: Login
+ref over Admin, Application, Database: Show admin
+ref over Admin, Application, Database: Show categories
+
+Admin -> Application: POST /admin/category/new
+Application -> Application: Check values
+alt values are valid
+    Application -> Database: Add category
+    Database -> Application: Add category
+    Application -> Admin: Redirect to /admin/
+else values are invalid
+    Application -> Application: Add error
+    Application -> Admin: Render /admin/category/new
+end
+
+@enduml

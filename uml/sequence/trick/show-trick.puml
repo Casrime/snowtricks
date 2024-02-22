@@ -1,0 +1,20 @@
+@startuml
+autonumber
+title       Visitor wants to show trick
+actor       Visitor
+participant Application
+database    Database
+
+ref over Visitor, Application, Database: Show tricks
+
+Visitor -> Application: GET /trick/:id
+Application -> Database: Get trick by id
+alt trick is found
+    Database -> Application: return trick
+    Application -> Visitor: Render /trick/:id with trick
+else trick is not found
+    Database -> Application: Add error message
+    Application -> Visitor: Render /trick/:id with error message
+end
+
+@enduml

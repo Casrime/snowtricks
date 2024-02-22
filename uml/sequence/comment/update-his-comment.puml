@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       User wants to update a comment
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show user
+ref over User, Application, Database: Show comments
+
+User -> Application: POST /user/comment/:id
+Application -> Database: Update comment with associated id
+Database -> Database: Update comment
+alt comment is updated
+    Database -> Application: Return update success
+    Application -> User: Redirect to /user/
+else comment is not updated
+    Database -> Application: Add error message
+    Application -> User: Render /user/
+end
+
+@enduml

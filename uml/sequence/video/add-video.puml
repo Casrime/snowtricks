@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       User wants to add a video
+actor       User
+participant Application
+database    Database
+
+ref over User, Application, Database: Login
+ref over User, Application, Database: Show user
+ref over User, Application, Database: Show videos
+
+User -> Application: POST /user/video/new
+Application -> Application: Check values
+alt values are valid
+    Application -> Database: Add video
+    Database -> Application: Add video
+    Application -> User: Redirect to /user/
+else values are invalid
+    Application -> Application: Add error
+    Application -> User: Render /user/video/new
+end
+
+@enduml

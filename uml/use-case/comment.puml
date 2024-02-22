@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+actor User as user #dodgerblue;line:dodgerblue;line.bold;text:black
+actor Admin as admin #crimson;line:crimson;line.bold;text:black
+
+package Comment #dodgerblue;line:dodgerblue;line.bold;text:white {
+  usecase "Add comment" as addComment
+  usecase "Update his comment" as updateHisComment
+  usecase "Delete his comment" as deleteHisComment
+  usecase "Show comments" as showComments
+  usecase "Delete comment" as deleteComment
+}
+
+admin --> user
+
+user --> addComment
+user --> updateHisComment
+user --> deleteHisComment
+admin --> showComments
+admin --> deleteComment
+@enduml

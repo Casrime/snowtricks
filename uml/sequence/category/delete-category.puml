@@ -1,0 +1,23 @@
+@startuml
+autonumber
+title       Admin wants to delete a category
+actor       Admin
+participant Application
+database    Database
+
+ref over Admin, Application, Database: Login
+ref over Admin, Application, Database: Show admin
+ref over Admin, Application, Database: Show categories
+
+Admin -> Application: POST /admin/category/:id
+Application -> Database: Delete category with associated id
+Database -> Database: Delete category
+alt category is deleted
+    Database -> Application: Return delete success
+    Application -> Admin: Redirect to /admin/
+else category is not deleted
+    Database -> Application: Add error message
+    Application -> Admin: Render /admin/
+end
+
+@enduml
