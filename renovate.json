@@ -6,6 +6,8 @@
   "prHourlyLimit": 10,
   "separateMajorMinor": true,
   "separateMultipleMajor": true,
+  "rebaseWhen": "behind-base-branch",
   "automerge": true,
-  "rebaseWhen": "auto"
+  "automergeType": "pr",
+  "platformAutomerge": true
 }
