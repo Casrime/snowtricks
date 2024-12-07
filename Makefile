@@ -115,16 +115,16 @@ checks: ## Run all checks
 checks: rector cs twig phpstan
 
 cs: ## Run php-cs-fixer
-	$(DOCKER_COMPOSE) exec php vendor/bin/php-cs-fixer --config=$(TOOLS_DIRECTORY)/.php-cs-fixer.dist.php fix --diff --verbose --allow-risky=yes
+	vendor/bin/php-cs-fixer --config=$(TOOLS_DIRECTORY)/.php-cs-fixer.dist.php fix --diff --verbose --allow-risky=yes
 
 twig: ## Run twig-cs-fixer
-	$(DOCKER_COMPOSE) exec php vendor/bin/twig-cs-fixer lint --config=$(TOOLS_DIRECTORY)/.twig-cs-fixer.php --fix templates
+	vendor/bin/twig-cs-fixer lint --config=$(TOOLS_DIRECTORY)/.twig-cs-fixer.php --fix templates
 
 phpstan: ## Run phpstan
-	$(DOCKER_COMPOSE) exec php vendor/bin/phpstan analyse --memory-limit=1G --configuration $(TOOLS_DIRECTORY)/phpstan.dist.neon
+	vendor/bin/phpstan analyse --memory-limit=1G --configuration $(TOOLS_DIRECTORY)/phpstan.dist.neon
 
 rector: ## Run rector
-	$(DOCKER_COMPOSE) exec php vendor/bin/rector --config=$(TOOLS_DIRECTORY)/rector.php
+	vendor/bin/rector --config=$(TOOLS_DIRECTORY)/rector.php
 
 ##
 ## # Tests
