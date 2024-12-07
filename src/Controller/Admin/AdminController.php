@@ -49,7 +49,7 @@ class AdminController extends AbstractController
             $this->addFlash('danger', 'You cannot delete the logged in user.');
             return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
         }
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->getString('_token'))) {
             foreach ($user->getTokens() as $token) {
                 $entityManager->remove($token);
             }

@@ -27,6 +27,9 @@ class Image
     #[Groups(['tricks:load:more'])]
     private ?string $alt = null;
 
+    /**
+     * @var Collection<int, Trick>
+     */
     #[ORM\ManyToMany(targetEntity: Trick::class, mappedBy: 'images')]
     private Collection $tricks;
 

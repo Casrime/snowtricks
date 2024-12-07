@@ -43,10 +43,16 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
 
+    /**
+     * @var Collection<int, Image>
+     */
     #[ORM\ManyToMany(targetEntity: Image::class, inversedBy: 'tricks')]
     #[Groups(['tricks:load:more'])]
     private Collection $images;
 
+    /**
+     * @var Collection<int, Video>
+     */
     #[ORM\ManyToMany(targetEntity: Video::class, inversedBy: 'tricks')]
     private Collection $videos;
 

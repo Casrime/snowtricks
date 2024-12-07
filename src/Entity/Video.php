@@ -20,6 +20,9 @@ class Video
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
+    /**
+     * @var Collection<int, Trick>
+     */
     #[ORM\ManyToMany(targetEntity: Trick::class, mappedBy: 'videos')]
     private Collection $tricks;
 

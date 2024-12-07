@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -25,6 +26,11 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    /**
+     * @param Trick $trick
+     * @param int $offset
+     * @return Paginator<QueryBuilder>
+     */
     public function loadMoreComments(Trick $trick, int $offset): Paginator
     {
         $query = $this->createQueryBuilder('c')

@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -24,6 +25,10 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
+    /**
+     * @param int $offset
+     * @return Paginator<QueryBuilder>
+     */
     public function loadMoreTricks(int $offset): Paginator
     {
         $query = $this->createQueryBuilder('t')

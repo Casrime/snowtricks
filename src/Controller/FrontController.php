@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Token;
 use App\Entity\Trick;
 use App\Entity\User;
@@ -61,9 +62,12 @@ final class FrontController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Comment $comment */
             $comment = $form->getData();
             $comment->setTrick($trick);
-            $comment->setUser($this->getUser());
+            /** @var User $user */
+            $user = $this->getUser();
+            $comment->setUser($user);
 
             $entityManager->persist($comment);
             $entityManager->flush();
