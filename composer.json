@@ -1,4 +1,6 @@
 {
+    "name": "casrime/snowtricks",
+    "description": "snowtricks project",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
