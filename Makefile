@@ -112,12 +112,12 @@ sf: ## Symfony command example: make sf c='c:c -e prod'
 .PHONY: checks cs
 
 checks: ## Run all checks
-checks: rector cs twig phpstan
+checks: php-cs-fixer twig-cs-fixer phpstan
 
-cs: ## Run php-cs-fixer
+php-cs-fixer: ## Run php-cs-fixer
 	vendor/bin/php-cs-fixer --config=$(TOOLS_DIRECTORY)/.php-cs-fixer.dist.php fix --diff --verbose --allow-risky=yes
 
-twig: ## Run twig-cs-fixer
+twig-cs-fixer: ## Run twig-cs-fixer
 	vendor/bin/twig-cs-fixer lint --config=$(TOOLS_DIRECTORY)/.twig-cs-fixer.php --fix templates
 
 phpstan: ## Run phpstan
