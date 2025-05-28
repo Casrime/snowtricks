@@ -1,4 +1,4 @@
-#syntax=docker/dockerfile:1.12
+#syntax=docker/dockerfile:1.16
 
 # Versions
 FROM dunglas/frankenphp:latest-alpine AS frankenphp_upstream
