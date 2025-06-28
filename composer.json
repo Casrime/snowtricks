@@ -106,7 +106,7 @@
         "friendsofphp/php-cs-fixer": "^3.42",
         "infection/infection": "^0.29.0",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.0",
         "rector/rector": "^1.0.0",
         "symfony/browser-kit": "7.0.*",
         "symfony/css-selector": "7.0.*",
