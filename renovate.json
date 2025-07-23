@@ -9,5 +9,9 @@
   "rebaseWhen": "behind-base-branch",
   "automerge": true,
   "automergeType": "pr",
-  "platformAutomerge": true
+  "platformAutomerge": true,
+  "branchPrefix": "renovate/",
+  "additionalBranchPrefix": "{{{newVersion}}}-",
+  "branchTopic": "{{{depName}}}",
+  "commitMessage": "Update {{{depName}}} to v{{{newVersion}}}"
 }
