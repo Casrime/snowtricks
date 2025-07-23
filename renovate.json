@@ -12,5 +12,5 @@
   "platformAutomerge": true,
   "branchPrefix": "renovate/",
   "additionalBranchPrefix": "{{{newVersion}}}-",
-  "branchTopic": "{{{depName}}}"
+  "branchTopic": "{{{depName}}}-{{{newVersion}}}"
 }
