@@ -21,34 +21,34 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         /** @var Category $grab */
-        $grab = $this->getReference('grab');
+        $grab = $this->getReference('grab', Category::class);
         /** @var Category $rotation */
-        $rotation = $this->getReference('rotation');
+        $rotation = $this->getReference('rotation', Category::class);
         /** @var Category $flip */
-        $flip = $this->getReference('flip');
+        $flip = $this->getReference('flip', Category::class);
 
         /** @var Image $image1 */
-        $image1 = $this->getReference('image-1');
+        $image1 = $this->getReference('image-1', Image::class);
         /** @var Image $image2 */
-        $image2 = $this->getReference('image-2');
+        $image2 = $this->getReference('image-2', Image::class);
         /** @var Image $image3 */
-        $image3 = $this->getReference('image-3');
+        $image3 = $this->getReference('image-3', Image::class);
         /** @var Image $image4 */
-        $image4 = $this->getReference('image-4');
+        $image4 = $this->getReference('image-4', Image::class);
 
         /** @var User $user1 */
-        $user1 = $this->getReference('user1');
+        $user1 = $this->getReference('user1', User::class);
         /** @var User $user2 */
-        $user2 = $this->getReference('user2');
+        $user2 = $this->getReference('user2', User::class);
 
         /** @var Video $video1 */
-        $video1 = $this->getReference('video1');
+        $video1 = $this->getReference('video1', Video::class);
         /** @var Video $video2 */
-        $video2 = $this->getReference('video2');
+        $video2 = $this->getReference('video2', Video::class);
         /** @var Video $video3 */
-        $video3 = $this->getReference('video3');
+        $video3 = $this->getReference('video3', Video::class);
         /** @var Video $video4 */
-        $video4 = $this->getReference('video4');
+        $video4 = $this->getReference('video4', Video::class);
 
         $trick1 = new Trick();
         $trick1->setName('Mute');

@@ -18,7 +18,7 @@ final class TokenFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         /** @var User $user4 */
-        $user4 = $this->getReference('user4');
+        $user4 = $this->getReference('user4', User::class);
 
         $token1 = new Token();
         $token1->setExpirationDate(new DateTimeImmutable('+1 year'));

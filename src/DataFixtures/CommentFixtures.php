@@ -19,9 +19,9 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
     {
         $comment1 = new Comment();
         /** @var Trick $trick1 */
-        $trick1 = $this->getReference('trick1');
+        $trick1 = $this->getReference('trick1', Trick::class);
         /** @var User $user1 */
-        $user1 = $this->getReference('user1');
+        $user1 = $this->getReference('user1', User::class);
         $comment1->setUser($user1);
         $comment1->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment1->setTrick($trick1);
@@ -29,7 +29,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
 
         $comment2 = new Comment();
         /** @var User $user2 */
-        $user2 = $this->getReference('user2');
+        $user2 = $this->getReference('user2', User::class);
         $comment2->setUser($user2);
         $comment2->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment2->setTrick($trick1);
@@ -37,7 +37,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
 
         $comment3 = new Comment();
         /** @var User $user3 */
-        $user3 = $this->getReference('user2');
+        $user3 = $this->getReference('user2', User::class);
         $comment3->setUser($user3);
         $comment3->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment3->setTrick($trick1);
@@ -45,7 +45,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
 
         $comment4 = new Comment();
         /** @var User $user4 */
-        $user4 = $this->getReference('user2');
+        $user4 = $this->getReference('user2', User::class);
         $comment4->setUser($user4);
         $comment4->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment4->setTrick($trick1);
