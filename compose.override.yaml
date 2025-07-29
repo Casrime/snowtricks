@@ -25,8 +25,13 @@ services:
             # Ensure that host.docker.internal is correctly defined on Linux
             - host.docker.internal:host-gateway
 
+    ###> symfony/mailer ###
     mailer:
-        image: schickling/mailcatcher
+        image: axllent/mailpit
         ports:
-            - '1025:1025'
-            - '1080:1080'
+            - "1025"
+            - "8025"
+        environment:
+            MP_SMTP_AUTH_ACCEPT_ANY: 1
+            MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    ###< symfony/mailer ###
