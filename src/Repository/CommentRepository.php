@@ -13,11 +13,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Comment>
- *
- * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
- * @method Comment|null findOneBy(array $criteria, array $orderBy = null)
- * @method Comment[]    findAll()
- * @method Comment[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class CommentRepository extends ServiceEntityRepository
 {
@@ -29,7 +24,7 @@ class CommentRepository extends ServiceEntityRepository
     /**
      * @param Trick $trick
      * @param int $offset
-     * @return Paginator<QueryBuilder>
+     * @return Paginator<Comment>
      */
     public function loadMoreComments(Trick $trick, int $offset): Paginator
     {

@@ -38,10 +38,12 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     #[Override]
     public function authenticate(Request $request): Passport
     {
+        /** @var string $username */
         $username = $request->request->all()['login']['username'] ?? '';
 
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $username);
 
+        /** @var string $password */
         $password = $request->request->all()['login']['password'] ?? '';
 
         $user = $this->userRepository->findOneBy([
@@ -57,11 +59,14 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             throw new BadCredentialsException();
         }
 
+        /** @var ?string $csrfToken */
+        $csrfToken = $request->request->all()['login']['_token'] ?? '';
+
         return new Passport(
             new UserBadge($username),
             new PasswordCredentials($password),
             [
-                new CsrfTokenBadge('csrf_token_login', $request->request->all()['login']['_token'] ?? ''),
+                new CsrfTokenBadge('csrf_token_login', $csrfToken),
                 new RememberMeBadge(),
             ]
         );

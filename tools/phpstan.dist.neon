@@ -1,4 +1,16 @@
+includes:
+    - phpstan-baseline.neon
+    - ../vendor/phpstan/phpstan-doctrine/extension.neon
+    - ../vendor/phpstan/phpstan-symfony/extension.neon
+    - ../vendor/phpstan/phpstan-symfony/rules.neon
+
 parameters:
+    doctrine:
+        objectManagerLoader: ../tests/object-manager.php
+
+    ignoreErrors:
+            - identifier: missingType.generics
+
     level: max
     paths:
         - ../bin/
@@ -6,3 +18,14 @@ parameters:
         - ../public/
         - ../src/
         - ../tests/
+
+    excludePaths:
+        - ../config/bundles.php
+        - ../public/index.php
+        - ../src/Kernel.php
+        - ../tests/bootstrap.php
+        - ../tests/object-manager.php
+        - ../vendor
+
+    symfony:
+        containerXmlPath: ../var/cache/dev/App_KernelDevDebugContainer.xml
