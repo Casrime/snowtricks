@@ -5,3 +5,9 @@ parameters:
 			identifier: function.alreadyNarrowedType
 			count: 1
 			path: ../tests/bootstrap.php
+
+		-
+			message: '#^Method App\\Entity\\User::getUserIdentifier\(\) should return non-empty-string but returns string.$#'
+			identifier: return.type
+			count: 1
+			path: ../src/Entity/User.php
