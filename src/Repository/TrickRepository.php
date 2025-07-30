@@ -12,11 +12,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Trick>
- *
- * @method Trick|null find($id, $lockMode = null, $lockVersion = null)
- * @method Trick|null findOneBy(array $criteria, array $orderBy = null)
- * @method Trick[]    findAll()
- * @method Trick[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TrickRepository extends ServiceEntityRepository
 {
@@ -27,7 +22,7 @@ class TrickRepository extends ServiceEntityRepository
 
     /**
      * @param int $offset
-     * @return Paginator<QueryBuilder>
+     * @return Paginator<Trick>
      */
     public function loadMoreTricks(int $offset): Paginator
     {
