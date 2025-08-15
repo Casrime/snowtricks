@@ -33,7 +33,7 @@ jobs:
             # —— Setup Github actions 🐙 —————————————————————————————————————————————
             # https://github.com/actions/checkout (official)
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             # https://github.com/shivammathur/setup-php (community)
             - name: Setup PHP, extensions and composer with shivammathur/setup-php
