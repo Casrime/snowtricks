@@ -5,11 +5,19 @@
 {% block body %}
     <div id="content-home">
         <h1 class="text-center">SnowTricks</h1>
-        <i
-            class="bi bi-arrow-down-circle-fill"
+        <svg
             data-action="click->scroll#bottom"
             data-controller="scroll"
-        ></i>
+            class="w-6 h-6 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m0 14-4-4m4 4 4-4"/>
+        </svg>
     </div>
 
     <div
@@ -29,11 +37,19 @@
             >Load more</button>
         </div>
         <p class="d-flex justify-content-end">
-            <i
-                class="bi bi-arrow-up-circle-fill"
+            <svg
                 data-action="click->scroll#top"
                 data-controller="scroll"
-            ></i>
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+            >
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
+            </svg>
         </p>
     </div>
 {% endblock %}

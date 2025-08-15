@@ -28,24 +28,6 @@ body {
     margin-top: 5vh;
 }
 
-#content-home .bi-arrow-down-circle-fill {
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-}
-
-.bi {
-    font-size: 1.4em;
-}
-
-.bi-arrow-down-circle-fill, .bi-arrow-up-circle-fill  {
-    font-size: 36px;
-}
-
-.bi-trash {
-    color: #842029;
-}
-
 .image-trick {
     width: 100%;
 }
