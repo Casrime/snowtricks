@@ -28,4 +28,7 @@ return [
     '@popperjs/core' => [
         'version' => '2.11.8',
     ],
+    'flowbite/dist/flowbite.turbo.js' => [
+        'version' => '3.1.2',
+    ],
 ];
