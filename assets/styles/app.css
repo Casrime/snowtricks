@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-body {
-    background-color: skyblue;
-}
-
 .navbar {
     min-height: 10vh;
 }
