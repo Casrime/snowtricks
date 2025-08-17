@@ -3,26 +3,23 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <div
-        class="container"
-        id="tricks"
-    >
-        <h1>Tricks list</h1>
-        {{ include('_inc/_tricks.html.twig') }}
-        <p class="d-flex justify-content-end">
-            <svg
-                data-action="click->scroll#top"
-                data-controller="scroll"
-                class="w-6 h-6 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-            >
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
-            </svg>
-        </p>
-    </div>
+    <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Tricks list</h1>
+    {{ include('_inc/_tricks.html.twig') }}
+    <p class="d-flex justify-content-end">
+        <svg
+            data-action="click->scroll#top"
+            data-controller="scroll"
+            class="w-6 h-6 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
+        </svg>
+    </p>
+
+    {{ include('_inc/_pagination.html.twig') }}
 {% endblock %}
