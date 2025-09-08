@@ -4,10 +4,14 @@
 
 {% block body %}
     <div class="w-[90%] m-auto">
+        <h1>Login</h1>
         <img class="h-auto max-w-lg mx-auto" alt="Logo SnowTricks" src="{{ asset('images/snowtricks.png') }}">
         {{ form_start(form) }}
             {% if error %}
-                <div class="p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                <div
+                    class="p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert"
+                    id="invalid-credentials"
+                >
                     <span class="font-medium">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
                 </div>
             {% endif %}
