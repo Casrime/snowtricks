@@ -106,7 +106,7 @@ class FrontControllerTest extends BaseController
         $this->assertEquals('/register', $client->getRequest()->getPathInfo());
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorTextContains('.invalid-feedback', 'There is already an account with this username.');
+        $this->assertSelectorTextContains('#registration_form p.text-red-600', 'There is already an account with this username.');
     }
 
     public function testRegisterPageWithFormSubmissionWithValidValues(): void
@@ -204,7 +204,7 @@ class FrontControllerTest extends BaseController
 
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
         $this->assertResponseStatusCodeSame(200);
-        $this->assertSelectorTextContains('div.alert-danger', 'Invalid credentials.');
+        $this->assertSelectorTextContains('#invalid-credentials', 'Invalid credentials.');
     }
 
     public function testLoginPageWithValidUsernameAndInvalidPassword(): void
@@ -222,7 +222,7 @@ class FrontControllerTest extends BaseController
 
         $this->assertEquals('/login', $client->getRequest()->getPathInfo());
         $this->assertResponseStatusCodeSame(200);
-        $this->assertSelectorTextContains('div.alert-danger', 'Invalid credentials.');
+        $this->assertSelectorTextContains('#invalid-credentials', 'Invalid credentials.');
     }
 
     public function testLoginPageWithValidUsernameAndPassword(): void
