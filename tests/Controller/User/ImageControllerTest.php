@@ -42,7 +42,7 @@ class ImageControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Image');
-        $this->assertSelectorTextContains('.invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#image_name_error_0', 'This value should not be blank.');
     }
 
     public function testImageNewPageWithAdminLoginWithFormSubmissionWithInvalidValues(): void
@@ -58,7 +58,7 @@ class ImageControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Image');
-        $this->assertSelectorTextContains('.invalid-feedback', 'Please upload a valid image');
+        $this->assertSelectorTextContains('#image_name_error_0', 'Please upload a valid image');
     }
 
     public function testImageNewPageWithAdminLoginWithFormSubmissionWithValidValues(): void

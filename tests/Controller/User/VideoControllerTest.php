@@ -42,7 +42,7 @@ class VideoControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Video');
-        $this->assertSelectorTextContains('.invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#video_url_error_0', 'This value should not be blank.');
     }
 
     public function testVideoNewPageWithAdminLoginWithFormSubmissionWithInvalidValues(): void
@@ -55,7 +55,7 @@ class VideoControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Video');
-        $this->assertSelectorTextContains('.invalid-feedback', 'This value is not a valid URL.');
+        $this->assertSelectorTextContains('#video_url_error_0', 'This value is not a valid URL.');
     }
 
     public function testVideoNewPageWithUserLoginWithFormSubmissionWithValidValues(): void
