@@ -3,6 +3,57 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
+    <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{ trick.name }}</h1>
+    <img class="h-auto mx-auto rounded-lg" src="{{ asset('uploads/images/' ~ trick.mainImage.name) }}" alt="image description">
+
+    <div id="medias">
+        <div class="text-center m-5">
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">See medias</button>
+        </div>
+
+        <div id="medias_images_and_videos" class="mx-auto flex flex-col">
+            <div id="medias_images" class="flex flex-col">
+                {% for image in trick.images %}
+                    <div class="">
+                        <img class="h-auto mx-auto w-[90%] m-5 rounded" src="{{ asset('uploads/images/' ~ image.name) }}" alt="{{ image.alt }}">
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="medias_videos" class="flex flex-col">
+                {% for video in trick.videos %}
+                    <div class="">
+                        <embed type="video/mp4" src="{{ video.url }}" class="mx-auto w-[100%] m-5">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="m-5 text-base text-gray-900 dark:text-white">
+        {{ trick.description }}
+    </div>
+
+    <div id="content_informations">
+        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">Default</span>
+        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-300">Dark</span>
+        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">Green</span>
+        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">Red</span>
+
+        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-blue-400 border border-blue-400">Default</span>
+        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-400 border border-gray-500">Dark</span>
+        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-red-400 border border-red-400">Red</span>
+        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-green-400 border border-green-400">Green</span>
+
+        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Default</span>
+        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">Dark</span>
+        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Red</span>
+        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Green</span>
+    </div>
+
+    <hr style="color: red;">
+    <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">TODO</h1>
+    <hr style="color: red;">
+
     <div id="content-home" {% if trick.mainImage %}style="background: no-repeat center/100% url({{ asset('uploads/images/' ~ trick.mainImage.name) }})"{% endif %}>
         {% if is_granted('ROLE_USER') %}
             <div
@@ -33,7 +84,7 @@
                 }) }}
             </div>
         {% endif %}
-        <h1 class="text-center">{{ trick.name }}</h1>
+        <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{ trick.name }}</h1>
     </div>
     <div class="container">
         <div id="see-medias-block" class="text-center" data-controller="show-medias">
