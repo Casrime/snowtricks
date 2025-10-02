@@ -132,7 +132,8 @@
                     {{ include('_inc/_modal_button.html.twig', {
                         btn_class: 'btn-danger',
                         content: 'Delete',
-                        target: 'trick-' ~ trick.id
+                        id: trick.id,
+                        htmlName: 'trick'
                     }) }}
                 {% endif %}
                 <button class="btn btn-{% if delete is defined %}warning{% else %}primary{% endif %}">{{ button_label|default('Save') }}</button>
