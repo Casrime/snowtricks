@@ -642,7 +642,7 @@ packages:
     resolution: {directory: vendor/symfony/ux-turbo/assets, type: directory}
     peerDependencies:
       '@hotwired/stimulus': ^3.0.0
-      '@hotwired/turbo': ^7.1.1 || ^8.0
+      '@hotwired/turbo': ^7.1.0 || ^8.0
 
   '@symfony/webpack-encore@5.2.0':
     resolution: {integrity: sha512-AGSdYBFgWqiZDFn6LAtoGYGys/XRdGpoGoEzt5m4FKkan20oGfmFfHJfemyLW7/OzQkRi1RM2F0RsIlZ73pmAw==}
