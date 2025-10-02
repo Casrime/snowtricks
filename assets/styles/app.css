@@ -3,7 +3,4 @@
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 @source not "../../public";
-
-body {
-    background-color: lightgray;
-}
+@custom-variant dark (&:where(.dark, .dark *));
