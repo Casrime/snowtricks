@@ -76,6 +76,15 @@ Encore
     //.autoProvidejQuery()
 
     .enablePostCssLoader()
+    .copyFiles({
+        from: './assets/images',
+
+        // if versioning is enabled, add the file hash too
+        to: 'images/[path][name].[hash:8].[ext]',
+
+        // only copy files matching this pattern
+        pattern: /\.(png|jpg|jpeg)$/
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();
