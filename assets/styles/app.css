@@ -16,7 +16,8 @@
 
 #content-home {
     height: 30vh;
-    border: solid 1px white;
+    border: solid 1px transparent;
+    border-radius: 0.25rem;
     background-image: url("../images/snowtricks.jpg");
 }
 

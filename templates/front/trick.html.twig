@@ -3,7 +3,7 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-    <div id="content-home" {% if trick.mainImage %}style="background: no-repeat center/100% url({{ asset('uploads/images/' ~ trick.mainImage.name) }})"{% endif %}>
+    <div class="mx-2" id="content-home" {% if trick.mainImage %}style="background: no-repeat center/100% url({{ asset('uploads/images/' ~ trick.mainImage.name) }})"{% endif %}>
         {% if is_granted('ROLE_USER') %}
             <div
                 class="actions flex justify-end items-start"
@@ -35,11 +35,6 @@
         {% endif %}
         <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{ trick.name }}</h1>
     </div>
-    {#
-    <div class="mx-2">
-        <img class="h-auto mx-auto rounded-lg" src="{{ asset('uploads/images/' ~ trick.mainImage.name) }}" alt="image description">
-    </div>
-    #}
 
     <div id="medias">
         <div class="text-center m-5">
