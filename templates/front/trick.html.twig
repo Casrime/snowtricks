@@ -3,61 +3,10 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-    <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{ trick.name }}</h1>
-    <img class="h-auto mx-auto rounded-lg" src="{{ asset('uploads/images/' ~ trick.mainImage.name) }}" alt="image description">
-
-    <div id="medias">
-        <div class="text-center m-5">
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">See medias</button>
-        </div>
-
-        <div id="medias_images_and_videos" class="mx-auto flex flex-col">
-            <div id="medias_images" class="flex flex-col">
-                {% for image in trick.images %}
-                    <div class="">
-                        <img class="h-auto mx-auto w-[90%] m-5 rounded" src="{{ asset('uploads/images/' ~ image.name) }}" alt="{{ image.alt }}">
-                    </div>
-                {% endfor %}
-            </div>
-            <div id="medias_videos" class="flex flex-col">
-                {% for video in trick.videos %}
-                    <div class="">
-                        <embed type="video/mp4" src="{{ video.url }}" class="mx-auto w-[100%] m-5">
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    <div id="content" class="m-5 text-base text-gray-900 dark:text-white">
-        {{ trick.description }}
-    </div>
-
-    <div id="content_informations">
-        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">Default</span>
-        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-300">Dark</span>
-        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">Green</span>
-        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">Red</span>
-
-        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-blue-400 border border-blue-400">Default</span>
-        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-400 border border-gray-500">Dark</span>
-        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-red-400 border border-red-400">Red</span>
-        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-green-400 border border-green-400">Green</span>
-
-        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Default</span>
-        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">Dark</span>
-        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">Red</span>
-        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">Green</span>
-    </div>
-
-    <hr style="color: red;">
-    <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">TODO</h1>
-    <hr style="color: red;">
-
     <div id="content-home" {% if trick.mainImage %}style="background: no-repeat center/100% url({{ asset('uploads/images/' ~ trick.mainImage.name) }})"{% endif %}>
         {% if is_granted('ROLE_USER') %}
             <div
-                class="actions d-flex justify-content-end align-items-start"
+                class="actions flex justify-end items-start"
                 style="position: relative; top: 10px; right: 10px;"
             >
                 <a href="{{ path('app_trick_edit', {
@@ -67,7 +16,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
                     </svg>
                 </a>
-                <span data-bs-toggle="modal" data-bs-target="#trick-{{ trick.id }}">
+                <span data-modal-target="trick-{{ trick.id }}" data-modal-toggle="trick-{{ trick.id }}">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
                     </svg>
@@ -86,82 +35,95 @@
         {% endif %}
         <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{ trick.name }}</h1>
     </div>
-    <div class="container">
-        <div id="see-medias-block" class="text-center" data-controller="show-medias">
-            <button class="btn btn-primary d-sm-none" data-action="show-medias#show">See medias</button>
+    {#
+    <div class="mx-2">
+        <img class="h-auto mx-auto rounded-lg" src="{{ asset('uploads/images/' ~ trick.mainImage.name) }}" alt="image description">
+    </div>
+    #}
+
+    <div id="medias">
+        <div class="text-center m-5">
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">See medias</button>
         </div>
-        <div class="row d-none d-sm-flex">
-            <div class="col-md-6 d-flex flex-column flex-md-row flex-wrap">
+
+        <div id="medias_images_and_videos" class="mx-auto flex flex-col">
+            <div id="medias_images" class="flex flex-col">
                 {% for image in trick.images %}
-                    <div class="form-check my-2 col-12 col-md-4 d-flex flex-column">
-                        <div class="mx-md-2">
-                            <label class="form-check-label" for="{{ image.id }}">
-                                <img class="img-fluid rounded" src="{{ asset('uploads/images/' ~ image.name) }}" alt="{{ image.alt }}" />
-                            </label>
-                        </div>
+                    <div class="">
+                        <img class="h-auto mx-auto w-[90%] m-5 rounded" src="{{ asset('uploads/images/' ~ image.name) }}" alt="{{ image.alt }}">
                     </div>
                 {% endfor %}
             </div>
-            <div class="col-md-6 d-flex flex-column flex-md-row flex-wrap">
+            <div id="medias_videos" class="mx-auto flex flex-col">
                 {% for video in trick.videos %}
-                    <div class="form-check my-2 col-12 col-md-4 d-flex flex-column">
-                        <div class="mx-md-2">
-                            <embed type="video/mp4" src="{{ video.url }}" width="100%" height="125">
-                        </div>
+                    <div class="">
+                        <embed type="video/mp4" src="{{ video.url }}" class="mx-auto w-[100%] m-5">
                     </div>
                 {% endfor %}
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <p>{{ trick.description }}</p>
+    </div>
+
+    <div id="content" class="mx-[5%] text-base text-gray-900 dark:text-white text-justify">
+        {{ trick.description }}
+    </div>
+
+    <div id="content_informations" class="flex justify-center flex-wrap">
+        <span class="my-2 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+            Créée le : {{ trick.createdAt|date('d/m/Y') }}
+        </span>
+        <span class="my-2 bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+            Groupe : {{ trick.category.name }}
+        </span>
+        {% if trick.updatedAt %}
+            <span class="my-2 bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-red-400 border border-red-400">
+                Modifiée le : {{ trick.updatedAt|date('d/m/Y') }}
+            </span>
+        {% endif %}
+        <span class="my-2 bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-green-400 border border-green-400">
+            Créée par : {{ trick.user.username }}
+        </span>
+    </div>
+
+    <hr class="mx-5 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+    {% if is_granted('ROLE_USER') %}
+        <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Leave a comment</h2>
+        {{ include('common/comment/_form.html.twig', {'button_label': 'Comment'}) }}
+    {% else %}
+        <div class="mx-5 flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+            <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="sr-only">Info</span>
+            <div>
+            <span class="font-medium">
+                You need to be <a href="{{ path('app_login') }}" class="font-semibold underline hover:no-underline">logged in</a> to leave a comment.
+            </span>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-md-6 offset-md-3 text-center">
-                <span class="badge text-bg-primary">Créée le : {{ trick.createdAt|date('d/m/Y') }}</span>
-                <span class="badge text-bg-secondary">Groupe : {{ trick.category.name }}</span>
-                {% if trick.updatedAt %}
-                    <span class="badge text-bg-success">Modifiée le : {{ trick.updatedAt|date('d/m/Y') }}</span>
-                {% endif %}
-                <span class="badge text-bg-danger">Créée par : {{ trick.user.username }}</span>
-                <hr>
-            </div>
+    {% endif %}
 
-            {% if is_granted('ROLE_USER') %}
-                {{ include('common/comment/_form.html.twig', {'button_label': 'Leave a comment'}) }}
-            {% else %}
-                <div class="col-12 col-md-6 offset-md-3 alert alert-info text-center" role="alert">
-                    You need to be <a href="{{ path('app_login') }}" class="alert-link">logged in</a> to leave a comment.
-                </div>
-            {% endif %}
+    <hr class="mx-5 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
-            <div
-                class="col-12 col-md-6 offset-md-3"
-                data-controller="load-more-comments"
-                data-offset="0"
-                data-id="{{ trick.id }}"
-                id="comments"
-            >
-                <hr>
+    <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Comments</h2>
 
-                <h2>Comments</h2>
-                <div class="accordion" id="accordionExample">
-                    <div
-                        class="text-center"
-                        id="load-more-button-div"
-                    >
-                    </div>
-                </div>
-                <div class="text-center">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-action="load-more-comments#connect"
-                        id="load-more-button"
-                    >Load more</button>
+    <div id="accordion-collapse" class="mx-5 my-2" data-accordion="collapse">
+        {% for comment in trick.comments|reverse %}
+            <h2 id="accordion-collapse-heading-{{ comment.id }}">
+                <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border {% if not loop.last %}border-b-0{% endif %} border-gray-200 {% if loop.first %}rounded-t-xl{% endif%} focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{{ comment.id }}" aria-expanded="true" aria-controls="accordion-collapse-body-{{ comment.id }}">
+                    <span>{{ comment.user.username }} #{{ comment.id }}</span>
+                    <span class="italic">Posté le {{ comment.createdAt|date('d/m/Y') }}</span>
+                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                    </svg>
+                </button>
+            </h2>
+            <div id="accordion-collapse-body-{{ comment.id }}" class="{% if not loop.first %}hidden{% endif %}" aria-labelledby="accordion-collapse-heading-{{ comment.id }}">
+                <div class="p-5 border {% if not loop.last %}border-b-0{% endif %} border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                    <p class="mb-2 text-gray-500 dark:text-gray-400">{{ comment.content }}</p>
                 </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}
