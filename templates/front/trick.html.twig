@@ -41,18 +41,18 @@
             <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">See medias</button>
         </div>
 
-        <div id="medias_images_and_videos" class="mx-auto flex flex-col">
-            <div id="medias_images" class="flex flex-col">
+        <div id="medias_images_and_videos" class="mx-auto flex flex-col md:flex-col md:mx-20">
+            <div id="medias_images" class="flex flex-col md:flex-row">
                 {% for image in trick.images %}
-                    <div class="">
-                        <img class="h-auto mx-auto w-[90%] m-5 rounded" src="{{ asset('uploads/images/' ~ image.name) }}" alt="{{ image.alt }}">
+                    <div class="flex-1">
+                        <img class="w-[90%] mx-5 my-2 rounded" src="{{ asset('uploads/images/' ~ image.name) }}" alt="{{ image.alt }}">
                     </div>
                 {% endfor %}
             </div>
-            <div id="medias_videos" class="mx-auto flex flex-col">
+            <div id="medias_videos" class="mx-auto flex flex-col md:flex-row">
                 {% for video in trick.videos %}
-                    <div class="">
-                        <embed type="video/mp4" src="{{ video.url }}" class="mx-auto w-[100%] m-5">
+                    <div class="flex-1">
+                        <embed type="video/mp4" src="{{ video.url }}" class="w-[90%] mx-5 my-2">
                     </div>
                 {% endfor %}
             </div>
@@ -63,7 +63,7 @@
         {{ trick.description }}
     </div>
 
-    <div id="content_informations" class="flex justify-center flex-wrap">
+    <div id="content_informations" class="flex justify-center flex-wrap md:mx-[5%]">
         <span class="my-2 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
             Créée le : {{ trick.createdAt|date('d/m/Y') }}
         </span>
@@ -80,45 +80,49 @@
         </span>
     </div>
 
-    <hr class="mx-5 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+    <hr class="mx-5 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700 md:mx-[15%]">
 
-    {% if is_granted('ROLE_USER') %}
-        <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Leave a comment</h2>
-        {{ include('common/comment/_form.html.twig', {'button_label': 'Comment'}) }}
-    {% else %}
-        <div class="mx-5 flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
-            <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-            </svg>
-            <span class="sr-only">Info</span>
-            <div>
+    <div id="content_leave_comment" class="md:mx-[15%]">
+        {% if is_granted('ROLE_USER') %}
+            <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Leave a comment</h2>
+            {{ include('common/comment/_form.html.twig', {'button_label': 'Comment'}) }}
+        {% else %}
+            <div class="mx-5 flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+                <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
             <span class="font-medium">
                 You need to be <a href="{{ path('app_login') }}" class="font-semibold underline hover:no-underline">logged in</a> to leave a comment.
             </span>
-            </div>
-        </div>
-    {% endif %}
-
-    <hr class="mx-5 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
-    <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Comments</h2>
-
-    <div id="accordion-collapse" class="mx-5 my-2" data-accordion="collapse">
-        {% for comment in trick.comments|reverse %}
-            <h2 id="accordion-collapse-heading-{{ comment.id }}">
-                <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border {% if not loop.last %}border-b-0{% endif %} border-gray-200 {% if loop.first %}rounded-t-xl{% endif%} focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{{ comment.id }}" aria-expanded="true" aria-controls="accordion-collapse-body-{{ comment.id }}">
-                    <span>{{ comment.user.username }} #{{ comment.id }}</span>
-                    <span class="italic">Posté le {{ comment.createdAt|date('d/m/Y') }}</span>
-                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
-                    </svg>
-                </button>
-            </h2>
-            <div id="accordion-collapse-body-{{ comment.id }}" class="{% if not loop.first %}hidden{% endif %}" aria-labelledby="accordion-collapse-heading-{{ comment.id }}">
-                <div class="p-5 border {% if not loop.last %}border-b-0{% endif %} border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-                    <p class="mb-2 text-gray-500 dark:text-gray-400">{{ comment.content }}</p>
                 </div>
             </div>
-        {% endfor %}
+        {% endif %}
+    </div>
+
+    <hr class="mx-5 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700 md:mx-[15%]">
+
+    <div id="content_comments" class="md:mx-[15%]">
+        <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Comments</h2>
+
+        <div id="accordion-collapse" class="mx-5 my-2" data-accordion="collapse">
+            {% for comment in trick.comments|reverse %}
+                <h2 id="accordion-collapse-heading-{{ comment.id }}">
+                    <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border {% if not loop.last %}border-b-0{% endif %} border-gray-200 {% if loop.first %}rounded-t-xl{% endif%} focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{{ comment.id }}" aria-expanded="true" aria-controls="accordion-collapse-body-{{ comment.id }}">
+                        <span>{{ comment.user.username }} #{{ comment.id }}</span>
+                        <span class="italic">Posté le {{ comment.createdAt|date('d/m/Y') }}</span>
+                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-collapse-body-{{ comment.id }}" class="{% if not loop.first %}hidden{% endif %}" aria-labelledby="accordion-collapse-heading-{{ comment.id }}">
+                    <div class="p-5 border {% if not loop.last %}border-b-0{% endif %} border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                        <p class="mb-2 text-gray-500 dark:text-gray-400">{{ comment.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
