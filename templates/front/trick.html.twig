@@ -37,11 +37,11 @@
     </div>
 
     <div id="medias">
-        <div class="text-center m-5">
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">See medias</button>
+        <div id="see-medias-block" class="text-center m-5 md:hidden" data-controller="show-medias">
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" data-action="show-medias#show">See medias</button>
         </div>
 
-        <div id="medias_images_and_videos" class="mx-auto flex flex-col md:flex-col md:mx-20">
+        <div id="medias_images_and_videos" class="hidden md:block mx-auto flex flex-col md:flex-col md:mx-20">
             <div id="medias_images" class="flex flex-col md:flex-row">
                 {% for image in trick.images %}
                     <div class="flex-1">
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div id="content" class="mx-[5%] text-base text-gray-900 dark:text-white text-justify">
+    <div id="content" class="mx-[5%] my-2 text-base text-gray-900 dark:text-white text-justify">
         {{ trick.description }}
     </div>
 
@@ -120,6 +120,16 @@
                 <div id="accordion-collapse-body-{{ comment.id }}" class="{% if not loop.first %}hidden{% endif %}" aria-labelledby="accordion-collapse-heading-{{ comment.id }}">
                     <div class="p-5 border {% if not loop.last %}border-b-0{% endif %} border-gray-200 dark:border-gray-700 dark:bg-gray-900">
                         <p class="mb-2 text-gray-500 dark:text-gray-400">{{ comment.content }}</p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="flex items-center p-4 mb-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800" role="alert">
+                    <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span class="sr-only">Info</span>
+                    <div>
+                        <span class="font-medium">No comments</span>
                     </div>
                 </div>
             {% endfor %}

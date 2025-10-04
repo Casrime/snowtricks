@@ -4,10 +4,8 @@ export default class extends Controller {
     async show(e) {
         const seeMediasBlock = document.getElementById('see-medias-block');
         seeMediasBlock.style.display = 'none';
-        const dNone = document.querySelectorAll('.d-none');
-        dNone.forEach((element) => {
-            element.classList.remove('d-none');
-        });
+        const mediasImagesAndVideos = document.getElementById('medias_images_and_videos');
+        mediasImagesAndVideos.classList.remove('hidden');
         e.preventDefault();
     }
 }
