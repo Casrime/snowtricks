@@ -3,7 +3,54 @@
 {% block title %}Administration{% endblock %}
 
 {% block body %}
-    <h1 class="text-center">Administration</h1>
+    <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Administration</h1>
+
+    <div class="container mx-auto">
+        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
+                <li class="me-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="tricks-styled-tab" data-tabs-target="#styled-tricks" type="button" role="tab" aria-controls="tricks" aria-selected="false">Tricks</button>
+                </li>
+                <li class="me-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="categories-styled-tab" data-tabs-target="#styled-categories" type="button" role="tab" aria-controls="categories" aria-selected="false">Categories</button>
+                </li>
+                <li class="me-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="users-styled-tab" data-tabs-target="#styled-users" type="button" role="tab" aria-controls="users" aria-selected="false">Users</button>
+                </li>
+                <li role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="comments-styled-tab" data-tabs-target="#styled-comments" type="button" role="tab" aria-controls="comments" aria-selected="false">Comments</button>
+                </li>
+                <li role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="images-styled-tab" data-tabs-target="#styled-images" type="button" role="tab" aria-controls="images" aria-selected="false">Images</button>
+                </li>
+                <li role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="videos-styled-tab" data-tabs-target="#styled-videos" type="button" role="tab" aria-controls="videos" aria-selected="false">Videos</button>
+                </li>
+            </ul>
+        </div>
+        <div id="default-styled-tab-content">
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-tricks" role="tabpanel" aria-labelledby="tricks-tab">
+                {{ include('_inc/_user/_trick.html.twig', {
+                    tricks: tricks,
+                }) }}
+            </div>
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-categories" role="tabpanel" aria-labelledby="categories-tab">
+                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Categories tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+            </div>
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-users" role="tabpanel" aria-labelledby="users-tab">
+                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Users tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+            </div>
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-comments" role="tabpanel" aria-labelledby="comments-tab">
+                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Comments tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+            </div>
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-images" role="tabpanel" aria-labelledby="images-tab">
+                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Images tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+            </div>
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-videos" role="tabpanel" aria-labelledby="videos-tab">
+                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Videos tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -28,9 +75,9 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="trick-tab-pane" role="tabpanel" aria-labelledby="trick-tab" tabindex="0">
-                {{ include('_inc/_user/_trick.html.twig', {
+                {# {{ include('_inc/_user/_trick.html.twig', {
                     tricks: tricks,
-                }) }}
+                }) }} #}
             </div>
             <div class="tab-pane fade" id="category-tab-pane" role="tabpanel" aria-labelledby="category-tab" tabindex="0">
                 {{ include('_inc/_admin/_category.html.twig', {

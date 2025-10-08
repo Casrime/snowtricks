@@ -1,52 +1,74 @@
-<a href="{{ path('app_trick_new') }}" class="btn btn-primary">New trick</a>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for trick in tricks %}
+<div class="mb-5">
+    <a href="{{ path('app_trick_new') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+        New trick
+    </a>
+</div>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-            <td>{{ trick.id }}</td>
-            <td>{{ trick.name }}</td>
-            <td>{{ trick.description|u.truncate(100, '...') }}</td>
-            <td>
-                <a href="{{ path('trick', {'id': trick.id}) }}">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
-                        <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                    </svg>
-                </a>
-                <a href="{{ path('app_trick_edit', {'id': trick.id}) }}">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
-                    </svg>
-                </a>
-                <span data-bs-toggle="modal" data-bs-target="#trick-{{ trick.id }}">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
-                    </svg>
-                </span>
-                {{ include('_inc/_modal.html.twig', {
-                    id: trick.id,
-                    htmlName: 'trick',
-                    name: trick.name,
-                    includeForm: include('_inc/_delete_form.html.twig', {
-                        action: path('app_trick_delete', {'id': trick.id}),
-                        content: 'Delete',
-                        value: csrf_token('delete' ~ trick.id),
-                    })
-                }) }}
-            </td>
+            <th scope="col" class="px-6 py-3">
+                Id
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Name
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Category
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Description
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Action
+            </th>
         </tr>
-    {% else %}
-        <tr>
-            <td colspan="4">no records found</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        {% for trick in tricks %}
+            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
+                <td class="px-6 py-4">
+                    {{ trick.id }}
+                </td>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ trick.name }}
+                </th>
+                <td class="px-6 py-4">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+                        {{ trick.category.name }}
+                    </span>
+                </td>
+                <td class="px-6 py-4">
+                    {{ trick.description|u.truncate(100, '...') }}
+                </td>
+                <td class="px-6 py-4 flex">
+                    <a href="{{ path('trick', {'id': trick.id}) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-5">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                        </svg>
+                    </a>
+                    <span data-modal-target="trick-{{ trick.id }}" data-modal-toggle="trick-{{ trick.id }}">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                        </svg>
+                    </span>
+                    {{ include('_inc/_modal.html.twig', {
+                        id: trick.id,
+                        htmlName: 'trick',
+                        name: trick.name,
+                        includeForm: include('_inc/_delete_form.html.twig', {
+                            action: path('app_trick_delete', {'id': trick.id}),
+                            content: 'Delete',
+                            value: csrf_token('delete' ~ trick.id),
+                        })
+                    }) }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td class="px-6 py-4" colspan="4">No tricks found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
