@@ -112,7 +112,7 @@ sf: ## Symfony command example: make sf c='c:c -e prod'
 .PHONY: checks cs
 
 checks: ## Run all checks
-checks: php-cs-fixer twig-cs-fixer phpstan
+checks: rector php-cs-fixer twig-cs-fixer phpstan
 
 php-cs-fixer: ## Run php-cs-fixer
 	vendor/bin/php-cs-fixer --config=$(TOOLS_DIRECTORY)/.php-cs-fixer.dist.php fix --diff --verbose --allow-risky=yes
