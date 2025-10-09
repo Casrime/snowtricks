@@ -26,7 +26,10 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Trick created successfully');
+            $this->addFlash(
+                'success',
+                sprintf('Trick created successfully: %s', $trick->getName())
+            );
 
             if ($this->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
@@ -53,7 +56,10 @@ class TrickController extends AbstractController
             $trick->setUpdatedAt(new DateTimeImmutable());
             $entityManager->flush();
 
-            $this->addFlash('warning', 'Trick updated successfully');
+            $this->addFlash(
+                'warning',
+                sprintf('Trick updated successfully: %s', $trick->getName())
+            );
 
             if ($this->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
@@ -78,6 +84,11 @@ class TrickController extends AbstractController
             }
             $entityManager->remove($trick);
             $entityManager->flush();
+
+            $this->addFlash(
+                'danger',
+                sprintf('Trick removed successfully: %s', $trick->getName())
+            );
         }
 
         if ($this->isGranted('ROLE_ADMIN')) {
