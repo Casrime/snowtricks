@@ -135,7 +135,7 @@ tests: ## Run tests
 tests: export APP_ENV=test
 tests:
 	@$(eval c ?=)
-	symfony run bin/phpunit --configuration $(TOOLS_DIRECTORY)/phpunit.xml.dist $(c) $(coverage)
+	$(DOCKER_COMPOSE) exec php bin/phpunit --configuration $(TOOLS_DIRECTORY)/phpunit.xml.dist $(c) $(coverage)
 
 tests-reset: ## Recreate database, launch migrations, load fixtures and execute tests
 tests-reset: export APP_ENV=test
