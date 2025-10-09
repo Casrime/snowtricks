@@ -98,7 +98,7 @@ class ImageController extends AbstractController
             $entityManager->remove($image);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Image deleted successfully');
+            $this->addFlash('danger', 'Image deleted successfully');
         }
 
         if ($this->isGranted('ROLE_ADMIN')) {
