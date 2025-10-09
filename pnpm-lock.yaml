@@ -38,7 +38,7 @@ importers:
         version: 4.1.14
       core-js:
         specifier: ^3.38.0
-        version: 3.45.1
+        version: 3.46.0
       file-loader:
         specifier: ^6.0.0
         version: 6.2.0(webpack@5.102.1)
@@ -1107,8 +1107,8 @@ packages:
   core-js-compat@3.45.1:
     resolution: {integrity: sha512-tqTt5T4PzsMIZ430XGviK4vzYSoeNJ6CXODi6c/voxOT6IZqBht5/EKaSNnYiEjjRYxjVz7DQIsOsY0XNi8PIA==}
 
-  core-js@3.45.1:
-    resolution: {integrity: sha512-L4NPsJlCfZsPeXukyzHFlg/i7IIVwHSItR0wg0FLNqYClJ4MQYTYLbC7EkjKYRLZF2iof2MUgN0EGy7MdQFChg==}
+  core-js@3.46.0:
+    resolution: {integrity: sha512-vDMm9B0xnqqZ8uSBpZ8sNtRtOdmfShrvT6h2TuQGLs0Is+cR0DYbj/KWP6ALVNbWPpqA/qPLoOuppJN07humpA==}
 
   cosmiconfig@9.0.0:
     resolution: {integrity: sha512-itvL5h8RETACmOTFc4UfIyB2RfEHi71Ax6E/PivVxq9NseKbOWpeyHEOIbmAw1rs8Ak0VursQNww7lf7YtUwzg==}
@@ -3378,7 +3378,7 @@ snapshots:
     dependencies:
       browserslist: 4.26.3
 
-  core-js@3.45.1: {}
+  core-js@3.46.0: {}
 
   cosmiconfig@9.0.0:
     dependencies:
