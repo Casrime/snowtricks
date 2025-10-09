@@ -3,6 +3,7 @@
 namespace App\Controller\User;
 
 use App\Entity\Trick;
+use App\Entity\User;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use DateTimeImmutable;
@@ -23,7 +24,9 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trick->setUser($this->getUser());
+            /** @var User $user */
+            $user = $this->getUser();
+            $trick->setUser($user);
             $entityManager->persist($trick);
             $entityManager->flush();
 
