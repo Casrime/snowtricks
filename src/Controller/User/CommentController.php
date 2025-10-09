@@ -45,7 +45,7 @@ class CommentController extends AbstractController
             $entityManager->remove($comment);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Comment deleted successfully');
+            $this->addFlash('danger', 'Comment removed successfully');
         }
 
         if ($this->isGranted('ROLE_ADMIN')) {

@@ -1,17 +1,17 @@
 <div class="mx-5">
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <div class="text-right">
+        <div class="flex justify-between">
             <button
                 {% if delete is defined %}
-                    class="text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
+                    class="btn-yellow"
                 {% else %}
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    class="btn-blue"
                 {% endif %}
             >{{ button_label|default('Save') }}</button>
             {% if delete is defined %}
                 {{ include('_inc/_modal_button.html.twig', {
-                    btn_class: 'text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900',
+                    btn_class: 'btn-red',
                     content: 'Delete',
                     id: comment.id,
                     htmlName: 'comment'
