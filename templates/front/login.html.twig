@@ -3,24 +3,31 @@
 {% block title %}Hello LoginController!{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="col-md-4 offset-md-4 text-center mt-5">
-            <h1>Login</h1>
-            <div class="border border-black border-3 container">
-                <div class="col-md-6 offset-md-3 my-3">
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-                    {{ form_start(form) }}
-                        {{ form_errors(form) }}
-                        {{ form_widget(form) }}
-                        <button class="btn btn-primary" type="submit">Connexion</button>
-                    {{ form_end(form) }}
-                    <br>
-                    <p><a href="{{ path('app_register') }}">Inscription</a></p>
-                    <p><a href="{{ path('app_forget_password') }}">Mot de passe oublié</a></p>
+    <div class="w-[90%] m-auto">
+        <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Login</h1>
+        <img class="h-auto max-w-lg mx-auto" alt="Logo SnowTricks" src="{{ asset('build/images/snowtricks.png') }}">
+        {{ form_start(form) }}
+            {% if error %}
+                <div
+                    class="p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert"
+                    id="invalid-credentials"
+                >
+                    <span class="font-medium">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
                 </div>
-            </div>
-        </div>
+            {% endif %}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Connexion</button>
+        {{ form_end(form) }}
+        <br>
+
+        <ul class="flex flex-wrap items-center justify-center text-gray-900 dark:text-white">
+            <li>
+                <a class="me-4 hover:underline md:me-6text-blue-600 hover:underline dark:text-blue-500" href="{{ path('app_register') }}">Inscription</a>
+            </li>
+            <li>
+                <a class="me-4 hover:underline md:me-6 text-blue-600 hover:underline dark:text-blue-500" href="{{ path('app_forget_password') }}">Mot de passe oublié</a>
+            </li>
+        </ul>
     </div>
 {% endblock %}

@@ -25,6 +25,7 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($category);
             $entityManager->flush();
+            $this->addFlash('success', sprintf('Category created successfully: %s', $category->getName()));
 
             return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
         }
@@ -44,6 +45,7 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('warning', sprintf('Category updated successfully: %s', $category->getName()));
 
             return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
         }
@@ -63,7 +65,7 @@ class CategoryController extends AbstractController
             $entityManager->remove($category);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Category deleted successfully');
+            $this->addFlash('danger', sprintf('Category removed successfully: %s', $category->getName()));
         }
 
         return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);

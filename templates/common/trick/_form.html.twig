@@ -1,100 +1,148 @@
-{{ form_start(form) }}
-    <div class="col-md-12">
-        <label class="mb-3 {% if form.mainImage.vars.required %}required{% endif %}">{{ form.mainImage.vars.label|capitalize }}</label>
-        <div id="{{ form.mainImage.vars.id }}" class="d-flex flex-wrap">
-            {% for image in form.mainImage.children %}
-                <div class="form-check my-2 col-12 col-md-3 d-flex flex-column">
-                    <div class="img-input-and-label mx-md-2">
-                        <input
-                            type="radio"
-                            id="{{ image.vars.id }}"
-                            name="{{ image.vars.full_name }}"
-                            class="form-check-input"
-                            value="{{ image.vars.value }}"
-                            {% if image.vars.checked %}checked{% endif %}
-                        >
-                        <label class="form-check-label {% if image.vars.required %}required{% endif %}" for="{{ image.vars.id }}">
-                            <img class="img-fluid rounded" src="{{ asset('uploads/images/' ~ image.vars.label) }}" alt="{{ image.vars.label }}" />
-                        </label>
+<div class="mx-4">
+    {{ form_start(form) }}
+        <div>
+            <label class="mb-3 block font-medium text-gray-200 {% if form.mainImage.vars.required %}required{% endif %}">
+                {{ form.mainImage.vars.label|capitalize }}
+            </label>
+
+            <div id="{{ form.mainImage.vars.id }}" class="flex flex-wrap">
+                {% for image in form.mainImage.children %}
+                    <div class="w-1/4 p-1">
+                        <div class="flex flex-col items-center">
+
+                            <div class="relative w-full">
+                                <label
+                                    for="{{ image.vars.id }}"
+                                    class="block cursor-pointer rounded-lg border border-gray-300 overflow-hidden transition hover:shadow-md"
+                                >
+                                    <img class="w-full h-auto object-cover" src="{{ asset('uploads/images/' ~ image.vars.label) }}" alt="{{ image.vars.label }}" />
+                                </label>
+
+                                <input
+                                    type="radio"
+                                    id="{{ image.vars.id }}"
+                                    name="{{ image.vars.full_name }}"
+                                    value="{{ image.vars.value }}"
+                                    class="absolute top-2 left-2 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500
+                                   dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700
+                                   focus:ring-2 dark:bg-gray-600 dark:border-gray-500 rounded-full"
+                                    {% if image.vars.checked %}checked{% endif %}
+                                >
+                            </div>
+
+                            <div class="flex justify-end mt-2 space-x-2 w-full">
+                                <a href="{{ path('app_image_edit', { id: image.vars.value }) }}" class="text-white hover:text-blue-300">
+                                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                    </svg>
+                                </a>
+                                <button type="button" data-modal-target="image-{{ image.vars.value }}" data-modal-toggle="image-{{ image.vars.value }}" class="text-white hover:text-red-300">
+                                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="actions d-flex justify-content-end">
-                        <a href="{{ path('app_image_edit', {
-                            id: image.vars.value
-                        }) }}">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <span data-bs-toggle="modal" data-bs-target="#mainImage-{{ image.vars.value }}">
-                            <i class="bi bi-trash"></i>
-                        </span>
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div id="see-medias-block" class="text-center" data-controller="show-medias">
-        <button class="btn btn-primary d-sm-none" data-action="show-medias#show">See medias</button>
-    </div>
-    <div class="row d-none d-sm-flex">
-        <div class="col-md-6">
-            <label class="mb-3 {% if form.images.vars.required %}required{% endif %}">{{ form.images.vars.name|capitalize }}</label>
-            <div id="{{ form.images.vars.id }}" class="d-flex flex-wrap flex-column flex-md-row container">
+
+    <div class="sm:flex flex-wrap gap-6 mt-6">
+        <div class="flex-1">
+            <label class="mb-3 block font-medium text-gray-200 {% if form.images.vars.required %}required{% endif %}">
+                {{ form.images.vars.name|capitalize }}
+            </label>
+
+            <div id="{{ form.images.vars.id }}" class="flex flex-wrap">
                 {% for image in form.images %}
-                    <div class="form-check my-2 col-12 col-md-4 d-flex flex-column">
-                        <div class="img-input-and-label mx-md-2">
+                    <div class="w-1/4 p-1">
+                        <div class="flex flex-col relative group">
                             <input
                                 type="checkbox"
                                 id="{{ image.vars.id }}"
                                 name="{{ image.vars.full_name }}"
-                                class="form-check-input"
                                 value="{{ image.vars.value }}"
+                                class="absolute top-2 left-2 w-5 h-5 z-10 text-blue-600 bg-gray-100 border-gray-300 rounded
+                                       focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700
+                                       focus:ring-2 dark:bg-gray-600 dark:border-gray-500 cursor-pointer"
                                 {% if image.vars.checked %}checked="checked"{% endif %}
                             >
-                            <label class="form-check-label" for="{{ image.vars.id }}">
-                                <img class="img-fluid rounded" src="{{ asset('uploads/images/' ~ image.vars.label) }}" alt="{{ image.vars.label }}" />
+                            <label
+                                for="{{ image.vars.id }}"
+                                class="block cursor-pointer rounded-lg border border-gray-300 overflow-hidden transition
+                                       hover:shadow-md peer-checked:border-blue-500 peer-checked:ring-2
+                                       peer-checked:ring-blue-300"
+                            >
+                                <img class="w-full h-auto object-cover" src="{{ asset('uploads/images/' ~ image.vars.label) }}" alt="{{ image.vars.label }}" />
                             </label>
-                        </div>
-                        <div class="actions d-flex justify-content-end">
-                            <a href="{{ path('app_image_edit', {
-                                id: image.vars.value
-                            }) }}">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <span data-bs-toggle="modal" data-bs-target="#image-{{ image.vars.value }}">
-                                <i class="bi bi-trash"></i>
-                            </span>
+
+                            <div class="flex justify-end mt-2 space-x-2">
+                                <a href="{{ path('app_image_edit', { id: image.vars.value }) }}" class="text-white hover:text-blue-300">
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                    </svg>
+                                </a>
+                                <button type="button" data-modal-target="image-{{ image.vars.value }}" data-modal-toggle="image-{{ image.vars.value }}" class="text-white hover:text-red-300">
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
         </div>
 
-        <div class="col-md-6">
-            <label class="col-form-label {% if form.videos.vars.required %}required{% endif %}">{{ form.videos.vars.name|capitalize }}</label>
-            <div id="{{ form.videos.vars.id }}" class="d-flex flex-wrap">
+        <div class="flex-1">
+            <label class="mb-3 block font-medium text-gray-200 {% if form.videos.vars.required %}required{% endif %}">
+                {{ form.videos.vars.name|capitalize }}
+            </label>
+
+            <div id="{{ form.videos.vars.id }}" class="flex flex-wrap">
                 {% for video in form.videos %}
-                    <div class="form-check my-2 col-12 col-md-4 d-flex flex-column">
-                        <div class="video-input-and-label mx-md-2">
+                    <div class="w-1/4 p-1">
+                        <div class="flex flex-col relative group">
                             <input
                                 type="checkbox"
                                 id="{{ video.vars.id }}"
                                 name="{{ video.vars.full_name }}"
-                                class="form-check-input"
                                 value="{{ video.vars.value }}"
+                                class="absolute top-2 left-2 w-5 h-5 z-10 text-blue-600 bg-gray-100 border-gray-300 rounded
+                                       focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700
+                                       focus:ring-2 dark:bg-gray-600 dark:border-gray-500 cursor-pointer"
                                 {% if video.vars.checked %}checked="checked"{% endif %}
                             >
-                            <label class="form-check-label" for="{{ video.vars.id }}">
+
+                            <label
+                                for="{{ video.vars.id }}"
+                                class="block cursor-pointer rounded-lg border border-gray-300 overflow-hidden transition
+                                       hover:shadow-md peer-checked:border-blue-500 peer-checked:ring-2
+                                       peer-checked:ring-blue-300"
+                            >
                                 <embed type="video/mp4" src="{{ video.vars.label }}" width="100%" height="125">
                             </label>
-                        </div>
-                        <div class="actions d-flex justify-content-end">
-                            <a href="{{ path('app_video_edit', {
-                                id: video.vars.value
-                            }) }}">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <span data-bs-toggle="modal" data-bs-target="#video-{{ video.vars.value }}">
-                                <i class="bi bi-trash"></i>
-                            </span>
+
+                            <div class="flex justify-end mt-2 space-x-2">
+                                <a href="{{ path('app_video_edit', { id: video.vars.value }) }}" class="text-white hover:text-blue-300">
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                    </svg>
+                                </a>
+                                <button type="button" data-modal-target="video-{{ video.vars.value }}" data-modal-toggle="video-{{ video.vars.value }}" class="text-white hover:text-red-300">
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
@@ -102,46 +150,61 @@
         </div>
     </div>
 
-    <br>
+        <br>
 
-    <div class="col-md-6 offset-md-2">
-        {{ form_row(form.name) }}
-    </div>
-    <div class="col-md-8 offset-md-2">
-        {{ form_row(form.description) }}
-    </div>
-    <div class="row">
-        <div class="col-md-2 offset-md-2">
-            {{ form_row(form.category) }}
-        </div>
-        <div class="col-md-2 offset-md-{% if delete is defined %}4{% else %}5{% endif %}">
-            <div class="d-flex justify-content-between">
+        <div class="max-w-3xl mx-auto">
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+
+            <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
+                {{ form_label(form.category) }}
+            </h3>
+
+            <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                {% for choice in form.category %}
+                    <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r last:border-r-0 dark:border-gray-600">
+                        <div class="flex items-center ps-3">
+                            <input
+                                type="radio"
+                                id="{{ choice.vars.id }}"
+                                name="{{ choice.vars.full_name }}"
+                                value="{{ choice.vars.value }}"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500
+                       dark:focus:ring-blue-600 dark:ring-offset-gray-700
+                       dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                {% if choice.vars.checked %}checked{% endif %}
+                            >
+                            <label
+                                for="{{ choice.vars.id }}"
+                                class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            >
+                                {{ choice.vars.label }}
+                            </label>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {{ form_errors(form.category) }}
+
+            <div class="flex items-center justify-end space-x-4 mt-5">
                 {% if delete is defined %}
                     {{ include('_inc/_modal_button.html.twig', {
-                        btn_class: 'btn-danger',
+                        btn_class: 'bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg',
                         content: 'Delete',
-                        target: 'trick-' ~ trick.id
+                        id: trick.id,
+                        htmlName: 'trick'
                     }) }}
                 {% endif %}
-                <button class="btn btn-{% if delete is defined %}warning{% else %}primary{% endif %}">{{ button_label|default('Save') }}</button>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg">
+                    {{ button_label|default('Save') }}
+                </button>
             </div>
         </div>
-    </div>
-    {{ form_row(form._token) }}
-{{ form_end(form, {'render_rest': false}) }}
 
-{% for image in form.mainImage.children %}
-    {{ include('_inc/_modal.html.twig', {
-        id: image.vars.value,
-        htmlName: 'mainImage',
-        name: image.vars.label,
-        includeForm: include('_inc/_delete_form.html.twig', {
-            action: path('app_image_delete', {'id': image.vars.value}),
-            content: 'Delete',
-            value: csrf_token('delete' ~ image.vars.value),
-        })
-    }) }}
-{% endfor %}
+        {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+</div>
 
 {% for image in form.images %}
     {{ include('_inc/_modal.html.twig', {

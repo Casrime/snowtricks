@@ -3,19 +3,29 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <div id="content-home">
-        <h1 class="text-center">SnowTricks</h1>
-        <i
-            class="bi bi-arrow-down-circle-fill"
-            data-action="click->scroll#bottom"
-            data-controller="scroll"
-        ></i>
-    </div>
+    <section class="bg-center bg-no-repeat bg-[url('{{ asset('build/images/snowtricks.jpg') }}')] bg-gray-700 bg-blend-multiply">
+        <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
+            <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">SnowTricks</h1>
+            <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">Here at SnowTricks, we focus on building a vibrant snowboard community where passion, collaboration, and shared knowledge unlock the progression of every rider.</p>
+            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+                <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                    Show tricks
+                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+                <a href="#" class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
+                    Learn more
+                </a>
+            </div>
+        </div>
+    </section>
 
     <div
-        class="container"
         data-controller="load-more-tricks"
         data-offset="0"
+        {# TODO - remove this div with this duplicated id #}
+        {# TODO - get tricks from the index controller, not with stimulus #}
         id="tricks"
     >
         <div
@@ -28,12 +38,23 @@
                 id="load-more-button"
             >Load more</button>
         </div>
+
+        {{ include('_inc/_pagination.html.twig') }}
+
         <p class="d-flex justify-content-end">
-            <i
-                class="bi bi-arrow-up-circle-fill"
+            <svg
                 data-action="click->scroll#top"
                 data-controller="scroll"
-            ></i>
+                class="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+            >
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13 4 4m-4-4-4 4"/>
+            </svg>
         </p>
     </div>
 {% endblock %}

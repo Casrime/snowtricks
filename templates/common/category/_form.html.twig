@@ -1,13 +1,14 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
 
-    <div class="d-flex justify-content-between">
-        <button class="btn btn-{% if delete is defined %}warning{% else %}primary{% endif %}">{{ button_label|default('Save') }}</button>
+    <div class="flex justify-between">
+        <button class="btn-{% if delete is defined %}yellow{% else %}blue{% endif %}">{{ button_label|default('Save') }}</button>
         {% if delete is defined %}
             {{ include('_inc/_modal_button.html.twig', {
-                btn_class: 'btn-danger',
+                btn_class: 'btn-red',
                 content: 'Delete',
-                target: 'category-' ~ category.id
+                id: category.id,
+                htmlName: 'category'
             }) }}
         {% endif %}
     </div>

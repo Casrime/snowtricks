@@ -1,21 +1,25 @@
-{{ form_start(form) }}
-    <div class="row">
-        <div class="col-12 {% if edit is defined %}col-md-7{% else %}col-md-4 offset-md-3{% endif%} text-center">
-            {{ form_widget(form) }}
-        </div>
-        <div class="col-12 col-md-2 text-center">
-            <div class="d-flex justify-content-between">
-                <button class="btn btn-{% if delete is defined %}warning{% else %}primary{% endif %}">{{ button_label|default('Save') }}</button>
+<div class="mx-5">
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="flex justify-between">
+            <button
                 {% if delete is defined %}
-                    {{ include('_inc/_modal_button.html.twig', {
-                        btn_class: 'btn-danger',
-                        content: 'Delete',
-                        target: 'comment-' ~ comment.id
-                    }) }}
+                    class="btn-yellow"
+                {% else %}
+                    class="btn-blue"
                 {% endif %}
-            </div>
+            >{{ button_label|default('Save') }}</button>
+            {% if delete is defined %}
+                {{ include('_inc/_modal_button.html.twig', {
+                    btn_class: 'btn-red',
+                    content: 'Delete',
+                    id: comment.id,
+                    htmlName: 'comment'
+                }) }}
+            {% endif %}
         </div>
-{{ form_end(form) }}
+    {{ form_end(form) }}
+</div>
 
 {% if delete is defined %}
     {{ include('_inc/_modal.html.twig', {

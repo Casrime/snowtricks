@@ -43,7 +43,7 @@ class CategoryControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Category');
-        $this->assertSelectorTextContains('.invalid-feedback', 'This value should not be blank.');
+        $this->assertSelectorTextContains('#category p.text-red-600', 'This value should not be blank.');
     }
 
     public function testCategoryNewPageWithAdminLoginWithFormSubmissionWithInvalidValues(): void
@@ -56,7 +56,7 @@ class CategoryControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Category');
-        $this->assertSelectorTextContains('.invalid-feedback', 'This value is too short. It should have 3 characters or more.');
+        $this->assertSelectorTextContains('#category p.text-red-600', 'This value is too short. It should have 3 characters or more.');
     }
 
     public function testCategoryNewPageWithAdminLoginWithFormSubmissionWithValidValues(): void

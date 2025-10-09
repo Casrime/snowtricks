@@ -74,7 +74,7 @@ class VideoController extends AbstractController
             $entityManager->remove($video);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Video deleted successfully');
+            $this->addFlash('danger', 'Video deleted successfully');
         }
 
         if ($this->isGranted('ROLE_ADMIN')) {

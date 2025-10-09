@@ -54,6 +54,16 @@ jobs:
 
             - name: Run checks
               run: make checks
+              
+            # —— Pnpm 🧙
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  version: 10
+                  run_install: true
+
+            - name: Build dependencies
+              run: pnpm build
 
             # —— Tests ✅ ———————————————————————————————————————————————————————————
             - name: Create database

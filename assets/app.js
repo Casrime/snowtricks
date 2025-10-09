@@ -1,5 +1,17 @@
 import './bootstrap.js';
-import './vendor/bootstrap/bootstrap.index.js';
+/*
+ * Welcome to your app's main JavaScript file!
+ *
+ * We recommend including the built version of this JavaScript file
+ * (and its CSS file) in your base layout (base.html.twig).
+ */
 
-import './vendor/bootstrap/dist/css/bootstrap.min.css'
-import './styles/app.css'
+// any CSS you import will output into a single css file (app.css in this case)
+import './styles/app.css';
+import './styles/header.css';
+
+import './bootstrap';
+import 'flowbite';
+import 'flowbite/dist/flowbite.turbo.js';
+import './js/dark-mode.js';
+import './js/toggle-dark-mode.js';

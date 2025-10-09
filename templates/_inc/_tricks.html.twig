@@ -1,56 +1,76 @@
-{% for five_tricks in tricks|batch(5, false) %}
-    <div class="row d-flex justify-content-start">
-        {% for trick in five_tricks %}
-            {% if trick %}
-                <div class="trick col-sm col-md my-2">
-                    <div class="card">
-                        {% if trick.mainImage %}
-                            <img
-                                alt="{{ trick.mainImage.alt }}"
-                                class="card-img-top image-trick"
-                                src="{{ asset('uploads/images/' ~ trick.mainImage.name) }}"
-                            />
-                        {% else %}
-                            <img
-                                alt="SnowTricks"
-                                class="card-img-top image-trick"
-                                src="{{ asset('uploads/images/snowtricks.jpg') }}"
-                            />
-                        {% endif %}
-                        <div class="card-body trick-content d-flex justify-content-between align-items-center">
+<div class="w-[90%] m-auto">
+    <div
+        class="flex flex-wrap"
+        id="tricks"
+    >
+        {% for three_tricks in tricks|batch(3, false) %}
+            {% for trick in three_tricks %}
+                {% if trick %}
+                    <div class="m-5 max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                        <a href="{{ path('trick', {
+                            id: trick.id,
+                        }) }}">
+                            {% if trick.mainImage %}
+                                <img
+                                    alt="{{ trick.mainImage.alt }}"
+                                    class="rounded-t-lg"
+                                    src="{{ asset('uploads/images/' ~ trick.mainImage.name) }}"
+                                />
+                            {% else %}
+                                <img
+                                    alt="SnowTricks"
+                                    class="rounded-t-lg"
+                                    src="{{ asset('uploads/images/snowtricks.jpg') }}"
+                                />
+                            {% endif %}
+                        </a>
+                        <div class="p-5">
                             <a href="{{ path('trick', {
                                 id: trick.id,
                             }) }}">
-                                <h5 class="card-title">{{ trick.name }}</h5>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ trick.name }}</h5>
                             </a>
-                            {% if is_granted('ROLE_USER') %}
-                                <div class="trick-content-actions d-flex align-items-center">
-                                    <a href="{{ path('app_trick_edit', {
-                                        id: trick.id
-                                    }) }}">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <span data-bs-toggle="modal" data-bs-target="#trick-{{ trick.id }}">
-                                        <i class="bi bi-trash"></i>
-                                    </span>
-                                    {{ include('_inc/_modal.html.twig', {
-                                        id: trick.id,
-                                        htmlName: 'trick',
-                                        name: trick.name,
-                                        includeForm: include('_inc/_delete_form.html.twig', {
-                                            action: path('app_trick_delete', {'id': trick.id}),
-                                            content: 'Delete',
-                                            value: csrf_token('delete' ~ trick.id),
-                                        })
-                                    }) }}
-                                </div>
-                            {% endif %}
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ trick.description|slice(0, 100) }}...</p>
+                            <div class="flex justify-between items-center">
+                                <a href="{{ path('trick', {
+                                    id: trick.id,
+                                }) }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Read more
+                                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                    </svg>
+                                </a>
+                                {% if is_granted('ROLE_USER') %}
+                                    <div class="trick-content-actions flex align-items-center">
+                                        <a href="{{ path('app_trick_edit', {
+                                            id: trick.id
+                                        }) }}">
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                            </svg>
+                                        </a>
+                                        <span data-modal-target="trick-{{ trick.id }}" data-modal-toggle="trick-{{ trick.id }}">
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                                            </svg>
+                                        </span>
+                                        {{ include('_inc/_modal.html.twig', {
+                                            id: trick.id,
+                                            htmlName: 'trick',
+                                            name: trick.name,
+                                            includeForm: include('_inc/_delete_form.html.twig', {
+                                                action: path('app_trick_delete', {'id': trick.id}),
+                                                content: 'Delete',
+                                                value: csrf_token('delete' ~ trick.id),
+                                            })
+                                        }) }}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% else %}
-                <div class="trick col-sm col-md"></div>
-            {% endif %}
+                {% endif %}
+            {% endfor %}
         {% endfor %}
     </div>
-{% endfor %}
+</div>

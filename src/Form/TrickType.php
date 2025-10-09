@@ -26,13 +26,11 @@ class TrickType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-                'label' => false,
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
                     'placeholder' => 'Description',
                 ],
-                'label' => false,
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
@@ -40,8 +38,7 @@ class TrickType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-                'expanded' => false,
-                'label' => false,
+                'expanded' => true,
                 'multiple' => false,
             ])
             ->add('mainImage', EntityType::class, [
