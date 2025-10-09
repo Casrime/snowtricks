@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller\User;
 
+use App\Entity\Trick;
 use App\Tests\Controller\BaseController;
 
 class TrickControllerTest extends BaseController
@@ -67,6 +68,11 @@ class TrickControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
+
+        $container = static::getContainer();
+        $trick = $container->get('doctrine')->getManager()->getRepository(Trick::class)->findOneBy(['name' => 'New trick']);
+        $client->request('GET', '/trick/'.$trick->getId());
+        $this->assertResponseStatusCodeSame(200);
     }
 
     public function testTrickNewPageWithAdminLoginWithFormSubmissionWithMaximalValidValues(): void
@@ -83,6 +89,11 @@ class TrickControllerTest extends BaseController
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');
+
+        $container = static::getContainer();
+        $trick = $container->get('doctrine')->getManager()->getRepository(Trick::class)->findOneBy(['name' => 'New trick']);
+        $client->request('GET', '/trick/'.$trick->getId());
+        $this->assertResponseStatusCodeSame(200);
     }
 
     public function testTrickEditPageWithoutLogin(): void

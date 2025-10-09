@@ -23,6 +23,7 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trick->setUser($this->getUser());
             $entityManager->persist($trick);
             $entityManager->flush();
 
