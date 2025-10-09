@@ -55,13 +55,13 @@
                 <li>
                     <a
                         href="{{ path('home') }}"
-                        {{ include('_inc/_active_page.html.twig', { route: 'home' }) }}
+                        {{ include('_inc/_active_page.html.twig', {route: 'home'}) }}
                     >Home</a>
                 </li>
                 <li>
                     <a
                         href="{{ path('tricks') }}"
-                        {{ include('_inc/_active_page.html.twig', { route: 'tricks' }) }}
+                        {{ include('_inc/_active_page.html.twig', {route: 'tricks'}) }}
                     >Tricks</a>
                 </li>
                 {% if app.user %}
@@ -69,34 +69,34 @@
                         <li>
                             <a
                                 href="{{ path('admin') }}"
-                                {{ include('_inc/_active_page.html.twig', { route: 'admin' }) }}
+                                {{ include('_inc/_active_page.html.twig', {route: 'admin'}) }}
                             >Admin</a>
                         </li>
                     {% else %}
                         <li>
                             <a
                                 href="{{ path('user') }}"
-                                {{ include('_inc/_active_page.html.twig', { route: 'user' }) }}
+                                {{ include('_inc/_active_page.html.twig', {route: 'user'}) }}
                             >User</a>
                         </li>
                     {% endif %}
                     <li>
                         <a
                             href="{{ path('app_logout') }}"
-                            {{ include('_inc/_active_page.html.twig', { route: 'app_logout' }) }}
+                            {{ include('_inc/_active_page.html.twig', {route: 'app_logout'}) }}
                         >Logout</a>
                     </li>
                 {% else %}
                     <li>
                         <a
                             href="{{ path('app_login') }}"
-                            {{ include('_inc/_active_page.html.twig', { route: 'app_login' }) }}
+                            {{ include('_inc/_active_page.html.twig', {route: 'app_login'}) }}
                         >Sign in</a>
                     </li>
                     <li>
                         <a
                             href="{{ path('app_register') }}"
-                            {{ include('_inc/_active_page.html.twig', { route: 'app_register' }) }}
+                            {{ include('_inc/_active_page.html.twig', {route: 'app_register'}) }}
                         >Sign up</a>
                     </li>
                 {% endif %}

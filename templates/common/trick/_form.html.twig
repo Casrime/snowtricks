@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="flex justify-end mt-2 space-x-2 w-full">
-                                <a href="{{ path('app_image_edit', { id: image.vars.value }) }}" class="text-white hover:text-blue-300">
+                                <a href="{{ path('app_image_edit', {id: image.vars.value}) }}" class="text-white hover:text-blue-300">
                                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
@@ -81,7 +81,7 @@
                             </label>
 
                             <div class="flex justify-end mt-2 space-x-2">
-                                <a href="{{ path('app_image_edit', { id: image.vars.value }) }}" class="text-white hover:text-blue-300">
+                                <a href="{{ path('app_image_edit', {id: image.vars.value}) }}" class="text-white hover:text-blue-300">
                                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
@@ -130,7 +130,7 @@
                             </label>
 
                             <div class="flex justify-end mt-2 space-x-2">
-                                <a href="{{ path('app_video_edit', { id: video.vars.value }) }}" class="text-white hover:text-blue-300">
+                                <a href="{{ path('app_video_edit', {id: video.vars.value}) }}" class="text-white hover:text-blue-300">
                                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
@@ -193,7 +193,7 @@
                         btn_class: 'bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg',
                         content: 'Delete',
                         id: trick.id,
-                        htmlName: 'trick'
+                        htmlName: 'trick',
                     }) }}
                 {% endif %}
                 <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg">
@@ -203,7 +203,7 @@
         </div>
 
         {{ form_row(form._token) }}
-    {{ form_end(form, {'render_rest': false}) }}
+    {{ form_end(form, {render_rest: false}) }}
 </div>
 
 {% for image in form.images %}
@@ -212,10 +212,10 @@
         htmlName: 'image',
         name: image.vars.label,
         includeForm: include('_inc/_delete_form.html.twig', {
-            action: path('app_image_delete', {'id': image.vars.value}),
+            action: path('app_image_delete', {id: image.vars.value}),
             content: 'Delete',
             value: csrf_token('delete' ~ image.vars.value),
-        })
+        }),
     }) }}
 {% endfor %}
 
@@ -225,10 +225,10 @@
         htmlName: 'video',
         name: video.vars.label,
         includeForm: include('_inc/_delete_form.html.twig', {
-            action: path('app_video_delete', {'id': video.vars.value}),
+            action: path('app_video_delete', {id: video.vars.value}),
             content: 'Delete',
             value: csrf_token('delete' ~ video.vars.value),
-        })
+        }),
     }) }}
 {% endfor %}
 
@@ -238,9 +238,9 @@
         htmlName: 'trick',
         name: trick.name,
         includeForm: include('_inc/_delete_form.html.twig', {
-            action: path('app_trick_delete', {'id': trick.id}),
+            action: path('app_trick_delete', {id: trick.id}),
             content: 'Delete',
             value: csrf_token('delete' ~ trick.id),
-        })
+        }),
     }) }}
 {% endif %}

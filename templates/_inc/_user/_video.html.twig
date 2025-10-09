@@ -36,10 +36,10 @@
                             htmlName: 'video',
                             name: video.url,
                             includeForm: include('_inc/_delete_form.html.twig', {
-                                action: path('app_video_delete', {'id': video.id}),
+                                action: path('app_video_delete', {id: video.id}),
                                 content: 'Delete',
                                 value: csrf_token('delete' ~ video.id),
-                            })
+                            }),
                         }) }}
                     </td>
                 </tr>
