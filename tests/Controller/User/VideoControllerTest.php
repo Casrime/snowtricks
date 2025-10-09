@@ -158,11 +158,11 @@ class VideoControllerTest extends BaseController
     {
         $client = $this->loginUser();
         $client->request('POST', '/user/video/2');
-        //$client->submitForm('Delete');
+        // $client->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
-        //$this->assertPageTitleContains('Redirecting to /user/video/');
+        // $this->assertPageTitleContains('Redirecting to /user/video/');
     }
 
     public function testVideoRemovePageWithAdminLoginWithExistingVideoWithoutAssociation(): void

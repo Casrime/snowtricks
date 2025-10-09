@@ -6,6 +6,7 @@ $finder = (new PhpCsFixer\Finder())
     ->notPath('Kernel.php')
     ->in(__DIR__.'/../tests')
     ->notPath('bootstrap.php')
+    ->notPath('object-manager.php')
     ->exclude('var')
 ;
 

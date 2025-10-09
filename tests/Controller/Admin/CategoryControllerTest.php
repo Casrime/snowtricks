@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Controller\Admin;
 
 use App\Tests\Controller\BaseController;
-use Symfony\Component\DomCrawler\Link;
 
 class CategoryControllerTest extends BaseController
 {

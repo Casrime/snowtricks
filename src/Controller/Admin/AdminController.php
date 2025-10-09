@@ -27,9 +27,8 @@ class AdminController extends AbstractController
         UserRepository $userRepository,
         CommentRepository $commentRepository,
         ImageRepository $imageRepository,
-        VideoRepository $videoRepository
-    ): Response
-    {
+        VideoRepository $videoRepository,
+    ): Response {
         return $this->render('admin/index.html.twig', [
             'tricks' => $trickRepository->findAll(),
             'categories' => $categoryRepository->findAll(),
@@ -47,6 +46,7 @@ class AdminController extends AbstractController
         $currentUser = $this->getUser();
         if ($currentUser->getId() === $user->getId()) {
             $this->addFlash('danger', 'You cannot delete the logged in user.');
+
             return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
         }
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->getString('_token'))) {

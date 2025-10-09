@@ -20,9 +20,8 @@ class UserController extends AbstractController
         TrickRepository $trickRepository,
         CommentRepository $commentRepository,
         ImageRepository $imageRepository,
-        VideoRepository $videoRepository
-    ): Response
-    {
+        VideoRepository $videoRepository,
+    ): Response {
         return $this->render('user/index.html.twig', [
             'tricks' => $trickRepository->findBy([
                 'user' => $this->getUser(),

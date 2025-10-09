@@ -6,7 +6,6 @@ namespace App\Controller\User;
 
 use App\Entity\Image;
 use App\Form\ImageType;
-use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
 use App\Service\FileHandler;
 use Doctrine\ORM\EntityManagerInterface;
