@@ -40,7 +40,9 @@
                 }) }}
             </div>
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-users" role="tabpanel" aria-labelledby="users-tab">
-                <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Users tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+                {{ include('_inc/_admin/_user.html.twig', {
+                    users: users,
+                }) }}
             </div>
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-comments" role="tabpanel" aria-labelledby="comments-tab">
                 <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Comments tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
@@ -82,29 +84,29 @@
                 }) }} #}
             </div>
             <div class="tab-pane fade" id="category-tab-pane" role="tabpanel" aria-labelledby="category-tab" tabindex="0">
-                {{ include('_inc/_admin/_category.html.twig', {
+                {# {{ include('_inc/_admin/_category.html.twig', {
                     categories: categories,
-                }) }}
+                }) }} #}
             </div>
             <div class="tab-pane fade" id="user-tab-pane" role="tabpanel" aria-labelledby="user-tab" tabindex="0">
-                {{ include('_inc/_admin/_user.html.twig', {
+                {# {{ include('_inc/_admin/_user.html.twig', {
                     users: users,
-                }) }}
+                }) }} #}
             </div>
             <div class="tab-pane fade" id="comment-tab-pane" role="tabpanel" aria-labelledby="comment-tab" tabindex="0">
-                {{ include('_inc/_user/_comment.html.twig', {
+                {# {{ include('_inc/_user/_comment.html.twig', {
                     comments: comments,
-                }) }}
+                }) }} #}
             </div>
             <div class="tab-pane fade" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab" tabindex="0">
-                {{ include('_inc/_user/_image.html.twig', {
+                {# {{ include('_inc/_user/_image.html.twig', {
                     images: images,
-                }) }}
+                }) }} #}
             </div>
             <div class="tab-pane fade" id="video-tab-pane" role="tabpanel" aria-labelledby="video-tab" tabindex="0">
-                {{ include('_inc/_user/_video.html.twig', {
+                {# {{ include('_inc/_user/_video.html.twig', {
                     videos: videos,
-                }) }}
+                }) }} #}
             </div>
         </div>
         <p class="d-flex justify-content-end">
