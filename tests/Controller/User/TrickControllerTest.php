@@ -1,24 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller\User;
 
 use App\Entity\Trick;
 use App\Tests\Controller\BaseController;
 
-class TrickControllerTest extends BaseController
+final class TrickControllerTest extends BaseController
 {
     public function testTrickNewPageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/user/trick/new');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('GET', '/user/trick/new');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testTrickNewPageWithUserLogin(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/trick/new');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/trick/new');
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertPageTitleContains('New Trick');
@@ -26,8 +28,8 @@ class TrickControllerTest extends BaseController
 
     public function testTrickNewPageWithAdminLoginWithoutFormSubmission(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/new');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/trick/new');
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertPageTitleContains('New Trick');
@@ -35,9 +37,9 @@ class TrickControllerTest extends BaseController
 
     public function testTrickNewPageWithAdminLoginWithFormSubmissionWithoutValues(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/new');
-        $client->submitForm('Save');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/trick/new');
+        $kernelBrowser->submitForm('Save');
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Trick');
@@ -46,9 +48,9 @@ class TrickControllerTest extends BaseController
 
     public function testTrickNewPageWithAdminLoginWithFormSubmissionWithInvalidValues(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/new');
-        $client->submitForm('Save', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/trick/new');
+        $kernelBrowser->submitForm('Save', [
             'trick[name]' => null,
         ]);
 
@@ -59,9 +61,9 @@ class TrickControllerTest extends BaseController
 
     public function testTrickNewPageWithUserLoginWithFormSubmissionWithMinimalValidValues(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/trick/new');
-        $client->submitForm('Save', [
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/trick/new');
+        $kernelBrowser->submitForm('Save', [
             'trick[name]' => 'New trick',
             'trick[category]' => 1,
         ]);
@@ -69,18 +71,18 @@ class TrickControllerTest extends BaseController
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
 
-        $container = static::getContainer();
+        $container = self::getContainer();
         /** @var Trick $trick */
         $trick = $container->get('doctrine')->getManager()->getRepository(Trick::class)->findOneBy(['name' => 'New trick']);
-        $client->request('GET', '/trick/'.$trick->getId());
+        $kernelBrowser->request('GET', '/trick/'.$trick->getId());
         $this->assertResponseStatusCodeSame(200);
     }
 
     public function testTrickNewPageWithAdminLoginWithFormSubmissionWithMaximalValidValues(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/new');
-        $client->submitForm('Save', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/trick/new');
+        $kernelBrowser->submitForm('Save', [
             'trick[name]' => 'New trick',
             'trick[category]' => 1,
             'trick[description]' => 'New trick description',
@@ -91,42 +93,42 @@ class TrickControllerTest extends BaseController
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');
 
-        $container = static::getContainer();
+        $container = self::getContainer();
         /** @var Trick $trick */
         $trick = $container->get('doctrine')->getManager()->getRepository(Trick::class)->findOneBy(['name' => 'New trick']);
-        $client->request('GET', '/trick/'.$trick->getId());
+        $kernelBrowser->request('GET', '/trick/'.$trick->getId());
         $this->assertResponseStatusCodeSame(200);
     }
 
     public function testTrickEditPageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/user/trick/1/edit');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('GET', '/user/trick/1/edit');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testTrickEditPageWithUserLoginWithUnexistingTrick(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/trick/100/edit');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/trick/100/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testTrickEditPageWithAdminLoginWithUnexistingTrick(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/100/edit');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/trick/100/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testTrickEditPageWithUserLoginWithExistingTrick(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/trick/1/edit');
-        $client->submitForm('Update', [
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/trick/1/edit');
+        $kernelBrowser->submitForm('Update', [
             'trick[name]' => 'https://www.youtube.com/watch?v=PEP1-Y7fX_I',
         ]);
 
@@ -136,9 +138,9 @@ class TrickControllerTest extends BaseController
 
     public function testTrickEditPageWithAdminLoginWithExistingTrick(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/trick/1/edit');
-        $client->submitForm('Update', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/trick/1/edit');
+        $kernelBrowser->submitForm('Update', [
             'trick[name]' => 'https://www.youtube.com/watch?v=PEP1-Y7fX_I',
         ]);
 
@@ -148,32 +150,32 @@ class TrickControllerTest extends BaseController
 
     public function testTrickRemovePageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('POST', '/user/trick/1');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('POST', '/user/trick/1');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testTrickRemovePageWithUserLoginWithUnexistingTrick(): void
     {
-        $client = $this->loginUser();
-        $client->request('POST', '/user/trick/100');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('POST', '/user/trick/100');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testTrickRemovePageWithAdminLoginWithUnexistingTrick(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('POST', '/user/trick/100');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('POST', '/user/trick/100');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testTrickRemovePageWithUserLoginWithExistingTrickWithoutAssociation(): void
     {
-        $client = $this->loginUser();
-        $client->request('POST', '/user/trick/2');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('POST', '/user/trick/2');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
@@ -181,8 +183,8 @@ class TrickControllerTest extends BaseController
 
     public function testTrickRemovePageWithAdminLoginWithExistingTrickWithoutAssociation(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('POST', '/user/trick/2');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('POST', '/user/trick/2');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');
@@ -190,8 +192,8 @@ class TrickControllerTest extends BaseController
 
     public function testTrickRemovePageWithUserLoginWithExistingTrickWithAssociation(): void
     {
-        $client = $this->loginUser();
-        $client->request('POST', '/user/trick/1');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('POST', '/user/trick/1');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
@@ -199,8 +201,8 @@ class TrickControllerTest extends BaseController
 
     public function testTrickRemovePageWithAdminLoginWithExistingTrickWithAssociation(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('POST', '/user/trick/1');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('POST', '/user/trick/1');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');

@@ -24,30 +24,16 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a username',
-                    ]),
-                    new Length([
-                        'min' => 3,
-                        'minMessage' => 'Your username should be at least {{ limit }} characters',
-                        'max' => 4096,
-                    ]),
+                    new NotBlank(message: 'Please enter a username'),
+                    new Length(min: 3, max: 4096, minMessage: 'Your username should be at least {{ limit }} characters'),
                     new UniqueEntity(),
                 ],
             ])
             ->add('email', TextType::class, [
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter an email',
-                    ]),
-                    new Email([
-                        'message' => 'Please enter a valid email address',
-                    ]),
-                    new Length([
-                        'min' => 3,
-                        'minMessage' => 'Your email should be at least {{ limit }} characters',
-                        'max' => 4096,
-                    ]),
+                    new NotBlank(message: 'Please enter an email'),
+                    new Email(message: 'Please enter a valid email address'),
+                    new Length(min: 3, max: 4096, minMessage: 'Your email should be at least {{ limit }} characters'),
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
@@ -55,15 +41,8 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
+                    new NotBlank(message: 'Please enter a password'),
+                    new Length(min: 6, max: 4096, minMessage: 'Your password should be at least {{ limit }} characters'),
                 ],
             ])
         ;

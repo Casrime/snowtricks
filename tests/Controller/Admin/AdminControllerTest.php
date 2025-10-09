@@ -6,12 +6,12 @@ namespace App\Tests\Controller\Admin;
 
 use App\Tests\Controller\BaseController;
 
-class AdminControllerTest extends BaseController
+final class AdminControllerTest extends BaseController
 {
     public function testAdminPageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/admin/');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('GET', '/admin/');
 
         $this->assertResponseStatusCodeSame(302);
         $this->assertResponseRedirects('/login');
@@ -19,8 +19,8 @@ class AdminControllerTest extends BaseController
 
     public function testAdminPageWithUserLogin(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/admin/');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/admin/');
 
         $this->assertResponseStatusCodeSame(403);
         $this->assertSelectorTextContains('h1.exception-message', 'Access Denied.');
@@ -28,8 +28,8 @@ class AdminControllerTest extends BaseController
 
     public function testAdminPageWithAdminLogin(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/admin/');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/admin/');
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertPageTitleContains('Administration');

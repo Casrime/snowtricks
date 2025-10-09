@@ -7,10 +7,10 @@ namespace App\Service;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 
-final class Mail
+final readonly class Mail
 {
     public function __construct(
-        private readonly MailerInterface $mailer,
+        private MailerInterface $mailer,
     ) {
     }
 
@@ -19,7 +19,7 @@ final class Mail
      */
     public function send(string $to, string $subject, string $template, array $context = []): void
     {
-        $email = (new TemplatedEmail())
+        $templatedEmail = (new TemplatedEmail())
             ->from('no-reply@snowtricks.com')
             ->to($to)
             ->subject($subject)
@@ -27,6 +27,6 @@ final class Mail
             ->context($context)
         ;
 
-        $this->mailer->send($email);
+        $this->mailer->send($templatedEmail);
     }
 }

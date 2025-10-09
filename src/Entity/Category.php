@@ -68,11 +68,9 @@ class Category
 
     public function removeTrick(Trick $trick): static
     {
-        if ($this->tricks->removeElement($trick)) {
-            // set the owning side to null (unless already changed)
-            if ($trick->getCategory() === $this) {
-                $trick->setCategory(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->tricks->removeElement($trick) && $trick->getCategory() === $this) {
+            $trick->setCategory(null);
         }
 
         return $this;

@@ -6,7 +6,6 @@ namespace App\Controller\User;
 
 use App\Entity\Image;
 use App\Form\ImageType;
-use App\Repository\ImageRepository;
 use App\Repository\TrickRepository;
 use App\Service\FileHandler;
 use Doctrine\ORM\EntityManagerInterface;
@@ -33,6 +32,7 @@ class ImageController extends AbstractController
                 $imageFileName = $fileHandler->upload($imageFile);
                 $image->setName($imageFileName);
             }
+
             $entityManager->persist($image);
             $entityManager->flush();
 
@@ -65,6 +65,7 @@ class ImageController extends AbstractController
                 $imageFileName = $fileHandler->upload($imageFile);
                 $image->setName($imageFileName);
             }
+
             $entityManager->flush();
 
             $this->addFlash('warning', 'Image updated successfully');
@@ -93,8 +94,10 @@ class ImageController extends AbstractController
                 if ($trick->getMainImage() === $image) {
                     $trick->setMainImage(null);
                 }
+
                 $trick->removeImage($image);
             }
+
             $entityManager->remove($image);
             $entityManager->flush();
 

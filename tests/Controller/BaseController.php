@@ -12,19 +12,19 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 abstract class BaseController extends WebTestCase
 {
-    public function getDoctrine(KernelBrowser $client): Registry
+    public function getDoctrine(KernelBrowser $kernelBrowser): Registry
     {
         /**
          * @var Registry $doctrine
          */
-        $doctrine = $client->getContainer()->get('doctrine');
+        $doctrine = $kernelBrowser->getContainer()->get('doctrine');
 
         return $doctrine;
     }
 
     private function login(string $email): KernelBrowser
     {
-        $client = static::createClient();
+        $kernelBrowser = static::createClient();
         /** @var UserRepository $userRepository */
         $userRepository = static::getContainer()->get(UserRepository::class);
 
@@ -33,9 +33,9 @@ abstract class BaseController extends WebTestCase
             'email' => $email,
         ]);
 
-        $client->loginUser($testUser);
+        $kernelBrowser->loginUser($testUser);
 
-        return $client;
+        return $kernelBrowser;
     }
 
     public function loginUser(): KernelBrowser

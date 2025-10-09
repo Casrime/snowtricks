@@ -14,7 +14,7 @@ abstract class BaseController extends AbstractController
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly Mail $mail,
-        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly UserPasswordHasherInterface $userPasswordHasher,
     ) {
     }
 
@@ -30,6 +30,6 @@ abstract class BaseController extends AbstractController
 
     public function getUserPasswordHasher(): UserPasswordHasherInterface
     {
-        return $this->passwordHasher;
+        return $this->userPasswordHasher;
     }
 }

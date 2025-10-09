@@ -17,6 +17,7 @@ return RectorConfig::configure()
         __DIR__.'/../public/index.php',
         __DIR__.'/../src/Kernel.php',
         __DIR__.'/../tests/bootstrap.php',
+        __DIR__.'/../tests/object-manager.php',
     ])
     ->withPreparedSets(
         deadCode: true,

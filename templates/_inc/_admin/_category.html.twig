@@ -32,7 +32,7 @@
                 <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-green-400 border border-green-400">{{ category.tricks.count }}</span>
             </td>
             <td class="px-6 py-4 flex">
-                <a href="{{ path('app_category_edit', {'id': category.id}) }}">
+                <a href="{{ path('app_category_edit', {id: category.id}) }}">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white mr-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
                     </svg>
@@ -47,12 +47,12 @@
                     htmlName: 'category',
                     name: category.name,
                     includeForm: include('_inc/_delete_form.html.twig', {
-                        action: path('app_category_delete', {'id': category.id}),
+                        action: path('app_category_delete', {id: category.id}),
                         content: 'Delete',
                         value: csrf_token('delete' ~ category.id),
                         id: category.id,
-                        name: 'category'
-                    })
+                        name: 'category',
+                    }),
                 }) }}
             </td>
         </tr>

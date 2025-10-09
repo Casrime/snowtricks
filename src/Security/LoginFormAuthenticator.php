@@ -31,7 +31,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly UserRepository $userRepository,
-        private readonly UserPasswordHasherInterface $userPasswordHasher
+        private readonly UserPasswordHasherInterface $userPasswordHasher,
     ) {
     }
 
@@ -51,7 +51,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             'active' => true,
         ]);
 
-        if (!$user) {
+        if (!$user instanceof \App\Entity\User) {
             throw new BadCredentialsException();
         }
 

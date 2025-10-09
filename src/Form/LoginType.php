@@ -31,14 +31,8 @@ class LoginType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a username',
-                    ]),
-                    new Length([
-                        'min' => 3,
-                        'minMessage' => 'Your username should be at least {{ limit }} characters',
-                        'max' => 4096,
-                    ]),
+                    new NotBlank(message: 'Please enter a username'),
+                    new Length(min: 3, max: 4096, minMessage: 'Your username should be at least {{ limit }} characters'),
                 ],
                 'data' => $request->getSession()->get(SecurityRequestAttributes::LAST_USERNAME),
             ])

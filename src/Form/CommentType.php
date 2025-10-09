@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Entity\Comment;
@@ -18,7 +20,7 @@ class CommentType extends AbstractType
             ->add('content', TextareaType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 5]),
+                    new Length(min: 5),
                 ],
                 'label' => false,
             ])

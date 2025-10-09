@@ -22,7 +22,7 @@ class CategoryType extends AbstractType
             ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 3, 'max' => 255]),
+                    new Length(min: 3, max: 255),
                 ],
             ])
         ;

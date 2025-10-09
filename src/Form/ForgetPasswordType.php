@@ -22,11 +22,7 @@ class ForgetPasswordType extends AbstractType
             ->add('username', TextType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Length([
-                        'min' => 3,
-                        'minMessage' => 'Your username should be at least {{ limit }} characters',
-                        'max' => 4096,
-                    ]),
+                    new Length(min: 3, max: 4096, minMessage: 'Your username should be at least {{ limit }} characters'),
                 ],
             ])
         ;
