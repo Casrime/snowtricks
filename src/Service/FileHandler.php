@@ -12,21 +12,21 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class FileHandler
 {
     public function __construct(
-        private string $imagesDirectory,
-        private SluggerInterface $slugger,
+        private readonly string $imagesDirectory,
+        private readonly SluggerInterface $slugger,
     ) {
     }
 
-    public function upload(UploadedFile $file): string
+    public function upload(UploadedFile $uploadedFile): string
     {
-        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = $this->slugger->slug($originalFilename);
-        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+        $unicodeString = $this->slugger->slug($originalFilename);
+        $fileName = $unicodeString.'-'.uniqid().'.'.$uploadedFile->guessExtension();
 
         try {
-            $file->move($this->getImageDirectory(), $fileName);
-        } catch (FileException $e) {
-            throw new UploadException($e->getMessage());
+            $uploadedFile->move($this->getImageDirectory(), $fileName);
+        } catch (FileException $fileException) {
+            throw new UploadException($fileException->getMessage());
         }
 
         return $fileName;

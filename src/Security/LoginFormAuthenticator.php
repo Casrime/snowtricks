@@ -51,7 +51,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             'active' => true,
         ]);
 
-        if (!$user) {
+        if (!$user instanceof \App\Entity\User) {
             throw new BadCredentialsException();
         }
 

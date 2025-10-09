@@ -6,20 +6,20 @@ namespace App\Tests\Controller\Admin;
 
 use App\Tests\Controller\BaseController;
 
-class CategoryControllerTest extends BaseController
+final class CategoryControllerTest extends BaseController
 {
     public function testCategoryNewPageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/admin/category/new');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('GET', '/admin/category/new');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testCategoryNewPageWithUserLogin(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/admin/category/new');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/admin/category/new');
 
         $this->assertResponseStatusCodeSame(403);
         $this->assertSelectorTextContains('h1.exception-message', 'Access Denied.');
@@ -27,8 +27,8 @@ class CategoryControllerTest extends BaseController
 
     public function testCategoryNewPageWithAdminLoginWithoutFormSubmission(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/new');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/admin/category/new');
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertPageTitleContains('New Category');
@@ -36,9 +36,9 @@ class CategoryControllerTest extends BaseController
 
     public function testCategoryNewPageWithAdminLoginWithFormSubmissionWithoutValues(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/new');
-        $client->submitForm('Save');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/admin/category/new');
+        $kernelBrowser->submitForm('Save');
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Category');
@@ -47,9 +47,9 @@ class CategoryControllerTest extends BaseController
 
     public function testCategoryNewPageWithAdminLoginWithFormSubmissionWithInvalidValues(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/new');
-        $client->submitForm('Save', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/admin/category/new');
+        $kernelBrowser->submitForm('Save', [
             'category[name]' => true,
         ]);
 
@@ -60,29 +60,29 @@ class CategoryControllerTest extends BaseController
 
     public function testCategoryNewPageWithAdminLoginWithFormSubmissionWithValidValues(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/new');
-        $client->submitForm('Save', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/admin/category/new');
+        $kernelBrowser->submitForm('Save', [
             'category[name]' => 'category created',
         ]);
 
         $this->assertResponseStatusCodeSame(303);
-        $client->followRedirects();
+        $kernelBrowser->followRedirects();
         $this->assertResponseRedirects('/admin/');
     }
 
     public function testCategoryEditPageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/admin/category/1/edit');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('GET', '/admin/category/1/edit');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testCategoryEditPageWithUserLogin(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/admin/category/1/edit');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/admin/category/1/edit');
 
         $this->assertResponseStatusCodeSame(403);
         $this->assertSelectorTextContains('h1.exception-message', 'Access Denied.');
@@ -90,17 +90,17 @@ class CategoryControllerTest extends BaseController
 
     public function testCategoryEditPageWithAdminLoginWithUnexistingCategory(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/100/edit');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/admin/category/100/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testCategoryEditPageWithAdminLoginWithExistingCategory(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/admin/category/1/edit');
-        $client->submitForm('Update', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/admin/category/1/edit');
+        $kernelBrowser->submitForm('Update', [
             'category[name]' => 'category updated',
         ]);
 
@@ -110,16 +110,16 @@ class CategoryControllerTest extends BaseController
 
     public function testCategoryRemovePageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('POST', '/admin/category/1');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('POST', '/admin/category/1');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testCategoryRemovePageWithUserLogin(): void
     {
-        $client = $this->loginUser();
-        $client->request('POST', '/admin/category/1');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('POST', '/admin/category/1');
 
         $this->assertResponseStatusCodeSame(403);
         $this->assertSelectorTextContains('h1.exception-message', 'Access Denied.');
@@ -127,16 +127,16 @@ class CategoryControllerTest extends BaseController
 
     public function testCategoryRemovePageWithAdminLoginWithUnexistingCategory(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('POST', '/admin/category/100');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('POST', '/admin/category/100');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testCategoryRemovePageWithAdminLoginWithExistingCategoryWithoutAssociation(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('POST', '/admin/category/4');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('POST', '/admin/category/4');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');
@@ -144,8 +144,8 @@ class CategoryControllerTest extends BaseController
 
     public function testCategoryRemovePageWithAdminLoginWithExistingCategoryWithAssociation(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('POST', '/admin/category/1');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('POST', '/admin/category/1');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');

@@ -22,9 +22,7 @@ class VideoType extends AbstractType
             ->add('url', UrlType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Url([
-                        'protocols' => ['https'],
-                    ]),
+                    new Url(protocols: ['https']),
                 ],
             ])
         ;

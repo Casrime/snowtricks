@@ -39,8 +39,8 @@ final class FrontController extends BaseController
     #[Route('/load-more-tricks', name: 'load-more-tricks')]
     public function loadMoreTricks(Request $request, TrickRepository $trickRepository): Response
     {
-        $tricks = $trickRepository->loadMoreTricks($request->query->getInt('offset'));
-        $results = $tricks->getQuery()->getResult();
+        $paginator = $trickRepository->loadMoreTricks($request->query->getInt('offset'));
+        $results = $paginator->getQuery()->getResult();
 
         return $this->render('_inc/_tricks.html.twig', [
             'tricks' => $results,
@@ -86,8 +86,8 @@ final class FrontController extends BaseController
     #[Route('/trick/{id}/load-more-comments', name: 'load-more-comments')]
     public function loadMoreComments(Request $request, Trick $trick, CommentRepository $commentRepository): Response
     {
-        $comments = $commentRepository->loadMoreComments($trick, $request->query->getInt('offset'));
-        $results = $comments->getQuery()->getResult();
+        $paginator = $commentRepository->loadMoreComments($trick, $request->query->getInt('offset'));
+        $results = $paginator->getQuery()->getResult();
 
         return $this->render('_inc/_comments.html.twig', [
             'comments' => $results,
@@ -170,6 +170,7 @@ final class FrontController extends BaseController
         $user = $token->getUser();
 
         $user->setActive(true);
+
         $token->setActive(false);
         $this->getEntityManager()->flush();
 
@@ -184,7 +185,7 @@ final class FrontController extends BaseController
         $form = $this->createForm(LoginType::class);
         $form->handleRequest($request);
 
-        if (null !== $security->getUser()) {
+        if ($security->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('home');
         }
 
@@ -205,7 +206,7 @@ final class FrontController extends BaseController
     public function logout(): never
     {
         // controller can be blank: it will never be called!
-        throw new Exception('Don\'t forget to activate logout in security.yaml');
+        throw new Exception("Don't forget to activate logout in security.yaml");
     }
 
     #[Route('/forget_password', name: 'app_forget_password', methods: ['GET', 'POST'])]
@@ -219,7 +220,7 @@ final class FrontController extends BaseController
             $user = $form->getData();
             $userExists = $userRepository->findOneBy(['username' => $user->getUsername()]);
 
-            if ($userExists) {
+            if ($userExists instanceof User) {
                 $token = new Token();
                 $token->setUser($userExists);
                 $token->setExpirationDate(new DateTimeImmutable('+7 days'));

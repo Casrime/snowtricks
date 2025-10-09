@@ -157,11 +157,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeComment(Comment $comment): static
     {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getUser() === $this) {
-                $comment->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->comments->removeElement($comment) && $comment->getUser() === $this) {
+            $comment->setUser(null);
         }
 
         return $this;
@@ -187,11 +185,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeTrick(Trick $trick): static
     {
-        if ($this->tricks->removeElement($trick)) {
-            // set the owning side to null (unless already changed)
-            if ($trick->getUser() === $this) {
-                $trick->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->tricks->removeElement($trick) && $trick->getUser() === $this) {
+            $trick->setUser(null);
         }
 
         return $this;
@@ -241,11 +237,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeToken(Token $token): static
     {
-        if ($this->tokens->removeElement($token)) {
-            // set the owning side to null (unless already changed)
-            if ($token->getUser() === $this) {
-                $token->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->tokens->removeElement($token) && $token->getUser() === $this) {
+            $token->setUser(null);
         }
 
         return $this;

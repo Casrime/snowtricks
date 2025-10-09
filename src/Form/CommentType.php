@@ -20,7 +20,7 @@ class CommentType extends AbstractType
             ->add('content', TextareaType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 5]),
+                    new Length(min: 5),
                 ],
                 'label' => false,
             ])

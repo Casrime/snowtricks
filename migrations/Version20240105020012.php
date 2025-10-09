@@ -21,12 +21,12 @@ final class Version20240105020012 extends AbstractMigration
         $this->addSql('CREATE TABLE comment (id INT NOT NULL, user_id INT DEFAULT NULL, trick_id INT DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, content TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_9474526CA76ED395 ON comment (user_id)');
         $this->addSql('CREATE INDEX IDX_9474526CB281BE2E ON comment (trick_id)');
-        $this->addSql('COMMENT ON COLUMN comment.created_at IS \'(DC2Type:datetime_immutable)\'');
+        $this->addSql("COMMENT ON COLUMN comment.created_at IS '(DC2Type:datetime_immutable)'");
         $this->addSql('CREATE TABLE image (id INT NOT NULL, name VARCHAR(255) NOT NULL, alt VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE token (uuid UUID NOT NULL, user_id INT NOT NULL, expiration_date TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, active BOOLEAN NOT NULL, PRIMARY KEY(uuid))');
         $this->addSql('CREATE INDEX IDX_5F37A13BA76ED395 ON token (user_id)');
-        $this->addSql('COMMENT ON COLUMN token.uuid IS \'(DC2Type:uuid)\'');
-        $this->addSql('COMMENT ON COLUMN token.expiration_date IS \'(DC2Type:datetime_immutable)\'');
+        $this->addSql("COMMENT ON COLUMN token.uuid IS '(DC2Type:uuid)'");
+        $this->addSql("COMMENT ON COLUMN token.expiration_date IS '(DC2Type:datetime_immutable)'");
         $this->addSql('CREATE TABLE trick (id INT NOT NULL, category_id INT NOT NULL, user_id INT DEFAULT NULL, name VARCHAR(50) NOT NULL, description TEXT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_D8F0A91E12469DE2 ON trick (category_id)');
         $this->addSql('CREATE INDEX IDX_D8F0A91EA76ED395 ON trick (user_id)');
@@ -43,9 +43,9 @@ final class Version20240105020012 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_75EA56E0FB7336F0 ON messenger_messages (queue_name)');
         $this->addSql('CREATE INDEX IDX_75EA56E0E3BD61CE ON messenger_messages (available_at)');
         $this->addSql('CREATE INDEX IDX_75EA56E016BA31DB ON messenger_messages (delivered_at)');
-        $this->addSql('COMMENT ON COLUMN messenger_messages.created_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('COMMENT ON COLUMN messenger_messages.available_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('COMMENT ON COLUMN messenger_messages.delivered_at IS \'(DC2Type:datetime_immutable)\'');
+        $this->addSql("COMMENT ON COLUMN messenger_messages.created_at IS '(DC2Type:datetime_immutable)'");
+        $this->addSql("COMMENT ON COLUMN messenger_messages.available_at IS '(DC2Type:datetime_immutable)'");
+        $this->addSql("COMMENT ON COLUMN messenger_messages.delivered_at IS '(DC2Type:datetime_immutable)'");
         $this->addSql('CREATE OR REPLACE FUNCTION notify_messenger_messages() RETURNS TRIGGER AS $$
             BEGIN
                 PERFORM pg_notify(\'messenger_messages\', NEW.queue_name::text);

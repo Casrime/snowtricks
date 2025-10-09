@@ -7,28 +7,28 @@ namespace App\Tests\Controller\User;
 use App\Tests\Controller\BaseController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ImageControllerTest extends BaseController
+final class ImageControllerTest extends BaseController
 {
     public function testImageNewPageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/user/image/new');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('GET', '/user/image/new');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testImageNewPageWithUserLogin(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/image/new');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/image/new');
 
         $this->assertResponseStatusCodeSame(200);
     }
 
     public function testImageNewPageWithAdminLoginWithoutFormSubmission(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/image/new');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/image/new');
 
         $this->assertResponseStatusCodeSame(200);
         $this->assertPageTitleContains('New Image');
@@ -36,9 +36,9 @@ class ImageControllerTest extends BaseController
 
     public function testImageNewPageWithAdminLoginWithFormSubmissionWithoutValues(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/image/new');
-        $client->submitForm('Save');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/image/new');
+        $kernelBrowser->submitForm('Save');
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertPageTitleContains('New Image');
@@ -47,9 +47,9 @@ class ImageControllerTest extends BaseController
 
     public function testImageNewPageWithAdminLoginWithFormSubmissionWithInvalidValues(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/image/new');
-        $client->submitForm('Save', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/image/new');
+        $kernelBrowser->submitForm('Save', [
             'image[name]' => new UploadedFile(
                 __DIR__.'/../../../public/uploads/images/snowtricks.txt',
                 'snowtricks.txt'
@@ -63,9 +63,9 @@ class ImageControllerTest extends BaseController
 
     public function testImageNewPageWithAdminLoginWithFormSubmissionWithValidValues(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/image/new');
-        $client->submitForm('Save', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/image/new');
+        $kernelBrowser->submitForm('Save', [
             'image[name]' => new UploadedFile(
                 __DIR__.'/../../../public/uploads/images/snowtricks.jpg',
                 'snowtricks.jpg'
@@ -79,33 +79,33 @@ class ImageControllerTest extends BaseController
 
     public function testImageEditPageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/user/image/1/edit');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('GET', '/user/image/1/edit');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testImageEditPageWithUserLogin(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/image/1/edit');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/image/1/edit');
 
         $this->assertResponseStatusCodeSame(200);
     }
 
     public function testImageEditPageWithAdminLoginWithUnexistingImage(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/image/100/edit');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/image/100/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testImageEditPageWithAdminLoginWithExistingImage(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/image/1/edit');
-        $client->submitForm('Update', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/image/1/edit');
+        $kernelBrowser->submitForm('Update', [
             'image[name]' => new UploadedFile(
                 __DIR__.'/../../../public/uploads/images/snowtricks-2.jpg',
                 'snowtricks-2.jpg'
@@ -118,32 +118,32 @@ class ImageControllerTest extends BaseController
 
     public function testImageRemovePageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('POST', '/user/image/1');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('POST', '/user/image/1');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testImageRemovePageWithUserLogin(): void
     {
-        $client = $this->loginUser();
-        $client->request('POST', '/user/image/1');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('POST', '/user/image/1');
 
         $this->assertResponseStatusCodeSame(303);
     }
 
     public function testImageRemovePageWithAdminLoginWithUnexistingImage(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('POST', '/user/image/100');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('POST', '/user/image/100');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testImageRemovePageWithAdminLoginWithExistingImageWithoutAssociation(): void
     {
-        $client = $this->loginUser();
-        $client->request('POST', '/user/image/3');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('POST', '/user/image/3');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
@@ -151,8 +151,8 @@ class ImageControllerTest extends BaseController
 
     public function testImageRemovePageWithAdminLoginWithExistingImageWithAssociation(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('POST', '/user/image/1');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('POST', '/user/image/1');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');

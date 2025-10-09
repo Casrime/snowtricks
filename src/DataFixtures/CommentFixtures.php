@@ -25,6 +25,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
         $comment1->setUser($user1);
         $comment1->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment1->setTrick($trick1);
+
         $manager->persist($comment1);
 
         $comment2 = new Comment();
@@ -33,6 +34,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
         $comment2->setUser($user2);
         $comment2->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment2->setTrick($trick1);
+
         $manager->persist($comment2);
 
         $comment3 = new Comment();
@@ -41,6 +43,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
         $comment3->setUser($user3);
         $comment3->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment3->setTrick($trick1);
+
         $manager->persist($comment3);
 
         $comment4 = new Comment();
@@ -49,18 +52,21 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
         $comment4->setUser($user4);
         $comment4->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment4->setTrick($trick1);
+
         $manager->persist($comment4);
 
         $comment5 = new Comment();
         $comment5->setUser($user1);
         $comment5->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment5->setTrick($trick1);
+
         $manager->persist($comment5);
 
         $comment6 = new Comment();
         $comment6->setUser($user1);
         $comment6->setContent('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.');
         $comment6->setTrick($trick1);
+
         $manager->persist($comment6);
 
         $manager->flush();

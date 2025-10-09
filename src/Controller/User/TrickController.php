@@ -80,6 +80,7 @@ class TrickController extends AbstractController
             foreach ($trick->getComments() as $comment) {
                 $entityManager->remove($comment);
             }
+
             $entityManager->remove($trick);
             $entityManager->flush();
 

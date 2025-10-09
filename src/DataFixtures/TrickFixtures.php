@@ -20,8 +20,8 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
     #[Override]
     public function load(ObjectManager $manager): void
     {
-        /** @var Category $grab */
-        $grab = $this->getReference('grab', Category::class);
+        /** @var Category $category */
+        $category = $this->getReference('grab', Category::class);
         /** @var Category $rotation */
         $rotation = $this->getReference('rotation', Category::class);
         /** @var Category $flip */
@@ -52,7 +52,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
 
         $trick1 = new Trick();
         $trick1->setName('Mute');
-        $trick1->setCategory($grab);
+        $trick1->setCategory($category);
         $trick1->addImage($image1);
         $trick1->addImage($image2);
         $trick1->addImage($image3);
@@ -78,99 +78,115 @@ Aliquam et justo velit. Mauris placerat ligula ex, eget tincidunt odio pharetra 
 
         $trick2 = new Trick();
         $trick2->setName('Sad');
-        $trick2->setCategory($grab);
+        $trick2->setCategory($category);
         $trick2->setUser($user1);
+
         $manager->persist($trick2);
 
         $trick3 = new Trick();
         $trick3->setName('Indy');
-        $trick3->setCategory($grab);
+        $trick3->setCategory($category);
         $trick3->setUser($user1);
+
         $manager->persist($trick3);
 
         $trick4 = new Trick();
         $trick4->setName('Stalefish');
-        $trick4->setCategory($grab);
+        $trick4->setCategory($category);
         $trick4->setUser($user1);
+
         $manager->persist($trick4);
 
         $trick5 = new Trick();
         $trick5->setName('Tail grab');
-        $trick5->setCategory($grab);
+        $trick5->setCategory($category);
         $trick5->addVideo($video1);
         $trick5->setUser($user1);
+
         $manager->persist($trick5);
 
         $trick6 = new Trick();
         $trick6->setName('Nose grab');
-        $trick6->setCategory($grab);
+        $trick6->setCategory($category);
         $trick6->setUser($user1);
+
         $manager->persist($trick6);
 
         $trick7 = new Trick();
         $trick7->setName('Japan');
-        $trick7->setCategory($grab);
+        $trick7->setCategory($category);
         $trick7->setUser($user1);
+
         $manager->persist($trick7);
 
         $trick8 = new Trick();
         $trick8->setName('Seat belt');
-        $trick8->setCategory($grab);
+        $trick8->setCategory($category);
         $trick8->setUser($user1);
+
         $manager->persist($trick8);
 
         $trick9 = new Trick();
         $trick9->setName('Truck driver');
-        $trick9->setCategory($grab);
+        $trick9->setCategory($category);
         $trick9->setUser($user1);
+
         $manager->persist($trick9);
 
         $trick10 = new Trick();
         $trick10->setName('180');
         $trick10->setCategory($rotation);
         $trick10->setUser($user1);
+
         $manager->persist($trick10);
 
         $trick11 = new Trick();
         $trick11->setName('360');
         $trick11->setCategory($rotation);
         $trick11->setUser($user1);
+
         $manager->persist($trick11);
 
         $trick12 = new Trick();
         $trick12->setName('540');
         $trick12->setCategory($rotation);
         $trick12->setUser($user1);
+
         $manager->persist($trick12);
 
         $trick13 = new Trick();
         $trick13->setName('720');
         $trick13->setCategory($rotation);
         $trick13->setUser($user1);
+
         $manager->persist($trick13);
 
         $trick14 = new Trick();
         $trick14->setName('900');
         $trick14->setCategory($rotation);
         $trick14->setUser($user1);
+
         $manager->persist($trick14);
 
         $trick15 = new Trick();
         $trick15->setName('1080');
         $trick15->setCategory($rotation);
         $trick15->setUser($user2);
+
         $manager->persist($trick15);
 
         $trick16 = new Trick();
         $trick16->setName('Front flip');
         $trick16->setCategory($flip);
         $trick16->setUser($user2);
+
         $manager->persist($trick16);
 
         $trick17 = new Trick();
         $trick17->setName('Back flip');
         $trick17->setCategory($flip);
         $trick17->setUser($user2);
+
         $manager->persist($trick17);
 
         $manager->flush();

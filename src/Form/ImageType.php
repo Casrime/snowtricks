@@ -25,14 +25,10 @@ class ImageType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new NotBlank(),
-                    new File([
-                        'maxSize' => '2048k',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid image',
-                    ]),
+                    new File(maxSize: '2048k', mimeTypes: [
+                        'image/jpeg',
+                        'image/png',
+                    ], mimeTypesMessage: 'Please upload a valid image'),
                 ],
             ])
             ->add('alt', TextType::class, [

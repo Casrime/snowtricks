@@ -6,37 +6,37 @@ namespace App\Tests\Controller\User;
 
 use App\Tests\Controller\BaseController;
 
-class CommentControllerTest extends BaseController
+final class CommentControllerTest extends BaseController
 {
     public function testCommentEditPageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/user/comment/1/edit');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('GET', '/user/comment/1/edit');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testCommentEditPageWithUserLoginWithUnexistingComment(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/comment/100/edit');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/comment/100/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testCommentEditPageWithAdminLoginWithUnexistingComment(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/comment/100/edit');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/comment/100/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testCommentEditPageWithUserLoginWithExistingComment(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/comment/1/edit');
-        $client->submitForm('Update', [
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/comment/1/edit');
+        $kernelBrowser->submitForm('Update', [
             'comment[content]' => 'https://www.youtube.com/watch?v=PEP1-Y7fX_I',
         ]);
 
@@ -46,9 +46,9 @@ class CommentControllerTest extends BaseController
 
     public function testCommentEditPageWithAdminLoginWithExistingComment(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/comment/1/edit');
-        $client->submitForm('Update', [
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/comment/1/edit');
+        $kernelBrowser->submitForm('Update', [
             'comment[content]' => 'https://www.youtube.com/watch?v=PEP1-Y7fX_I',
         ]);
 
@@ -58,33 +58,33 @@ class CommentControllerTest extends BaseController
 
     public function testCommentRemovePageWithoutLogin(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/user/comment/1/edit');
+        $kernelBrowser = self::createClient();
+        $kernelBrowser->request('GET', '/user/comment/1/edit');
 
         $this->assertResponseRedirects('/login');
     }
 
     public function testCommentRemovePageWithUserLoginWithUnexistingComment(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/comment/100/edit');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/comment/100/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testCommentRemovePageWithAdminLoginWithUnexistingComment(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/comment/100/edit');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/comment/100/edit');
 
         $this->assertResponseStatusCodeSame(404);
     }
 
     public function testCommentRemovePageWithUserLoginWithExistingCommentWithoutAssociation(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/comment/2/edit');
-        $client->submitForm('Delete');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/comment/2/edit');
+        $kernelBrowser->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
@@ -92,9 +92,9 @@ class CommentControllerTest extends BaseController
 
     public function testCommentRemovePageWithAdminLoginWithExistingCommentWithoutAssociation(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/comment/2/edit');
-        $client->submitForm('Delete');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/comment/2/edit');
+        $kernelBrowser->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');
@@ -102,9 +102,9 @@ class CommentControllerTest extends BaseController
 
     public function testCommentRemovePageWithUserLoginWithExistingCommentWithAssociation(): void
     {
-        $client = $this->loginUser();
-        $client->request('GET', '/user/comment/1/edit');
-        $client->submitForm('Delete');
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/user/comment/1/edit');
+        $kernelBrowser->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
@@ -112,9 +112,9 @@ class CommentControllerTest extends BaseController
 
     public function testCommentRemovePageWithAdminLoginWithExistingCommentWithAssociation(): void
     {
-        $client = $this->loginAdmin();
-        $client->request('GET', '/user/comment/1/edit');
-        $client->submitForm('Delete');
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/user/comment/1/edit');
+        $kernelBrowser->submitForm('Delete');
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');
