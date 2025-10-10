@@ -1,5 +1,14 @@
 #syntax=docker/dockerfile:1
 
+# Webpack Encore image
+FROM node AS webpack_encore
+
+WORKDIR /app
+
+RUN apt-get update
+
+RUN npm install -g pnpm
+
 # Versions
 FROM dunglas/frankenphp:1-php8.4 AS frankenphp_upstream
 

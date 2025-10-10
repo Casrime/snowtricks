@@ -1,6 +1,6 @@
 APP_ENV ?= dev
 CONTAINER_NAME ?= php
-DOCKER_COMPOSE = docker-compose --project-name snowtricks --project-directory .
+DOCKER_COMPOSE = docker compose --project-name symfony-full-demo --project-directory .
 OS := $(shell uname)
 TOOLS_DIRECTORY = tools
 
@@ -11,11 +11,11 @@ TOOLS_DIRECTORY = tools
 
 install: ## Install project in dev environment
 install: export APP_ENV=dev
-install: dc-up composer-install db-reset
+install: dc-build dc-up db-reset js-install js-watch
 
 install-prod: ## Install project in prod environment
 install-prod: export APP_ENV=prod
-install-prod: dc-prod composer-install
+install-prod: dc-build-prod dc-prod js-install js-build
 
 ##
 ## # Docker Compose
@@ -24,7 +24,11 @@ install-prod: dc-prod composer-install
 
 dc-build: ## Build containers
 dc-build: .env
-	$(DOCKER_COMPOSE) build
+	$(DOCKER_COMPOSE) build --pull --no-cache
+
+dc-build-prod: ## Build containers in prod environment
+dc-build-prod: .env
+	$(DOCKER_COMPOSE) -f compose.yaml -f compose.prod.yaml build --pull --no-cache
 
 dc-down: ## Remove containers and delete volumes
 	$(DOCKER_COMPOSE) down --remove-orphans --volumes
@@ -38,7 +42,7 @@ dc-logs: ## Show container logs
 	$(DOCKER_COMPOSE) logs -f $(CONTAINER_NAME)
 
 dc-prod: ## Up containers in prod environment
-	$(DOCKER_COMPOSE) -f compose.yaml -f compose.prod.yaml up --wait
+	APP_SECRET=$(APP_SECRET) CADDY_MERCURE_JWT_SECRET=$(CADDY_MERCURE_JWT_SECRET) $(DOCKER_COMPOSE) -f compose.yaml -f compose.prod.yaml up --wait
 
 dc-ps: ## Show running containers
 	$(DOCKER_COMPOSE) ps
@@ -60,7 +64,7 @@ dc-trust-certificate:
 
 dc-up: ## Up containers
 dc-up: .env
-	$(DOCKER_COMPOSE) up -d
+	$(DOCKER_COMPOSE) up --wait
 
 ##
 ## # Database
@@ -86,16 +90,19 @@ db-reset: ## Reset Database
 db-reset: db-drop db-create db-migrations db-fixtures
 
 ##
-## # Composer
+## # JavaScript
 ##---------------------------------------------------------------------------
-.PHONY: composer-install
 
-composer-install: ## Install composer dependencies
-	$(if $(filter $(APP_ENV), dev or test),\
-		$(DOCKER_COMPOSE) exec php composer install,\
-		$(DOCKER_COMPOSE) exec php composer dump-env prod && \
-		$(DOCKER_COMPOSE) exec php composer install --no-dev --optimize-autoloader \
-	)
+.PHONY: js-install js-watch js-build
+
+js-install:				## Install pnpm dependencies
+						@$(DOCKER_COMPOSE) exec node pnpm install
+
+js-watch:				## Launch server in background
+						@$(DOCKER_COMPOSE) exec node pnpm watch
+
+js-build:				## Generate assets for production
+						@$(DOCKER_COMPOSE) exec node pnpm build
 
 ##
 ## # Symfony

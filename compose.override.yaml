@@ -5,6 +5,17 @@ services:
         ports:
             - '5432:5432'
 
+    node:
+        build:
+            context: .
+            target: webpack_encore
+        ports:
+            - "8000:8000"
+        volumes:
+            - ./:/app
+        restart: unless-stopped
+        tty: true
+
     php:
         build:
             context: .
