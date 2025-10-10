@@ -56,8 +56,16 @@ final class FrontController extends BaseController
     }
 
     #[Route('/trick/{id}', name: 'trick')]
-    public function trick(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
+    public function trick(Request $request, EntityManagerInterface $entityManager, TrickRepository $trickRepository): Response
     {
+        $id = $request->attributes->filter('id', 1, FILTER_VALIDATE_INT, options: [
+            'options' => ['flags' => FILTER_NULL_ON_FAILURE, 'default' => 1]
+        ]);
+        // Get everything in just one query
+        $trick = $trickRepository->getTrickWithCommentsAndImagesAndVideos($id);
+        if (!$trick) {
+            throw $this->createNotFoundException('Trick not found');
+        }
         $form = $this->createForm(CommentType::class);
         $form->handleRequest($request);
 
