@@ -42,7 +42,7 @@ dc-logs: ## Show container logs
 	$(DOCKER_COMPOSE) logs -f $(CONTAINER_NAME)
 
 dc-prod: ## Up containers in prod environment
-	$(DOCKER_COMPOSE) -f compose.yaml -f compose.prod.yaml up --wait
+	APP_SECRET=$(APP_SECRET) CADDY_MERCURE_JWT_SECRET=$(CADDY_MERCURE_JWT_SECRET) $(DOCKER_COMPOSE) -f compose.yaml -f compose.prod.yaml up --wait
 
 dc-ps: ## Show running containers
 	$(DOCKER_COMPOSE) ps
