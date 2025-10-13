@@ -1,17 +1,20 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-        "config:recommended"
-    ],
-    "prHourlyLimit": 0,
-    "separateMajorMinor": true,
-    "separateMultipleMajor": true,
-    "rebaseWhen": "behind-base-branch",
-    "automerge": true,
-    "automergeType": "pr",
-    "platformAutomerge": true,
-    "branchPrefix": "renovate/",
-    "additionalBranchPrefix": "{{{newVersion}}}-",
-    "branchTopic": "{{{depName}}}",
-    "commitMessageExtra": "to v{{{newVersion}}}"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "prHourlyLimit": 10,
+  "separateMajorMinor": true,
+  "separateMultipleMajor": true,
+  "rebaseWhen": "behind-base-branch",
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "branchPrefix": "renovate/",
+  "additionalBranchPrefix": "{{{newVersion}}}-",
+  "branchTopic": "{{{depName}}}",
+  "commitMessageExtra": "to v{{{newVersion}}}",
+  "patch": {
+    "enabled": false
+  }
 }
