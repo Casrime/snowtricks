@@ -31,7 +31,7 @@ final class ImageControllerTest extends BaseController
         $kernelBrowser->request('GET', '/user/image/new');
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('New Image');
+        $this->assertPageTitleContains($this->trans('app.images.new'));
     }
 
     public function testImageNewPageWithAdminLoginWithFormSubmissionWithoutValues(): void
@@ -41,7 +41,7 @@ final class ImageControllerTest extends BaseController
         $kernelBrowser->submitForm('Save');
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertPageTitleContains('New Image');
+        $this->assertPageTitleContains($this->trans('app.images.new'));
         $this->assertSelectorTextContains('#image_name_error_0', 'This value should not be blank.');
     }
 
@@ -57,7 +57,7 @@ final class ImageControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertPageTitleContains('New Image');
+        $this->assertPageTitleContains($this->trans('app.images.new'));
         $this->assertSelectorTextContains('#image_name_error_0', 'Please upload a valid image');
     }
 

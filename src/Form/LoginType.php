@@ -35,6 +35,7 @@ class LoginType extends AbstractType
                     new Length(min: 3, max: 4096, minMessage: 'Your username should be at least {{ limit }} characters'),
                 ],
                 'data' => $request->getSession()->get(SecurityRequestAttributes::LAST_USERNAME),
+                'label' => 'app.username',
             ])
             ->add('password', PasswordType::class)
         ;

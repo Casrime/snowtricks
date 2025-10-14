@@ -47,7 +47,7 @@ class TrickType extends AbstractType
                 'class' => Image::class,
                 'choice_label' => 'name',
                 'expanded' => true,
-                'label' => 'Image principale',
+                'label' => 'app.images.main',
                 'multiple' => false,
             ])
             ->add('images', EntityType::class, [

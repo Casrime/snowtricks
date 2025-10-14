@@ -23,7 +23,7 @@ final class TrickControllerTest extends BaseController
         $kernelBrowser->request('GET', '/user/trick/new');
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('New Trick');
+        $this->assertPageTitleContains($this->trans('app.tricks.new'));
     }
 
     public function testTrickNewPageWithAdminLoginWithoutFormSubmission(): void
@@ -32,7 +32,7 @@ final class TrickControllerTest extends BaseController
         $kernelBrowser->request('GET', '/user/trick/new');
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('New Trick');
+        $this->assertPageTitleContains($this->trans('app.tricks.new'));
     }
 
     public function testTrickNewPageWithAdminLoginWithFormSubmissionWithoutValues(): void
@@ -42,7 +42,7 @@ final class TrickControllerTest extends BaseController
         $kernelBrowser->submitForm('Save');
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertPageTitleContains('New Trick');
+        $this->assertPageTitleContains($this->trans('app.tricks.new'));
         $this->assertSelectorTextContains('#trick_name_error_0', 'This value should not be blank.');
     }
 
@@ -55,7 +55,7 @@ final class TrickControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertPageTitleContains('New Trick');
+        $this->assertPageTitleContains($this->trans('app.tricks.new'));
         $this->assertSelectorTextContains('#trick_name_error_0', 'This value should not be blank.');
     }
 
@@ -64,7 +64,7 @@ final class TrickControllerTest extends BaseController
         $kernelBrowser = $this->loginUser();
         $kernelBrowser->request('GET', '/user/trick/new');
         $kernelBrowser->submitForm('Save', [
-            'trick[name]' => 'New trick',
+            'trick[name]' => $this->trans('app.tricks.new'),
             'trick[category]' => 1,
         ]);
 
@@ -73,7 +73,7 @@ final class TrickControllerTest extends BaseController
 
         $container = self::getContainer();
         /** @var Trick $trick */
-        $trick = $container->get('doctrine')->getManager()->getRepository(Trick::class)->findOneBy(['name' => 'New trick']);
+        $trick = $container->get('doctrine')->getManager()->getRepository(Trick::class)->findOneBy(['name' => $this->trans('app.tricks.new')]);
         $kernelBrowser->request('GET', '/trick/'.$trick->getId());
         $this->assertResponseStatusCodeSame(200);
     }
@@ -83,7 +83,7 @@ final class TrickControllerTest extends BaseController
         $kernelBrowser = $this->loginAdmin();
         $kernelBrowser->request('GET', '/user/trick/new');
         $kernelBrowser->submitForm('Save', [
-            'trick[name]' => 'New trick',
+            'trick[name]' => $this->trans('app.tricks.new'),
             'trick[category]' => 1,
             'trick[description]' => 'New trick description',
             'trick[images]' => [1, 2, 3],
@@ -95,7 +95,7 @@ final class TrickControllerTest extends BaseController
 
         $container = self::getContainer();
         /** @var Trick $trick */
-        $trick = $container->get('doctrine')->getManager()->getRepository(Trick::class)->findOneBy(['name' => 'New trick']);
+        $trick = $container->get('doctrine')->getManager()->getRepository(Trick::class)->findOneBy(['name' => $this->trans('app.tricks.new')]);
         $kernelBrowser->request('GET', '/trick/'.$trick->getId());
         $this->assertResponseStatusCodeSame(200);
     }

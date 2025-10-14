@@ -12,7 +12,7 @@
             {% if delete is defined %}
                 {{ include('_inc/_modal_button.html.twig', {
                     btn_class: 'btn-red',
-                    content: 'Delete',
+                    content: 'app.delete'|trans,
                     id: comment.id,
                     htmlName: 'comment',
                 }) }}
@@ -28,7 +28,7 @@
         name: comment.content,
         includeForm: include('_inc/_delete_form.html.twig', {
             action: path('app_comment_delete', {id: comment.id}),
-            content: 'Delete',
+            content: 'app.delete'|trans,
             value: csrf_token('delete' ~ comment.id),
         }),
     }) }}

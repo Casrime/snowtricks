@@ -1,0 +1,56 @@
+app:
+    admin: Admin
+    administration: Administration
+    categories:
+        name: Category
+        new: New category
+    comments: Comments
+    delete: Delete
+    en: English (US)
+    fr: French (FR)
+    home: Home
+    images: Images
+    login: Login
+    logout: Logout
+    register: Register
+    tricks:
+        name: Tricks
+        list: Tricks list
+    user: User
+    videos: Videos
+    users: Users
+    edit: Edit
+    new: New
+    id: Id
+    username: Username
+    roles: Roles
+    actions: Actions
+    users.not.found: No users found
+    name: Name
+    categories.not.found: No categories found
+    snowtricks: SnowTricks
+    with: with
+    delete.question: __delete.question # TODO
+    comments.not.found: No comments found
+    content: Content
+    trick: Trick
+    videos.new: New video
+    url: Url
+    videos.not.found: No videos found
+    images.new: New image
+    alt: Alt
+    images.not.found: No images found
+    tricks.new: New trick
+    description: Description
+    tricks.not.found: No tricks found
+    reset.password: Reset password
+    reset: Reset
+    forgot.password: Forgot password
+    see.medias: See medias
+    created.at: Created at
+    group: Group
+    updated.at: Updated at
+    created.by: Created by
+    comment: Comment
+    posted.on: Posted on
+    submit: Submit

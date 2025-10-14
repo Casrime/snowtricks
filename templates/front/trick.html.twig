@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Trick{% endblock %}
+{% block title %}{{ 'app.trick'|trans }}{% endblock %}
 
 {% block body %}
     <div class="mx-2" id="content-home" {% if trick.mainImage %}style="background: no-repeat center/100% url({{ asset('uploads/images/' ~ trick.mainImage.name) }})"{% endif %}>
@@ -27,7 +27,7 @@
                     name: trick.name,
                     includeForm: include('_inc/_delete_form.html.twig', {
                         action: path('app_trick_delete', {id: trick.id}),
-                        content: 'Delete',
+                        content: 'app.delete'|trans,
                         value: csrf_token('delete' ~ trick.id),
                     }),
                 }) }}
@@ -38,7 +38,7 @@
 
     <div id="medias">
         <div id="see-medias-block" class="text-center m-5 md:hidden" data-controller="show-medias">
-            <button type="button" class="btn-blue" data-action="show-medias#show">See medias</button>
+            <button type="button" class="btn-blue" data-action="show-medias#show">{{ 'app.see.medias'|trans }}</button>
         </div>
 
         <div id="medias_images_and_videos" class="hidden md:block mx-auto flex flex-col md:flex-col md:mx-20">
@@ -65,18 +65,18 @@
 
     <div id="content_informations" class="flex justify-center flex-wrap md:mx-[5%]">
         <span class="my-2 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-            Créée le : {{ trick.createdAt|date('d/m/Y') }}
+            {{ 'app.created.at'|trans }} : {{ trick.createdAt|date('d/m/Y') }}
         </span>
         <span class="my-2 bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
-            Groupe : {{ trick.category.name }}
+            {{ 'app.group'|trans }} : {{ trick.category.name }}
         </span>
         {% if trick.updatedAt %}
             <span class="my-2 bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-red-400 border border-red-400">
-                Modifiée le : {{ trick.updatedAt|date('d/m/Y') }}
+                {{ 'app.updated.at'|trans }} : {{ trick.updatedAt|date('d/m/Y') }}
             </span>
         {% endif %}
         <span class="my-2 bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-gray-700 dark:text-green-400 border border-green-400">
-            Créée par : {{ trick.user.username }}
+            {{ 'app.created.by'|trans }} : {{ trick.user.username }}
         </span>
     </div>
 
@@ -84,7 +84,7 @@
 
     <div id="content_leave_comment" class="md:mx-[15%]">
         {% if is_granted('ROLE_USER') %}
-            <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Leave a comment</h2>
+            <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{ 'app.comment'|trans }}</h2>
             {{ include('common/comment/_form.html.twig', {button_label: 'Comment'}) }}
         {% else %}
             <div class="mx-5 flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
@@ -94,6 +94,7 @@
                 <span class="sr-only">Info</span>
                 <div>
             <span class="font-medium">
+                {# TODO - translate this content #}
                 You need to be <a href="{{ path('app_login') }}" class="font-semibold underline hover:no-underline">logged in</a> to leave a comment.
             </span>
                 </div>
@@ -104,14 +105,14 @@
     <hr class="mx-5 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700 md:mx-[15%]">
 
     <div id="content_comments" class="md:mx-[15%]">
-        <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Comments</h2>
+        <h2 class="text-center mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{ 'app.comments.name'|trans }}</h2>
 
         <div id="accordion-collapse" class="mx-5 my-2" data-accordion="collapse">
             {% for comment in trick.comments|reverse %}
                 <h2 id="accordion-collapse-heading-{{ comment.id }}">
                     <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border {% if not loop.last %}border-b-0{% endif %} border-gray-200 {% if loop.first %}rounded-t-xl{% endif %} focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{{ comment.id }}" aria-expanded="true" aria-controls="accordion-collapse-body-{{ comment.id }}">
                         <span>{{ comment.user.username }} #{{ comment.id }}</span>
-                        <span class="italic">Posté le {{ comment.createdAt|date('d/m/Y') }}</span>
+                        <span class="italic">{{ 'app.posted.on'|trans }} : {{ comment.createdAt|date('d/m/Y') }}</span>
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                         </svg>
@@ -129,7 +130,7 @@
                     </svg>
                     <span class="sr-only">Info</span>
                     <div>
-                        <span class="font-medium">No comments</span>
+                        <span class="font-medium">{{ 'app.comments.not.found'|trans }}</span>
                     </div>
                 </div>
             {% endfor %}

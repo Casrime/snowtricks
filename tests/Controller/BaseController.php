@@ -47,4 +47,9 @@ abstract class BaseController extends WebTestCase
     {
         return $this->login('admin@snowtricks.com');
     }
+
+    protected function trans(string $identifier, array $parameters = [], string $domain = 'messages')
+    {
+        return static::getContainer()->get('translator')->trans($identifier, $parameters, $domain);
+    }
 }

@@ -1,6 +1,6 @@
 <div class="mb-5">
     <a href="{{ path('app_category_new') }}" class="btn-blue">
-        New category
+        {{ 'app.categories.new'|trans }}
     </a>
 </div>
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -8,16 +8,16 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Id
+                    {{ 'app.id'|trans }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Name
+                    {{ 'app.name'|trans }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Tricks
+                    {{ 'app.tricks.name'|trans }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Actions
+                    {{ 'app.actions'|trans }}
                 </th>
             </tr>
         </thead>
@@ -48,7 +48,7 @@
                     name: category.name,
                     includeForm: include('_inc/_delete_form.html.twig', {
                         action: path('app_category_delete', {id: category.id}),
-                        content: 'Delete',
+                        content: 'app.delete'|trans,
                         value: csrf_token('delete' ~ category.id),
                         id: category.id,
                         name: 'category',
@@ -58,7 +58,7 @@
         </tr>
             {% else %}
                 <tr>
-                    <td class="px-6 py-4" colspan="4">no records found</td>
+                    <td class="px-6 py-4" colspan="4">{{ 'app.categories.not.found'|trans }}</td>
                 </tr>
             {% endfor %}
         </tbody>

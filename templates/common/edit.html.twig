@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit {{ name|capitalize }}{% endblock %}
+{% block title %}{{ 'app.edit'|trans }} {{ name }}{% endblock %}
 
 {% block body %}
     <div class="container mx-auto">
-        <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Edit {{ name|capitalize }}</h1>
+        <h1 class="text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+            {{ 'app.edit'|trans }} {{ name }}
+        </h1>
         {{ include('common/' ~ name ~ '/_form.html.twig', {
             button_label: 'Update',
             edit: true,
