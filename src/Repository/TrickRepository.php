@@ -35,4 +35,30 @@ class TrickRepository extends ServiceEntityRepository
 
         return new Paginator($query);
     }
+
+    public function getTrickWithCommentsAndImagesAndVideos(int $trickId): ?Trick
+    {
+        return $this->createQueryBuilder('trick')
+            ->addSelect('trick')
+            ->leftJoin('trick.mainImage', 'mainImage')
+            ->addSelect('mainImage')
+            ->leftJoin('trick.comments', 'comment')
+            ->addSelect('comment')
+            ->leftJoin('trick.images', 'image')
+            ->addSelect('image')
+            ->leftJoin('trick.videos', 'video')
+            ->addSelect('video')
+            ->leftJoin('trick.user', 'user')
+            ->addSelect('user')
+            ->leftJoin('trick.category', 'category')
+            ->addSelect('category')
+            ->leftJoin('comment.user', 'comment_user')
+            ->addSelect('comment_user')
+            ->andWhere('trick.id = :id')
+            ->setParameter('id', $trickId)
+            ->orderBy('trick.id', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
