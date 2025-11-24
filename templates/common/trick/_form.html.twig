@@ -191,7 +191,7 @@
                 {% if delete is defined %}
                     {{ include('_inc/_modal_button.html.twig', {
                         btn_class: 'bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg',
-                        content: 'Delete',
+                        content: 'app.delete'|trans,
                         id: trick.id,
                         htmlName: 'trick',
                     }) }}
@@ -213,7 +213,7 @@
         name: image.vars.label,
         includeForm: include('_inc/_delete_form.html.twig', {
             action: path('app_image_delete', {id: image.vars.value}),
-            content: 'Delete',
+            content: 'app.delete'|trans,
             value: csrf_token('delete' ~ image.vars.value),
         }),
     }) }}
@@ -226,7 +226,7 @@
         name: video.vars.label,
         includeForm: include('_inc/_delete_form.html.twig', {
             action: path('app_video_delete', {id: video.vars.value}),
-            content: 'Delete',
+            content: 'app.delete'|trans,
             value: csrf_token('delete' ~ video.vars.value),
         }),
     }) }}
@@ -239,7 +239,7 @@
         name: trick.name,
         includeForm: include('_inc/_delete_form.html.twig', {
             action: path('app_trick_delete', {id: trick.id}),
-            content: 'Delete',
+            content: 'app.delete'|trans,
             value: csrf_token('delete' ~ trick.id),
         }),
     }) }}

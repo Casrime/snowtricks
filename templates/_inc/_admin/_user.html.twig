@@ -2,12 +2,24 @@
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3">Id</th>
-                <th scope="col" class="px-6 py-3">Username</th>
-                <th scope="col" class="px-6 py-3">Roles</th>
-                <th scope="col" class="px-6 py-3">Comments</th>
-                <th scope="col" class="px-6 py-3">Tricks</th>
-                <th scope="col" class="px-6 py-3">Actions</th>
+                <th scope="col" class="px-6 py-3">
+                    {{ 'app.id'|trans }}
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    {{ 'app.username'|trans }}
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    {{ 'app.roles'|trans }}
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    {{ 'app.comments.name'|trans }}
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    {{ 'app.tricks.name'|trans }}
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    {{ 'app.actions'|trans }}
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +54,7 @@
                             name: user.username,
                             includeForm: include('_inc/_delete_form.html.twig', {
                                 action: path('app_user_delete', {id: user.id}),
-                                content: 'Delete',
+                                content: 'app.delete'|trans,
                                 value: csrf_token('delete' ~ user.id),
                             }),
                         }) }}
@@ -50,7 +62,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td class="px-6 py-4" colspan="6">No users found</td>
+                    <td class="px-6 py-4" colspan="6">{{ 'app.users.not.found'|trans }}</td>
                 </tr>
             {% endfor %}
         </tbody>

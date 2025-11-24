@@ -9,12 +9,43 @@ use Symfony\Component\Uid\Uuid;
 
 final class FrontControllerTest extends BaseController
 {
-    public function testHomePage(): void
+    public function testHomePageWithoutLogin(): void
     {
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/');
 
         $this->assertSelectorTextContains('h1', 'SnowTricks');
+        $this->assertSelectorTextContains('body', $this->trans('app.home'));
+        $this->assertSelectorTextContains('body', $this->trans('app.tricks.name'));
+        $this->assertSelectorTextContains('body', $this->trans('app.login'));
+        $this->assertSelectorTextContains('body', $this->trans('app.register'));
+        $this->assertSelectorTextNotContains('body', $this->trans('app.logout'));
+        $this->assertSelectorTextNotContains('body', $this->trans('app.admin'));
+        $this->assertSelectorTextNotContains('body', $this->trans('app.user'));
+    }
+
+    public function testHomePageWithUserLoggedIn(): void
+    {
+        $kernelBrowser = $this->loginUser();
+        $kernelBrowser->request('GET', '/');
+
+        $this->assertSelectorTextNotContains('body', $this->trans('app.login'));
+        $this->assertSelectorTextNotContains('body', $this->trans('app.register'));
+        $this->assertSelectorTextContains('body', $this->trans('app.logout'));
+        $this->assertSelectorTextNotContains('body', $this->trans('app.admin'));
+        $this->assertSelectorTextContains('body', $this->trans('app.user'));
+    }
+
+    public function testHomePageWithAdminLoggedIn(): void
+    {
+        $kernelBrowser = $this->loginAdmin();
+        $kernelBrowser->request('GET', '/');
+
+        $this->assertSelectorTextNotContains('body', $this->trans('app.login'));
+        $this->assertSelectorTextNotContains('body', $this->trans('app.register'));
+        $this->assertSelectorTextContains('body', $this->trans('app.logout'));
+        $this->assertSelectorTextContains('body', $this->trans('app.admin'));
+        $this->assertSelectorTextNotContains('body', $this->trans('app.user'));
     }
 
     public function testTricksPage(): void
@@ -22,8 +53,8 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/tricks');
 
-        $this->assertSelectorTextNotContains('h1', 'SnowTricks');
-        $this->assertSelectorTextContains('h1', 'Tricks list');
+        $this->assertSelectorTextNotContains('h1', $this->trans('app.snowtricks'));
+        $this->assertSelectorTextContains('h1', $this->trans('app.tricks.list'));
     }
 
     public function testTrickShowPageWithoutLogin(): void
@@ -59,7 +90,7 @@ final class FrontControllerTest extends BaseController
 
         $this->assertResponseIsSuccessful();
         $this->assertPageTitleSame('Register');
-        $this->assertSelectorTextSame('h1', 'Register');
+        $this->assertSelectorTextSame('h1', $this->trans('app.register'));
     }
 
     public function testRegisterPageWithFormSubmissionWithEmptyValues(): void
@@ -67,7 +98,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/register');
 
-        $kernelBrowser->submitForm('Create an account');
+        $kernelBrowser->submitForm($this->trans('app.register'));
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertSelectorTextContains('#registration_form', 'Please enter a username');
@@ -80,7 +111,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/register');
 
-        $kernelBrowser->submitForm('Create an account', [
+        $kernelBrowser->submitForm($this->trans('app.register'), [
             'registration_form[username]' => '1',
             'registration_form[email]' => 'hello',
             'registration_form[plainPassword]' => '1234',
@@ -97,7 +128,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/register');
 
-        $kernelBrowser->submitForm('Create an account', [
+        $kernelBrowser->submitForm($this->trans('app.register'), [
             'registration_form[username]' => 'admin',
             'registration_form[email]' => 'new-user@snowtricks.com',
             'registration_form[plainPassword]' => 'pass123',
@@ -114,7 +145,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/register');
 
-        $kernelBrowser->submitForm('Create an account', [
+        $kernelBrowser->submitForm($this->trans('app.register'), [
             'registration_form[username]' => 'admin-for-test',
             'registration_form[email]' => 'admin-for-test@snowtricks.com',
             'registration_form[plainPassword]' => 'pass123',
@@ -194,7 +225,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/login');
 
-        $kernelBrowser->submitForm('Connexion', [
+        $kernelBrowser->submitForm($this->trans('app.login'), [
             'login[username]' => 'unexisting-user',
             'login[password]' => 'pass',
         ]);
@@ -212,7 +243,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/login');
 
-        $kernelBrowser->submitForm('Connexion', [
+        $kernelBrowser->submitForm($this->trans('app.login'), [
             'login[username]' => 'admin',
             'login[password]' => 'pass',
         ]);
@@ -230,7 +261,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/login');
 
-        $kernelBrowser->submitForm('Connexion', [
+        $kernelBrowser->submitForm($this->trans('app.login'), [
             'login[username]' => 'admin',
             'login[password]' => 'pass123',
         ]);
@@ -248,7 +279,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/login');
 
-        $kernelBrowser->submitForm('Connexion', [
+        $kernelBrowser->submitForm($this->trans('app.login'), [
             'login[username]' => 'admin',
             'login[password]' => 'pass123',
         ]);
@@ -268,7 +299,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/forget_password');
 
-        $this->assertSelectorTextContains('label', 'Username');
+        $this->assertSelectorTextContains('label', $this->trans('app.username'));
     }
 
     public function testForgetPasswordPageWithFormSubmissionWithInvalidUsername(): void
@@ -276,7 +307,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/forget_password');
 
-        $kernelBrowser->submitForm('Valider', [
+        $kernelBrowser->submitForm($this->trans('app.submit'), [
             'forget_password[username]' => 'unexisting-user',
         ]);
 
@@ -292,7 +323,7 @@ final class FrontControllerTest extends BaseController
         $kernelBrowser = self::createClient();
         $kernelBrowser->request('GET', '/forget_password');
 
-        $kernelBrowser->submitForm('Valider', [
+        $kernelBrowser->submitForm($this->trans('app.submit'), [
             'forget_password[username]' => 'admin',
         ]);
 

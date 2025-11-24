@@ -31,7 +31,7 @@ final class CategoryControllerTest extends BaseController
         $kernelBrowser->request('GET', '/admin/category/new');
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('New Category');
+        $this->assertPageTitleContains($this->trans('app.categories.new'));
     }
 
     public function testCategoryNewPageWithAdminLoginWithFormSubmissionWithoutValues(): void
@@ -41,7 +41,7 @@ final class CategoryControllerTest extends BaseController
         $kernelBrowser->submitForm('Save');
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertPageTitleContains('New Category');
+        $this->assertPageTitleContains($this->trans('app.categories.new'));
         $this->assertSelectorTextContains('#category p.text-red-600', 'This value should not be blank.');
     }
 
@@ -54,7 +54,7 @@ final class CategoryControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertPageTitleContains('New Category');
+        $this->assertPageTitleContains($this->trans('app.categories.new'));
         $this->assertSelectorTextContains('#category p.text-red-600', 'This value is too short. It should have 3 characters or more.');
     }
 

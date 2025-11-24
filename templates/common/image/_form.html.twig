@@ -6,7 +6,7 @@
         {% if delete is defined %}
             {{ include('_inc/_modal_button.html.twig', {
                 btn_class: 'btn-red',
-                content: 'Delete',
+                content: 'app.delete'|trans,
                 id: image.id,
                 htmlName: 'image',
             }) }}
@@ -21,7 +21,7 @@
         name: image.name,
         includeForm: include('_inc/_delete_form.html.twig', {
             action: path('app_image_delete', {id: image.id}),
-            content: 'Delete',
+            content: 'app.delete'|trans,
             value: csrf_token('delete' ~ image.id),
         }),
     }) }}

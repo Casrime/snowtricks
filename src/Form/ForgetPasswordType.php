@@ -24,6 +24,7 @@ class ForgetPasswordType extends AbstractType
                     new NotBlank(),
                     new Length(min: 3, max: 4096, minMessage: 'Your username should be at least {{ limit }} characters'),
                 ],
+                'label' => 'app.username',
             ])
         ;
     }

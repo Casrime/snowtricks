@@ -60,7 +60,7 @@
                                             name: trick.name,
                                             includeForm: include('_inc/_delete_form.html.twig', {
                                                 action: path('app_trick_delete', {id: trick.id}),
-                                                content: 'Delete',
+                                                content: 'app.delete'|trans,
                                                 value: csrf_token('delete' ~ trick.id),
                                             }),
                                         }) }}

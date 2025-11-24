@@ -32,6 +32,6 @@ final class AdminControllerTest extends BaseController
         $kernelBrowser->request('GET', '/admin/');
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Administration');
+        $this->assertPageTitleContains($this->trans('app.administration'));
     }
 }

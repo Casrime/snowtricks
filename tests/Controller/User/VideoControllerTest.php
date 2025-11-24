@@ -22,7 +22,7 @@ final class VideoControllerTest extends BaseController
         $kernelBrowser->request('GET', '/user/video/new');
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('New Video');
+        $this->assertPageTitleContains($this->trans('app.videos.new'));
     }
 
     public function testVideoNewPageWithAdminLoginWithoutFormSubmission(): void
@@ -31,7 +31,7 @@ final class VideoControllerTest extends BaseController
         $kernelBrowser->request('GET', '/user/video/new');
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('New Video');
+        $this->assertPageTitleContains($this->trans('app.videos.new'));
     }
 
     public function testVideoNewPageWithAdminLoginWithFormSubmissionWithoutValues(): void
@@ -41,7 +41,7 @@ final class VideoControllerTest extends BaseController
         $kernelBrowser->submitForm('Save');
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertPageTitleContains('New Video');
+        $this->assertPageTitleContains($this->trans('app.videos.new'));
         $this->assertSelectorTextContains('#video_url_error_0', 'This value should not be blank.');
     }
 
@@ -54,7 +54,7 @@ final class VideoControllerTest extends BaseController
         ]);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertPageTitleContains('New Video');
+        $this->assertPageTitleContains($this->trans('app.videos.new'));
         $this->assertSelectorTextContains('#video_url_error_0', 'This value is not a valid URL.');
     }
 

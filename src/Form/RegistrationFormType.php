@@ -28,6 +28,7 @@ class RegistrationFormType extends AbstractType
                     new Length(min: 3, max: 4096, minMessage: 'Your username should be at least {{ limit }} characters'),
                     new UniqueEntity(),
                 ],
+                'label' => 'app.username',
             ])
             ->add('email', TextType::class, [
                 'constraints' => [
@@ -35,9 +36,10 @@ class RegistrationFormType extends AbstractType
                     new Email(message: 'Please enter a valid email address'),
                     new Length(min: 3, max: 4096, minMessage: 'Your email should be at least {{ limit }} characters'),
                 ],
+                'label' => 'app.email',
             ])
             ->add('plainPassword', PasswordType::class, [
-                'label' => 'Password',
+                'label' => 'app.password',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

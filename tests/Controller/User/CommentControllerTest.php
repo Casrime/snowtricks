@@ -84,7 +84,7 @@ final class CommentControllerTest extends BaseController
     {
         $kernelBrowser = $this->loginUser();
         $kernelBrowser->request('GET', '/user/comment/2/edit');
-        $kernelBrowser->submitForm('Delete');
+        $kernelBrowser->submitForm($this->trans('app.delete'));
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
@@ -94,7 +94,7 @@ final class CommentControllerTest extends BaseController
     {
         $kernelBrowser = $this->loginAdmin();
         $kernelBrowser->request('GET', '/user/comment/2/edit');
-        $kernelBrowser->submitForm('Delete');
+        $kernelBrowser->submitForm($this->trans('app.delete'));
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');
@@ -104,7 +104,7 @@ final class CommentControllerTest extends BaseController
     {
         $kernelBrowser = $this->loginUser();
         $kernelBrowser->request('GET', '/user/comment/1/edit');
-        $kernelBrowser->submitForm('Delete');
+        $kernelBrowser->submitForm($this->trans('app.delete'));
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/user/');
@@ -114,7 +114,7 @@ final class CommentControllerTest extends BaseController
     {
         $kernelBrowser = $this->loginAdmin();
         $kernelBrowser->request('GET', '/user/comment/1/edit');
-        $kernelBrowser->submitForm('Delete');
+        $kernelBrowser->submitForm($this->trans('app.delete'));
 
         $this->assertResponseStatusCodeSame(303);
         $this->assertResponseRedirects('/admin/');

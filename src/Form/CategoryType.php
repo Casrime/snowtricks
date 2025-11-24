@@ -24,6 +24,7 @@ class CategoryType extends AbstractType
                     new NotBlank(),
                     new Length(min: 3, max: 255),
                 ],
+                'label' => 'app.name',
             ])
         ;
     }

@@ -31,6 +31,6 @@ final class UserControllerTest extends BaseController
         $kernelBrowser->request('GET', '/user/');
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertPageTitleContains('Administration');
+        $this->assertPageTitleContains($this->trans('app.administration'));
     }
 }

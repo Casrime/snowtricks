@@ -1,0 +1,10 @@
+app:
+    admin: Admin
+    en: Anglais (US)
+    fr: Français (FR)
+    home: Accueil
+    login: Connexion
+    logout: Déconnexion
+    register: Inscription
+    tricks: Figures
+    user: Utilisateur

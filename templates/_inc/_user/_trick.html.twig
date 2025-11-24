@@ -1,6 +1,6 @@
 <div class="mb-5">
     <a href="{{ path('app_trick_new') }}" class="btn-blue">
-        New trick
+        {{ 'app.tricks.new'|trans }}
     </a>
 </div>
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -8,19 +8,19 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Id
+                    {{ 'app.id'|trans }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Name
+                    {{ 'app.name'|trans }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Category
+                    {{ 'app.category.name'|trans }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Description
+                    {{ 'app.description'|trans }}
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Actions
+                    {{ 'app.actions'|trans }}
                 </th>
             </tr>
         </thead>
@@ -58,7 +58,7 @@
                         name: trick.name,
                         includeForm: include('_inc/_delete_form.html.twig', {
                             action: path('app_trick_delete', {id: trick.id}),
-                            content: 'Delete',
+                            content: 'app.delete'|trans,
                             value: csrf_token('delete' ~ trick.id),
                         }),
                     }) }}
@@ -66,7 +66,7 @@
             </tr>
         {% else %}
             <tr>
-                <td class="px-6 py-4" colspan="5">No tricks found</td>
+                <td class="px-6 py-4" colspan="5">{{ 'app.tricks.not.found'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
